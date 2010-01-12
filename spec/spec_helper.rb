@@ -16,6 +16,14 @@ class TablelessModel < ActiveRecord::Base
   def self.column(name, sql_type = nil, default = nil, null = true)
     columns << ActiveRecord::ConnectionAdapters::Column.new(name.to_s, default, sql_type.to_s, null)
   end
+  
+  def self.quoted_table_name
+    name.pluralize.underscore
+  end
+  
+  def quoted_id
+    "0"
+  end
 end
 
 class Project < TablelessModel

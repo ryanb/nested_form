@@ -5,6 +5,7 @@ describe NestedForm::Builder do
     before(:each) do
       @project = Project.new
       @template = ActionView::Base.new
+      @template.output_buffer = ""
       @builder = NestedForm::Builder.new(:item, @project, @template, {}, proc {})
     end
   
@@ -14,6 +15,13 @@ describe NestedForm::Builder do
   
     it "should have a remove link" do
       @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
+    end
+    
+    it "should wrap nested fields each in a div with class" do
+      2.times { @project.tasks.build }
+      @builder.fields_for(:tasks) do
+        "Task"
+      end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
     end
   end
 end
