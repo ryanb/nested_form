@@ -20,16 +20,16 @@ describe NestedForm::Builder do
     it "should wrap nested fields each in a div with class" do
       2.times { @project.tasks.build }
       @builder.fields_for(:tasks) do
-        "Task"
-      end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
+        @template.concat("Task")
+      end
+      @template.output_buffer.should == '<div class="fields">Task</div><div class="fields">Task</div>'
     end
     
     it "should add task fields to hidden div after form" do
-      content = nil
-      mock(@template).after_nested_form { |block| content = block.call }
-      @builder.fields_for(:tasks) { "Task" }
+      mock(@template).after_nested_form { |block| block.call }
+      @builder.fields_for(:tasks) { @template.concat("Task") }
       @builder.link_to_add("Add", :tasks)
-      content.should == '<div style="display: none"><div class="fields">Task</div></div>'
+      @template.output_buffer.should == '<div style="display: none"><div class="fields">Task</div></div>'
     end
   end
 end
