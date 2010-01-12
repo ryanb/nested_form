@@ -1,9 +1,9 @@
 require File.dirname(__FILE__) + '/../spec_helper'
 
-describe NestedForm::Helper do
+describe NestedForm::ViewHelper do
   before(:each) do
     @helper = Object.new
-    @helper.extend NestedForm::Helper
+    @helper.extend NestedForm::ViewHelper
   end
   
   it "should pass nested form builder to form_for along with other options" do

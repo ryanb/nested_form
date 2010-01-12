@@ -1,5 +1,5 @@
 module NestedForm
-  module Helper
+  module ViewHelper
     def nested_form_for(*args, &block)
       options = args.extract_options!.reverse_merge(:builder => NestedForm::Builder)
       form_for(*(args << options), &block)
@@ -8,5 +8,5 @@ module NestedForm
 end
 
 class ActionView::Base
-  include NestedForm::Helper
+  include NestedForm::ViewHelper
 end
