@@ -4,7 +4,7 @@ module NestedForm
       @fields ||= {}
       @template.after_nested_form do
         model_object = object.class.reflect_on_association(association).klass.new
-        @template.concat('<div style="display: none">')
+        @template.concat(%Q[<div id="#{association}_fields_blueprint" style="display: none">])
         fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
         @template.concat('</div>')
       end

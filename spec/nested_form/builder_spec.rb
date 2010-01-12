@@ -29,7 +29,7 @@ describe NestedForm::Builder do
       mock(@template).after_nested_form { |block| block.call }
       @builder.fields_for(:tasks) { @template.concat("Task") }
       @builder.link_to_add("Add", :tasks)
-      @template.output_buffer.should == '<div style="display: none"><div class="fields">Task</div></div>'
+      @template.output_buffer.should == '<div id="tasks_fields_blueprint" style="display: none"><div class="fields">Task</div></div>'
     end
   end
 end
