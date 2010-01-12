@@ -6,3 +6,7 @@ module NestedForm
     end
   end
 end
+
+class ActionView::Base
+  include NestedForm::Helper
+end
