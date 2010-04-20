@@ -25,7 +25,7 @@ Use this form just like normal, including the fields_for helper method for nesti
 
   <% f.fields_for :tasks do |task_form| %>
     <%= task_form.text_field :name %>
-    <%= task_form.link_to_remove %>
+    <%= task_form.link_to_remove, "Remove this task" %>
   <% end %>
   <%= f.link_to_add "Add a task", :tasks %>
 
