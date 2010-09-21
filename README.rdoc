@@ -8,7 +8,7 @@ This is in early development, so some of this documentation is not yet applicabl
 
 This is currently only available as a plugin.
 
-  script/plugin install git://github.com/ryanb/nested_form.git
+  script/plugin install git://github.com/pieoneers/nested_form.git
 
 
 == Usage
@@ -43,6 +43,4 @@ In this case it will look for a partial called "task_fields" and pass the form b
 
 == Special Thanks
 
-This plugin is based on the solution by Tim Riley in his complex-form-examples fork.
-
-http://github.com/timriley/complex-form-examples/tree/unobtrusive-jquery-deep-fix2
+This plugin is a fork of the solution by Ryan Bates: http://github.com/ryanb/nested_form
