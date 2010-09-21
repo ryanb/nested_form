@@ -4,9 +4,10 @@ module NestedForm
       @fields ||= {}
       @template.after_nested_form do
         model_object = object.class.reflect_on_association(association).klass.new
-        @template.concat(%Q[<div id="#{association}_fields_blueprint" style="display: none">])
-        fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        @template.concat('</div>')
+        output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
+        output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
+        output.safe_concat('</div>')
+        output
       end
       @template.link_to(name, "javascript:void(0)", :class => "add_nested_fields", "data-association" => association)
     end
@@ -23,9 +24,10 @@ module NestedForm
 
     
     def fields_for_nested_model(name, association, args, block)
-      @template.concat('<div class="fields">')
-      super
-      @template.concat('</div>')
+      output = '<div class="fields">'.html_safe
+      output << super     
+      output.safe_concat('</div>')     
+      output
     end
   end
 end

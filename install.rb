@@ -10,7 +10,7 @@ $(function() {
     
     // Make the context correct by replacing new_<parents> with the generated ID
     // of each of the parent objects
-    var context = ($(this).parents('.fields').children('input:first').attr('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
+    var context = ($(this).siblings('.fields').children('input:first').attr('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
     
     // context will be something like this for a brand new form:
     // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
@@ -35,7 +35,7 @@ $(function() {
     var new_id  = new Date().getTime();
     content     = content.replace(regexp, new_id)
     
-    $(this).parent().before(content);
+    $(this).before(content);
     return false;
   });
   

@@ -14,22 +14,23 @@ describe NestedForm::Builder do
     end
   
     it "should have a remove link" do
-      @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
+      @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
     end
     
     it "should wrap nested fields each in a div with class" do
       2.times { @project.tasks.build }
       @builder.fields_for(:tasks) do
-        @template.concat("Task")
-      end
+        "Task"
+      end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
       @template.output_buffer.should == '<div class="fields">Task</div><div class="fields">Task</div>'
     end
     
     it "should add task fields to hidden div after form" do
-      mock(@template).after_nested_form { |block| block.call }
-      @builder.fields_for(:tasks) { @template.concat("Task") }
+      output = ""
+      mock(@template).after_nested_form { |block| output << block.call }
+      @builder.fields_for(:tasks) { "Task" }
       @builder.link_to_add("Add", :tasks)
-      @template.output_buffer.should == '<div id="tasks_fields_blueprint" style="display: none"><div class="fields">Task</div></div>'
+      output.should == '<div id="tasks_fields_blueprint" style="display: none"><div class="fields">Task</div></div>'
     end
   end
 end
