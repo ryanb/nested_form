@@ -4,6 +4,8 @@ A Rails plugin to conveniently manage multiple nested models in a single form. I
 
 This plugin has been tested to work with a Rails 3 app.
 
+Read this blog post to learn about how this plugin works under the hood http://blog.madebydna.com/dynamic-nested-forms-in-rails-3-with-the-nest
+
 == Install
 
 This is currently only available as a plugin.
