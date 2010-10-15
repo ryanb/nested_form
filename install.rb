@@ -23,7 +23,7 @@ $(function() {
       for(i = 0; i < parent_names.length; i++) {
         if(parent_ids[i]) {
           content = content.replace(
-            new RegExp("(\\[" + parent_names[i] + "\\])\\[.+?\\]", "g")
+            new RegExp("(\\\[" + parent_names[i] + "\\\])\\\[.+?\\\]", "g")
             '$1[' + parent_ids[i] + ']'
           )
         }
