@@ -1,7 +1,7 @@
 path = "public/javascripts/nested_form.js"
 puts "Generating #{path}"
 
-File.open("test.js", "w") do |file|
+File.open("#{Rails.root}/#{path}", "w") do |file|
   file.print <<-EOS
   $(function() {
   $('form a.add_nested_fields').live('click', function() {
