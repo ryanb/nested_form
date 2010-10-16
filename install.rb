@@ -11,20 +11,20 @@ File.open("#{Rails.root}/#{path}", "w") do |file|
 
     // Make the context correct by replacing new_<parents> with the generated ID
     // of each of the parent objects
-    var context = ($(this).siblings('.fields').children('input:first').attr('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
+    var context = ($(this).parents('.fields').children('input:first').attr('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
 
     // context will be something like this for a brand new form:
     // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
     // or for an edit form:
     // project[tasks_attributes][0][assignments_attributes][1]
     if(context) {
-      var parent_names = context.match(/[a-z]+_attributes/g) || []
-      var parent_ids   = context.match(/[0-9]+/g)
+      var parent_names = context.match(/[a-z_]+_attributes/g) || [];
+      var parent_ids   = context.match(/[0-9]+/g);
 
       for(i = 0; i < parent_names.length; i++) {
         if(parent_ids[i]) {
           content = content.replace(
-            new RegExp('(\\\\[' + parent_names[i] + '\\\\])\\\\[.+?\\\\]', 'g')
+            new RegExp('(\\\\[' + parent_names[i] + '\\\\])\\\\[.+?\\\\]', 'g'),
             '$1[' + parent_ids[i] + ']'
           )
         }
@@ -34,7 +34,7 @@ File.open("#{Rails.root}/#{path}", "w") do |file|
     // Make a unique ID for the new child
     var regexp  = new RegExp('new_' + assoc, 'g');
     var new_id  = new Date().getTime();
-    content     = content.replace(regexp, new_id)
+    content     = content.replace(regexp, new_id);
 
     $(this).before(content);
     return false;
