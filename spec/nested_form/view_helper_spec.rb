@@ -29,3 +29,4 @@ describe NestedForm::ViewHelper do
     @template.output_buffer.should include("123456")
   end
 end
+
