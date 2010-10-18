@@ -6,13 +6,13 @@ To learn more about how this works under the hood: http://blog.madebydna.com/dyn
 
 == Install
 
-Install the gem
-
-  gem install rails_nested_form
-  
 Add it to your Gemfile
   
-  gem "rails_nested_form"
+  gem "nested_form", :git => "git://github.com/madebydna/nested_form.git"
+
+Run
+  
+  bundle install
 
 Run the generator
 
