@@ -2,7 +2,7 @@ path = "public/javascripts/nested_form.js"
 puts "Generating #{path}"
 File.open("#{Rails.root}/#{path}", "w") do |file|
   file.print <<-EOS
-$(function() {
+jQuery(function($) {
   $('form a.add_nested_fields').live('click', function() {
     // Setup
     var assoc   = $(this).attr('data-association');           // Name of child
