@@ -7,7 +7,12 @@ module NestedForm
       
       
       def copy_jquery_file
-        copy_file 'nested_form.js', 'public/javascripts/nested_form.js'
+        stat = File.stat('public/javascripts/prototype.js')
+        if stat.file?
+          copy_file 'prototype_nested_form.js', 'public/javascripts/nested_form.js'
+        else
+          copy_file 'jquery_nested_form.js', 'public/javascripts/nested_form.js'
+        end
       end
     end
   end
