@@ -1,19 +1,23 @@
-require 'rubygems'
-require 'bundler/setup'
+require "rubygems"
+require "bundler/setup"
+
+require "action_view"
+require "active_record"
 
 Bundler.require(:default)
 
-require 'active_model'
-require 'active_record'
-require 'action_controller'
-require 'action_view'
-require 'action_view/template'
+# require 'active_model'
+# require 'active_record'
+# require 'action_controller'
+# require 'action_view'
+# require 'action_view/template'
+# require "active_support/all"
 
-require 'nested_form/view_helper'
-require 'nested_form/builder'
+# require 'nested_form/view_helper'
+# require 'nested_form/builder'
 
-Rspec.configure do |config|
-  config.mock_with :rr
+RSpec.configure do |config|
+  config.mock_with :mocha
 end
 
 class TablelessModel < ActiveRecord::Base

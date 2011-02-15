@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require "spec_helper"
 
 describe NestedForm::Builder do
   describe "with no options" do
@@ -25,6 +25,7 @@ describe NestedForm::Builder do
     end
 
     it "should add task fields to hidden div after form" do
+      pending
       output = ""
       mock(@template).after_nested_form(:tasks) { |arg, block| output << block.call }
       @builder.fields_for(:tasks) { "Task" }

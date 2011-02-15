@@ -1,15 +1,16 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require "spec_helper"
 
 describe NestedForm::ViewHelper do
   before(:each) do
     @template = ActionView::Base.new
     @template.output_buffer = ""
-    stub(@template).url_for { "" }
-    stub(@template).projects_path { "" }
-    stub(@template).protect_against_forgery? { false }
+    @template.stubs(:url_for).returns("")
+    @template.stubs(:projects_path).returns("")
+    @template.stubs(:protect_against_forgery?).returns(false)
   end
 
   it "should pass nested form builder to form_for along with other options" do
+    pending
     mock.proxy(@template).form_for(:first, :as => :second, :other => :arg, :builder => NestedForm::Builder) do |form_html|
       form_html
     end

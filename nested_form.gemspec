@@ -10,10 +10,10 @@ Gem::Specification.new do |s|
   s.files        = Dir["{lib,spec}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
   s.require_path = "lib"
 
-  s.required_rubygems_version = ">= 1.3.6"
-  s.rubyforge_project         = "nested_form"
-
   s.add_development_dependency "rspec", "~> 2.1.0"
-  s.add_development_dependency "rr", "~> 0.10.11" # 1.0.0 has respond_to? issues: http://github.com/btakita/rr/issues/issue/43
+  s.add_development_dependency "mocha"
   s.add_development_dependency "rails", "~> 3.0.0"
+
+  s.rubyforge_project = s.name
+  s.required_rubygems_version = ">= 1.3.4"
 end
