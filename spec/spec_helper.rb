@@ -1,3 +1,8 @@
+require 'rubygems'
+require 'bundler/setup'
+
+Bundler.require(:default)
+
 require 'active_model'
 require 'active_record'
 require 'action_controller'

@@ -1,16 +1,10 @@
-require 'bundler'
-Bundler::GemHelper.install_tasks
-
 require 'rubygems'
 require 'rake'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
-spec_files = Rake::FileList["spec/**/*_spec.rb"]
-
-desc "Run specs"
-Spec::Rake::SpecTask.new do |t|
-  t.spec_files = spec_files
-  t.spec_opts = ["-c"]
+desc "Run RSpec"
+RSpec::Core::RakeTask.new do |t|
+  t.verbose = false
 end
 
 task :default => :spec

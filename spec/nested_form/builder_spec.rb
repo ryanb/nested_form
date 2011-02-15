@@ -8,23 +8,22 @@ describe NestedForm::Builder do
       @template.output_buffer = ""
       @builder = NestedForm::Builder.new(:item, @project, @template, {}, proc {})
     end
-    
+
     it "should have an add link" do
       @builder.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
     end
-    
 
     it "should have a remove link" do
       @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
     end
-    
+
     it "should wrap nested fields each in a div with class" do
       2.times { @project.tasks.build }
       @builder.fields_for(:tasks) do
         "Task"
       end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
     end
-    
+
     it "should add task fields to hidden div after form" do
       output = ""
       mock(@template).after_nested_form(:tasks) { |arg, block| output << block.call }
