@@ -1,12 +1,13 @@
-require 'rubygems'
-require 'spec'
-require 'active_support'
+require 'active_model'
 require 'active_record'
 require 'action_controller'
 require 'action_view'
-require File.dirname(__FILE__) + '/../lib/nested_form.rb'
+require 'action_view/template'
 
-Spec::Runner.configure do |config|
+require 'nested_form/view_helper'
+require 'nested_form/builder'
+
+Rspec.configure do |config|
   config.mock_with :rr
 end
 
@@ -36,4 +37,10 @@ class Task < TablelessModel
   column :project_id, :integer
   column :name, :string
   belongs_to :project
+end
+
+class Milestone < TablelessModel
+  column :task_id, :integer
+  column :name, :string
+  belongs_to :task
 end

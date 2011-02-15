@@ -1,36 +1,42 @@
 = Nested Form
 
-A Rails plugin to conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery.
+A Rails gem to conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery.
 
-This is in early development, so some of this documentation is not yet applicable.
+To learn more about how this works under the hood: http://blog.madebydna.com/dynamic-nested-forms-in-rails-3-with-the-nest
 
 == Install
 
-This is currently only available as a plugin.
+Add it to your Gemfile
+  
+  gem "nested_form", :git => "git://github.com/madebydna/nested_form.git"
 
-  script/plugin install git://github.com/ryanb/nested_form.git
+Run
+  
+  bundle install
 
+Run the generator
+
+  rails generate nested_form:install
 
 == Usage
 
-When installing this plugin it will add a file at public/javascripts/nested_form.js which should be included after jQuery.
+Running the generator will add a file at public/javascripts/nested_form.js which should be included after jQuery.
 
   <%= javascript_include_tag 'jquery', 'nested_form' %>
 
 You can then generate a nested form using the nested_form_for helper method.
 
-  <% nested_form_for @project do |f| %>
+  <%= nested_form_for @project do |f| %>
 
 Use this form just like normal, including the fields_for helper method for nesting models. The benefit of this plugin comes from the link_to_add and link_to_remove helper methods on the form builder.
 
-  <% f.fields_for :tasks do |task_form| %>
+  <%= f.fields_for :tasks do |task_form| %>
     <%= task_form.text_field :name %>
     <%= task_form.link_to_remove "Remove this task" %>
   <% end %>
   <%= f.link_to_add "Add a task", :tasks %>
 
 This generates links which dynamically add and remove fields.
-
 
 == Partials
 
@@ -40,9 +46,7 @@ It is often desirable to move the nested fields into a partial to keep things or
 
 In this case it will look for a partial called "task_fields" and pass the form builder as an f variable to it.
 
-
 == Special Thanks
 
-This plugin is based on the solution by Tim Riley in his complex-form-examples fork.
+This gem is based on the plugin by Ryan Bates: http://github.com/ryanb/nested_form
 
-http://github.com/timriley/complex-form-examples/tree/unobtrusive-jquery-deep-fix2
