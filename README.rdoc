@@ -53,3 +53,5 @@ In this case it will look for a partial called "task_fields" and pass the form b
 This gem was originally based on the solution by Tim Riley in his {complex-form-examples fork}[https://github.com/timriley/complex-form-examples/tree/unobtrusive-jquery-deep-fix2].
 
 Thank you Andrew Manshin for the Rails 3 transition, {Andrea Singh}[https://github.com/madebydna] for converting to a gem and {Peter Giacomo Lombardo}[https://github.com/pglombardo] for Prototype support.
+
+Andrea also wrote a great {blog post}[http://blog.madebydna.com/all/code/2010/10/07/dynamic-nested-froms-with-the-nested-form-gem.html] on the internal workings of this gem.
