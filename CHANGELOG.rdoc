@@ -1,3 +1,11 @@
+0.1.0 (March 26, 2011)
+
+* Prefix new records with "new_" so there's no possible conflict with existing records - issue #21
+
+* Add support for _fields partial if no block is passed in to fields_for
+
+* Use the $-jquery-function only inside the jQuery scope (thanks nhocki)
+
 * Triggers nested:fieldAdded and nested:fieldRemoved events (thanks pirelenito)
 
 * Fixed JavaScript bug for nested attributes in has_one association (thanks pirelenito)
