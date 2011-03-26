@@ -16,13 +16,15 @@ module NestedForm
       hidden_field(:_destroy) + @template.link_to(name, "javascript:void(0)", :class => "remove_nested_fields")
     end
 
-    def fields_for_with_nested_attributes(association, args, block)
+    def fields_for_with_nested_attributes(association_name, args, block)
+      # TODO Test this better
+      block ||= Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
       @fields ||= {}
-      @fields[association] = block
-      super
+      @fields[association_name] = block
+      super(association_name, args, block)
     end
 
-    def fields_for_nested_model(name, association, args, block)
+    def fields_for_nested_model(name, object, options, block)
       output = '<div class="fields">'.html_safe
       output << super
       output.safe_concat('</div>')
