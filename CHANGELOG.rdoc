@@ -1,0 +1,8 @@
+* Triggers nested:fieldAdded and nested:fieldRemoved events (thanks pirelenito)
+
+* Fixed JavaScript bug for nested attributes in has_one association (thanks pirelenito)
+
+
+0.0.0 (February 17, 2011)
+
+* Initial release
