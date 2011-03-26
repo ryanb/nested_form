@@ -8,7 +8,7 @@ This gem only works with Rails 3. See the <tt>rails2</tt> branch for a plugin to
 == Setup
 
 Add it to your Gemfile then run +bundle+ to install it.
-  
+
   gem "nested_form"
 
 Next run the generator to create the JavaScript file.

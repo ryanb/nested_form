@@ -9,7 +9,7 @@ module NestedForm
       end
       output << fields.join(" ").html_safe
     end
-    
+
     def after_nested_form(association, &block)
       @associations ||= []
       @after_nested_form_callbacks ||= []
