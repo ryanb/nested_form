@@ -41,12 +41,12 @@ It is often desirable to move the nested fields into a partial to keep things or
 
   <%= f.fields_for :tasks %>
 
-In this case it will look for a partial called "task_fields" and pass the form builder as an f variable to it.
+In this case it will look for a partial called "task_fields" and pass the form builder as an +f+ variable to it.
 
 
 == Events
 
-If you are using jQuery, <tt>nested:fieldAdded<tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
+If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
 
 
 == Special Thanks
