@@ -1,4 +1,6 @@
-0.1.0 (March 26, 2011)
+0.1.1 (April 18, 2011)
+
+* Added new RegEx to generate new objects IDs correctly - issue #26 and issue #30
 
 * Prefix new records with "new_" so there's no possible conflict with existing records - issue #21
 

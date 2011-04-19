@@ -4,6 +4,9 @@ This is a Rails gem for conveniently manage multiple nested models in a single f
 
 This gem only works with Rails 3. See the {rails2 branch}[https://github.com/ryanb/nested_form/tree/rails2] for a plugin to work in Rails 2.
 
+== My fork
+
+This forks solves issues #26 and #30.
 
 == Setup
 
@@ -56,6 +59,8 @@ If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved<
 
 
 == Special Thanks
+
+First of all, thanks ro Ryan Bates for this gem. Awesome work.
 
 This gem was originally based on the solution by Tim Riley in his {complex-form-examples fork}[https://github.com/timriley/complex-form-examples/tree/unobtrusive-jquery-deep-fix2].
 
