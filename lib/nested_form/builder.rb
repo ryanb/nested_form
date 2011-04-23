@@ -31,7 +31,7 @@ module NestedForm
     #
     #   link_to_remove(content)
     #
-    #   link_to_add do
+    #   link_to_remove do
     #     # content
     #   end
     #

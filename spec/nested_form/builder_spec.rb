@@ -14,7 +14,7 @@ describe NestedForm::Builder do
     end
     
     it "add link should accept a block" do
-      @builder.link_to_add(:tasks){"Add"}.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
+      @builder.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
     end
 
     it "should have a remove link" do
@@ -22,7 +22,7 @@ describe NestedForm::Builder do
     end
 
     it "remove link accepts a block" do
-      @builder.link_to_remove{"Remove"}.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
+      @builder.link_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
     end
 
     it "should wrap nested fields each in a div with class" do
