@@ -9,19 +9,15 @@ describe NestedForm::Builder do
       @builder = NestedForm::Builder.new(:item, @project, @template, {}, proc {})
     end
 
-    it "should have an add link" do
+    it "has an add link which behaves similar to a Rails link_to" do
       @builder.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
-    end
-    
-    it "add link should accept a block" do
+      @builder.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks">Add</a>'
       @builder.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
     end
 
-    it "should have a remove link" do
+    it "has a remove link which behaves similar to a Rails link_to" do
       @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
-    end
-
-    it "remove link accepts a block" do
+      @builder.link_to_remove("Remove", :class => "foo", :href => "url").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="url" class="foo remove_nested_fields">Remove</a>'
       @builder.link_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
     end
 
@@ -39,6 +35,6 @@ describe NestedForm::Builder do
       @builder.fields_for(:tasks) { "Task" }
       @builder.link_to_add("Add", :tasks)
       output.should == '<div id="tasks_fields_blueprint" style="display: none"><div class="fields">Task</div></div>'
-    end 
+    end
   end
 end

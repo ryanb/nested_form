@@ -1,3 +1,5 @@
+* Support HTML options and block in add/remove link - issue #31
+
 * Added new RegEx to generate new objects IDs correctly - issue #26 and issue #30
 
 0.1.0 (March 26, 2011)
