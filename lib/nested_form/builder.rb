@@ -1,6 +1,21 @@
 module NestedForm
   class Builder < ::ActionView::Helpers::FormBuilder
-    def link_to_add(name, association)
+    # ==== Signatures
+    #
+    #   link_to_add(content, association)
+    #
+    #   link_to_add(association) do
+    #     # content
+    #   end
+    #
+    def link_to_add(*args, &block)
+      if block_given?
+        content = @template.capture(&block)
+        association = args.first
+      else
+        content = args.first
+        association = args.second
+      end
       @fields ||= {}
       @template.after_nested_form(association) do
         model_object = object.class.reflect_on_association(association).klass.new
@@ -9,11 +24,24 @@ module NestedForm
         output.safe_concat('</div>')
         output
       end
-      @template.link_to(name, "javascript:void(0)", :class => "add_nested_fields", "data-association" => association)
+      @template.link_to(content, "javascript:void(0)", :class => "add_nested_fields", "data-association" => association)
     end
 
-    def link_to_remove(name)
-      hidden_field(:_destroy) + @template.link_to(name, "javascript:void(0)", :class => "remove_nested_fields")
+    # ==== Signatures
+    #
+    #   link_to_remove(content)
+    #
+    #   link_to_add do
+    #     # content
+    #   end
+    #
+    def link_to_remove(*args, &block)
+      if block_given?
+        content = @template.capture(&block)
+      else
+        content = args.first
+      end
+      hidden_field(:_destroy) + @template.link_to(content, "javascript:void(0)", :class => "remove_nested_fields")
     end
 
     def fields_for_with_nested_attributes(association_name, args, block)
