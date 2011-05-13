@@ -1,20 +1,21 @@
-require "rubygems"
+$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+$LOAD_PATH.unshift(File.dirname(__FILE__))
 require "bundler/setup"
-
-require "action_view"
-require "active_record"
-
 Bundler.require(:default)
 
-# require 'active_model'
-# require 'active_record'
-# require 'action_controller'
-# require 'action_view'
-# require 'action_view/template'
-# require "active_support/all"
+require "rails"
+require "nested_form"
 
-# require 'nested_form/view_helper'
-# require 'nested_form/builder'
+# a fake app for initializing the railtie
+app = Class.new(Rails::Application)
+app.config.secret_token = "token"
+app.config.session_store :cookie_store, :key => "_myapp_session"
+app.config.active_support.deprecation = :log
+app.initialize!
+
+require 'action_controller'
+require 'active_record'
+require 'rspec/rails'
 
 RSpec.configure do |config|
   config.mock_with :mocha
