@@ -6,6 +6,13 @@ This gem only works with Rails 3. See the {rails2 branch}[https://github.com/rya
 
 An example project showing how this works is available in the {complex-nested-forms/nested_form branch}[https://github.com/ryanb/complex-form-examples/tree/nested_form].
 
+== Changes in this repo
+
+Added simple_form support. Now if you add
+
+  gem 'simple_form'
+
+before adding this gem to your Gemfile - nested_form_for will use SimpleForm builder instead of default ActionView builder.
 
 == Setup
 
