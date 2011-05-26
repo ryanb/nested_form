@@ -31,6 +31,14 @@ module NestedForm
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
+      validators = self.object.class.validators_on(association)
+      unless validators.empty?
+        length_validator = validators.select {|item| item.class == ActiveModel::Validations::LengthValidator}.first
+        unless length_validator.nil?
+          maximum = length_validator.options[:maximum]
+          options["data-maximum"] = maximum
+        end
+      end
       options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
@@ -89,6 +97,7 @@ module NestedForm
 
     def fields_for_nested_model(name, object, options, block)
       classes = 'fields'
+      classes << " #{object.class.name.underscore.pluralize}"
       classes << ' marked_for_destruction' if object.respond_to?(:marked_for_destruction?) && object.marked_for_destruction?
 
       perform_wrap   = options.fetch(:nested_wrapper, true)

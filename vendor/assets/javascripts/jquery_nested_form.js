@@ -43,6 +43,8 @@
       content     = $.trim(content.replace(regexp, new_id));
 
       var field = this.insertFields(content, assoc, link);
+      check_maximum();
+
       // bubble up event upto document (through form)
       field
         .trigger({ type: 'nested:fieldAdded', field: field })
@@ -69,6 +71,8 @@
       
       var field = $link.closest('.fields');
       field.hide();
+
+      check_maximum();
       
       field
         .trigger({ type: 'nested:fieldRemoved', field: field })
@@ -81,6 +85,16 @@
   $(document)
     .delegate('form a.add_nested_fields',    'click', nestedFormEvents.addFields)
     .delegate('form a.remove_nested_fields', 'click', nestedFormEvents.removeFields);
+
+  function check_maximum() {
+    $('form a.add_nested_fields').each(function(){
+      var assoc   = $(this).attr('data-association');            // Name of child
+      var maximum = $(this).attr('data-maximum');                // Maximum # of children
+      $('.' + assoc+':visible').length >= maximum ? $(this).hide() : $(this).show();
+    });
+  }
+  
+  check_maximum();
 })(jQuery);
 
 // http://plugins.jquery.com/project/closestChild
