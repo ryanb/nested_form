@@ -48,21 +48,15 @@ module NestedForm
       hidden_field(:_destroy) + @template.link_to(*args, &block)
     end
 
-    if Rails::VERSION::MAJOR >= 3 && Rails::VERSION::MINOR >= 1
-      def fields_for_with_nested_attributes(association_name, association, options, block)
-        # TODO Test this better
-        block ||= Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
-        @fields ||= {}
-        @fields[association_name] = block
-        super(association_name, association, options, block)
-      end
-    else
-      def fields_for_with_nested_attributes(association_name, args, block)
-        # TODO Test this better
-        block ||= Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
-        @fields ||= {}
-        @fields[association_name] = block
-        super(association_name, args, block)
+    def fields_for_with_nested_attributes(association_name, *args, block)
+      # TODO Test this better
+      block ||= Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
+      @fields ||= {}
+      @fields[association_name] = block
+      if Rails::VERSION::MAJOR >= 3 && Rails::VERSION::MINOR >= 1
+        super(association_name, args.first, args.last, block)
+      else
+        super(association_name, *args, block)
       end
     end
 
