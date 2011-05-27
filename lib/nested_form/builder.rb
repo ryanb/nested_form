@@ -16,6 +16,14 @@ module NestedForm
       association = args.pop
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
+      validators = self.object.class.validators_on(association)
+      unless validators.empty?
+        length_validator = validators.select {|item| item.class == ActiveModel::Validations::LengthValidator}.first
+        unless length_validator.nil?
+          maximum = length_validator.options[:maximum]
+          options["data-maximum"] = maximum
+        end
+      end
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
       @fields ||= {}
@@ -57,7 +65,7 @@ module NestedForm
     end
 
     def fields_for_nested_model(name, object, options, block)
-      output = '<div class="fields">'.html_safe
+      output = "<div class=\"fields #{object.class.name.underscore.pluralize}\">".html_safe
       output << super
       output.safe_concat('</div>')
       output
