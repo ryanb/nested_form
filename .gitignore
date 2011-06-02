@@ -3,5 +3,4 @@
 *.gem
 Gemfile.lock
 .bundle
-Gemfile
 log

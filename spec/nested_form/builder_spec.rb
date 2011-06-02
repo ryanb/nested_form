@@ -1,6 +1,6 @@
 require "spec_helper"
 
-$builders.each do |builder|
+[NestedForm::Builder, NestedForm::SimpleBuilder, NestedForm::FormtasticBuilder].each do |builder|
   describe builder do
     describe "with no options" do
       before(:each) do

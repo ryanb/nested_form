@@ -21,8 +21,6 @@ RSpec.configure do |config|
   config.mock_with :mocha
 end
 
-$builders = [NestedForm::Builder, NestedForm::SimpleBuilder, NestedForm::FormtasticBuilder]
-
 class TablelessModel < ActiveRecord::Base
   def self.columns() @columns ||= []; end
 
