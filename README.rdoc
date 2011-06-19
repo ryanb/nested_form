@@ -14,6 +14,12 @@ Added simple_form support. Now if you add
 
 before adding this gem to your Gemfile - nested_form_for will use SimpleForm builder instead of default ActionView builder.
 
+Also you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
+
+  window.nestedFormEvents.insertFields = function(content, assoc, link) {
+    return $(link).closest('form').find(assoc + '_fields').append($(content));
+  }
+
 == Setup
 
 Add it to your Gemfile then run +bundle+ to install it.
