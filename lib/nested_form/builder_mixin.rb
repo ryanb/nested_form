@@ -53,11 +53,7 @@ module NestedForm
       block ||= Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
       @fields ||= {}
       @fields[association_name] = block
-      if Rails::VERSION::MAJOR >= 3 && Rails::VERSION::MINOR >= 1
-        super(association_name, args.first, args.last, block)
-      else
-        super(association_name, *args, block)
-      end
+      super(association_name, *args, block)
     end
 
     def fields_for_nested_model(name, object, options, block)
