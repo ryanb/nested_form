@@ -2,6 +2,7 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require "bundler/setup"
 require "rails"
+require 'action_view/railtie'
 Bundler.require(:default)
 require 'action_controller/railtie'
 require 'active_record'

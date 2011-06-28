@@ -14,6 +14,8 @@ Added simple_form support. Now if you add
 
 before adding this gem to your Gemfile - nested_form_for will use SimpleForm builder instead of default ActionView builder.
 
+Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
+
 == Setup
 
 Add it to your Gemfile then run +bundle+ to install it.
