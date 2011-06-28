@@ -24,6 +24,8 @@ or
 
 you will be able to use simple_nested_form_for and semantic_nested_form_for respectively.
 
+Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
+
 === Enhanced jQuery javascript template
 
 Also you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
@@ -37,8 +39,6 @@ Also you can override default behavior of inserting new subforms into your form 
 There's a small fix for Rails 3.1 form handling. 
 Also support of Rails 3.1 led me to huge refactor of specs setup (now using Helper specs from rspec-rails instead of custom implementation spec context).
 Last, but not least - I used appraisal[https://github.com/thoughtbot/appraisal] gem to run specs for rails 3 and 3.1.
-
-Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
 
 == Setup
 
