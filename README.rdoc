@@ -6,6 +6,18 @@ This gem only works with Rails 3. See the {rails2 branch}[https://github.com/rya
 
 An example project showing how this works is available in the {complex-nested-forms/nested_form branch}[https://github.com/ryanb/complex-form-examples/tree/nested_form].
 
+
+== Changes in this repo
+
+=== Enhanced jQuery javascript template
+
+Now you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
+
+  window.nestedFormEvents.insertFields = function(content, assoc, link) {
+    return $(link).closest('form').find(assoc + '_fields').append($(content));
+  }
+
+
 == Setup
 
 Add it to your Gemfile then run +bundle+ to install it.
