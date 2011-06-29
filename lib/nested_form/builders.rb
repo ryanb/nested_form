@@ -4,7 +4,7 @@ module NestedForm
   class Builder < ::ActionView::Helpers::FormBuilder
     include ::NestedForm::BuilderMixin
   end
-  
+
   begin
     require 'simple_form'
     class SimpleBuilder < ::SimpleForm::FormBuilder
@@ -12,7 +12,7 @@ module NestedForm
     end
   rescue LoadError
   end
-  
+
   begin
     require 'formtastic'
     class FormtasticBuilder < ::Formtastic::SemanticFormBuilder

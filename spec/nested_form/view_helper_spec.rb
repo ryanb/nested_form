@@ -22,7 +22,7 @@ describe NestedForm::ViewHelper do
       f.should be_instance_of(NestedForm::Builder)
     end
   end
-  
+
   it "should pass instance of NestedForm::SimpleBuilder to simple_nested_form_for block" do
     @template.simple_nested_form_for(Project.new) do |f|
       f.should be_instance_of(NestedForm::SimpleBuilder)
