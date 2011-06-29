@@ -1,5 +1,5 @@
 module NestedForm
-  class Builder < ::ActionView::Helpers::FormBuilder
+  module BuilderMixin
     # Adds a link to insert a new associated records. The first argument is the name of the link, the second is the name of the association.
     #
     #   f.link_to_add("Add Task", :tasks)

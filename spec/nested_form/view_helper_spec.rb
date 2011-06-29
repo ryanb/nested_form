@@ -23,6 +23,18 @@ describe NestedForm::ViewHelper do
     end
   end
 
+  it "should pass instance of NestedForm::SimpleBuilder to simple_nested_form_for block" do
+    @template.simple_nested_form_for(Project.new) do |f|
+      f.should be_instance_of(NestedForm::SimpleBuilder)
+    end
+  end
+
+  it "should pass instance of NestedForm::FormtasticBuilder to semantic_nested_form_for block" do
+    @template.semantic_nested_form_for(Project.new) do |f|
+      f.should be_instance_of(NestedForm::FormtasticBuilder)
+    end
+  end
+
   it "should append content to end of nested form" do
     @template.after_nested_form(:tasks) { @template.concat("123") }
     @template.after_nested_form(:milestones) { @template.concat("456") }
