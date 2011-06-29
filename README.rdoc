@@ -6,25 +6,8 @@ This gem only works with Rails 3. See the {rails2 branch}[https://github.com/rya
 
 An example project showing how this works is available in the {complex-nested-forms/nested_form branch}[https://github.com/ryanb/complex-form-examples/tree/nested_form].
 
+
 == Changes in this repo
-
-For some reasons, in this fork the main branch is now 'unstable'. In order to use this branch in your projects - the following line in Gemfile should look like this:
-  
-  gem 'nested_form', :git => 'git://github.com/fxposter/nested_form.git', :branch => 'unstable'
-
-=== Simple Form and Formtastic support
-
-Now if you add
-
-  gem 'simple_form'
-  
-or
-
-  gem 'formtastic'
-
-you will be able to use simple_nested_form_for and semantic_nested_form_for respectively.
-
-Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
 
 === Enhanced jQuery javascript template
 
@@ -39,6 +22,9 @@ Also you can override default behavior of inserting new subforms into your form 
 There's a small fix for Rails 3.1 form handling. 
 Also support of Rails 3.1 led me to huge refactor of specs setup (now using Helper specs from rspec-rails instead of custom implementation spec context).
 Last, but not least - I used appraisal[https://github.com/thoughtbot/appraisal] gem to run specs for rails 3 and 3.1.
+
+Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
+
 
 == Setup
 
@@ -74,6 +60,11 @@ You will then be able to use +link_to_add+ and +link_to_remove+ helper methods o
   <p><%= f.link_to_add "Add a task", :tasks %></p>
 
 
+== SimpleForm and Formtastic Support
+
+Use <tt>simple_nested_form_for</tt> or <tt>semantic_nested_form_for</tt> for SimpleForm and Formtastic support respectively. This is feature is not yet in a Gem release but is in the Git repo.
+
+
 == Partials
 
 It is often desirable to move the nested fields into a partial to keep things organized. If you don't supply a block to fields_for it will look for a partial and use that.
@@ -90,10 +81,10 @@ If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved<
 
 == Special Thanks
 
-First of all, thanks ro Ryan Bates for this gem. Awesome work.
-
 This gem was originally based on the solution by Tim Riley in his {complex-form-examples fork}[https://github.com/timriley/complex-form-examples/tree/unobtrusive-jquery-deep-fix2].
 
 Thank you Andrew Manshin for the Rails 3 transition, {Andrea Singh}[https://github.com/madebydna] for converting to a gem and {Peter Giacomo Lombardo}[https://github.com/pglombardo] for Prototype support.
 
 Andrea also wrote a great {blog post}[http://blog.madebydna.com/all/code/2010/10/07/dynamic-nested-froms-with-the-nested-form-gem.html] on the internal workings of this gem.
+
+Thanks {Pavel Forkert}[https://github.com/fxposter] for the SimpleForm and Formtastic support.
