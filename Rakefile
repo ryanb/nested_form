@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'appraisal'
 require 'rake'
 require 'rspec/core/rake_task'
 

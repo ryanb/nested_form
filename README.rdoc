@@ -8,17 +8,37 @@ An example project showing how this works is available in the {complex-nested-fo
 
 == Changes in this repo
 
-Added simple_form support. Now if you add
+For some reasons, in this fork the main branch is now 'unstable'. In order to use this branch in your projects - the following line in Gemfile should look like this:
+  
+  gem 'nested_form', :git => 'git://github.com/fxposter/nested_form.git', :branch => 'unstable'
+
+=== Simple Form and Formtastic support
+
+Now if you add
 
   gem 'simple_form'
+  
+or
 
-before adding this gem to your Gemfile - nested_form_for will use SimpleForm builder instead of default ActionView builder.
+  gem 'formtastic'
+
+you will be able to use simple_nested_form_for and semantic_nested_form_for respectively.
+
+Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
+
+=== Enhanced jQuery javascript template
 
 Also you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
 
   window.nestedFormEvents.insertFields = function(content, assoc, link) {
     return $(link).closest('form').find(assoc + '_fields').append($(content));
   }
+  
+=== Rails 3.1 support (asset pipeline is not yet supported)
+
+There's a small fix for Rails 3.1 form handling. 
+Also support of Rails 3.1 led me to huge refactor of specs setup (now using Helper specs from rspec-rails instead of custom implementation spec context).
+Last, but not least - I used appraisal[https://github.com/thoughtbot/appraisal] gem to run specs for rails 3 and 3.1.
 
 == Setup
 
