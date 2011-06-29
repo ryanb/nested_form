@@ -11,7 +11,7 @@ An example project showing how this works is available in the {complex-nested-fo
 
 === Enhanced jQuery javascript template
 
-Also you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
+Now you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
 
   window.nestedFormEvents.insertFields = function(content, assoc, link) {
     return $(link).closest('form').find(assoc + '_fields').append($(content));
