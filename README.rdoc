@@ -42,7 +42,7 @@ You will then be able to use +link_to_add+ and +link_to_remove+ helper methods o
 
 == SimpleForm and Formtastic Support
 
-If you add <tt>simple_form</tt> or <tt>formtastic</tt> before <tt>nested_form</tt> in your Gemfile it will automatically use that given form builder when calling <tt>nested_form_for</tt>.
+Use <tt>simple_nested_form_for</tt> or <tt>semantic_nested_form_for</tt> for SimpleForm and Formtastic support respectively. This is feature is not yet in a Gem release but is in the Git repo.
 
 
 == Partials
