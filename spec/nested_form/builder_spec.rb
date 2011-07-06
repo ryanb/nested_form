@@ -16,6 +16,12 @@ require "spec_helper"
         @builder.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
       end
 
+      it "has an add link with positionable attributes" do
+        @builder.link_to_add("Add", :tasks, :position => :before).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-insert-position="before">Add</a>'
+        @builder.link_to_add("Add", :tasks, :node => 'table').should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-insert-node="table">Add</a>'
+        @builder.link_to_add("Add", :tasks, :node => 'table', :position => :before).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-insert-node="table" data-insert-position="before">Add</a>'
+      end
+
       it "has a remove link which behaves similar to a Rails link_to" do
         @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
         @builder.link_to_remove("Remove", :class => "foo", :href => "url").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="url" class="foo remove_nested_fields">Remove</a>'

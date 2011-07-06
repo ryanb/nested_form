@@ -12,7 +12,7 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rspec-rails", "~> 2.6.0"
   s.add_development_dependency "mocha"
-  # s.add_development_dependency "rails", "~> 3.1.0.rc"
+  s.add_development_dependency "rails", "~> 3.0.8"
 
   s.rubyforge_project = s.name
   s.required_rubygems_version = ">= 1.3.4"
