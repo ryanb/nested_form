@@ -52,10 +52,12 @@ jQuery(function($) {
     },
     removeFields: function(e) {
       var link = e.currentTarget;
-      var hiddenField = $(link).prev('input[type=hidden]')[0];
-      if (hiddenField) {
-        hiddenField.value = '1';
-      }
+      var hiddenField = $(link).prev('input[type=hidden]');
+      hiddenField.val('1');
+      // if (hiddenField) {
+      //   $(link).v
+      //   hiddenField.value = '1';
+      // }
       var field = $(link).closest('.fields');
       field.hide();
       $(link).closest("form").trigger({ type: 'nested:fieldRemoved', field: field });

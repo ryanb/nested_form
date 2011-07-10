@@ -1,0 +1,2 @@
+instance_eval File.read('gemfiles/Gemfile.base')
+gem "rails", "~> 3.1.0.rc4"
