@@ -17,14 +17,18 @@ Now you can override default behavior of inserting new subforms into your form (
     return $(link).closest('form').find(assoc + '_fields').append($(content));
   }
   
-=== Rails 3.1 support (asset pipeline is not yet supported)
+=== Rails 3.1 support (with asset pipeline)
 
 There's a small fix for Rails 3.1 form handling. 
 Also support of Rails 3.1 led me to huge refactor of specs setup (now using Helper specs from rspec-rails instead of custom implementation spec context).
-Last, but not least - I used appraisal[https://github.com/thoughtbot/appraisal] gem to run specs for rails 3 and 3.1.
 
 Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
 
+Asset pipeline is supported. So you can use
+
+  //= require jquery_nested_form
+  // or
+  //= require prototype_nested_form
 
 == Setup
 

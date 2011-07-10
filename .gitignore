@@ -4,4 +4,4 @@
 Gemfile.lock
 .bundle
 log
-gemfiles
+gemfiles/*.lock
