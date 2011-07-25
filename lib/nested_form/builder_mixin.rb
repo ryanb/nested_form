@@ -24,6 +24,14 @@ module NestedForm
         output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
         output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
         output.safe_concat('</div>')
+
+        # Add support for client_side_validations by bcardella
+        if defined? ::ClientSideValidations and self.options[:validate]
+          output.safe_concat('<script>')
+          output << "window['#{association}_validations_blueprint'] = #{model_object.client_side_validation_hash.to_json};".html_safe
+          output.safe_concat('</script>')
+        end
+
         output
       end
       @template.link_to(*args, &block)

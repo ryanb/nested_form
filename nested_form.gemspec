@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.summary     = "Gem to conveniently handle multiple models in a single form."
   s.description = "Gem to conveniently handle multiple models in a single form with Rails 3 and jQuery or Prototype."
 
-  s.files        = Dir["{lib,spec}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
+  s.files        = Dir["{app,lib,spec}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
   s.require_path = "lib"
 
   s.add_development_dependency "rspec-rails", "~> 2.6.0"
