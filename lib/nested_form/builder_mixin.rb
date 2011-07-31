@@ -31,18 +31,20 @@ module NestedForm
 
     # Adds a link to remove the associated record. The first argment is the name of the link.
     #
-    #   f.link_to_remove("Remove Task")
+    #   f.link_to_remove("Remove Task", :tasks)
     #
     # You can pass HTML options in a hash at the end and a block for the content.
     #
-    #   <%= f.link_to_remove(:class => "remove_task", :href => "#") do %>
+    #   <%= f.link_to_remove(:tasks, :class => "remove_task", :href => "#") do %>
     #     Remove Task
     #   <% end %>
     #
     # See the README for more details on where to call this method.
     def link_to_remove(*args, &block)
       options = args.extract_options!.symbolize_keys
+      association = args.pop
       options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
+      options["data-association"] = association
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
       hidden_field(:_destroy) + @template.link_to(*args, &block)
