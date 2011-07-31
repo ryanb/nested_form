@@ -36,7 +36,7 @@ You will then be able to use +link_to_add+ and +link_to_remove+ helper methods o
 
   <%= f.fields_for :tasks do |task_form| %>
     <%= task_form.text_field :name %>
-    <%= task_form.link_to_remove "Remove this task" %>
+    <%= task_form.link_to_remove "Remove this task", :tasks %>
   <% end %>
   <p><%= f.link_to_add "Add a task", :tasks %></p>
 
@@ -58,6 +58,14 @@ In this case it will look for a partial called "task_fields" and pass the form b
 == Events
 
 If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
+
+  $(function() {
+    $("form").live('nested:fieldAdded nested:fieldRemoved', function(event) {
+	  console.log(event.type);
+	  console.log(event.association);  // name of the association that triggered the event
+	  // you can have access to the added fields (in case of nested:fieldAdded, obviously) with $(event.field)
+	});
+  });
 
 
 == Special Thanks
