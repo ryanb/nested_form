@@ -29,13 +29,13 @@ require "spec_helper"
         end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
       end
 
-      it "should add task fields to hidden div after form" do
+      it "should add task fields to window javascript variable" do
         pending
         output = ""
         mock(@template).after_nested_form(:tasks) { |arg, block| output << block.call }
         @builder.fields_for(:tasks) { "Task" }
         @builder.link_to_add("Add", :tasks)
-        output.should == '<div id="tasks_fields_blueprint" style="display: none"><div class="fields">Task</div></div>'
+        output.should == "<script>windows['tasks_fields_blueprint']=\"<div class=\"fields\">Task<\/div>\";</script>"
       end
     end
   end
