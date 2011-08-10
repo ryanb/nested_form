@@ -1,11 +1,15 @@
 require 'rubygems'
 # require 'appraisal'
 require 'rake'
-require 'rspec/core/rake_task'
 
-desc "Run RSpec"
-RSpec::Core::RakeTask.new do |t|
-  t.verbose = false
+begin
+  require 'rspec/core/rake_task'
+  desc "Run RSpec"
+  RSpec::Core::RakeTask.new do |t|
+    t.verbose = false
+  end
+rescue LoadError
+  puts "You should run rake spec:install in order to install all corresponding gems!"
 end
 
 task :default => :spec

@@ -5,3 +5,5 @@ Gemfile.lock
 .bundle
 log
 gemfiles/*.lock
+spec/dummy/tmp/
+
