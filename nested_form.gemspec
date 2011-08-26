@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.files        = Dir["{lib,spec}/**/*", "[A-Z]*"] - ["Gemfile.lock"]
   s.require_path = "lib"
 
+  s.add_development_dependency "activerecord", "~> 3.0"
   s.add_development_dependency "rspec-rails", "~> 2.6.0"
   s.add_development_dependency "mocha"
   # s.add_development_dependency "rails", "~> 3.1.0.rc"
