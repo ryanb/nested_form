@@ -29,6 +29,14 @@ require "spec_helper"
         end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
       end
 
+      it "should wrap nested fields marked for destruction with an additional class" do
+        task = @project.tasks.build
+        task.mark_for_destruction
+        @builder.fields_for(:tasks) do
+          "Task"
+        end.should == '<div class="fields marked_for_destruction">Task</div>'
+      end
+
       it "should add task fields to hidden div after form" do
         pending
         output = ""
