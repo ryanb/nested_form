@@ -4,10 +4,13 @@ module NestedForm
       source_root File.expand_path('../../../../app/assets/javascripts/nested_form', __FILE__)
 
       def install
-        if File.exists?('public/javascripts/prototype.js')
-          copy_file 'prototype.js', 'public/javascripts/nested_form.js'
+        if ::Rails.version < '3.1'
+          js_framework = File.exists?('public/javascripts/prototype.js') ? :prototype : :jquery
+          copy_file "#{js_framework}.js", 'public/javascripts/nested_form.js'
         else
-          copy_file 'jquery.js', 'public/javascripts/nested_form.js'
+          js_framework = defined?(Jquery::Rails::VERSION) ? :jquery : :prototype
+          inject_into_file 'app/assets/javascripts/application.js',
+            "//= require nested_form/#{js_framework}\n", :after => "require #{js_framework}\n"
         end
       end
     end
