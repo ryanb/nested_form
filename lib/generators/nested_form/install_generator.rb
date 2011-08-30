@@ -1,15 +1,13 @@
 module NestedForm
   module Generators
     class InstallGenerator < Rails::Generators::Base
-      def self.source_root
-        File.dirname(__FILE__) + "/templates"
-      end
+      source_root File.expand_path('../../../../app/assets/javascripts/nested_form', __FILE__)
 
-      def copy_jquery_file
+      def install
         if File.exists?('public/javascripts/prototype.js')
-          copy_file 'prototype_nested_form.js', 'public/javascripts/nested_form.js'
+          copy_file 'prototype.js', 'public/javascripts/nested_form.js'
         else
-          copy_file 'jquery_nested_form.js', 'public/javascripts/nested_form.js'
+          copy_file 'jquery.js', 'public/javascripts/nested_form.js'
         end
       end
     end
