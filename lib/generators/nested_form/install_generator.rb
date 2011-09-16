@@ -1,6 +1,6 @@
 module NestedForm
   module Generators
-    class InstallGenerator < Rails::Generators::Base
+    class InstallGenerator < ::Rails::Generators::Base
       source_root File.expand_path('../../../../app/assets/javascripts/nested_form', __FILE__)
 
       def install
