@@ -13,7 +13,7 @@ module NestedForm
     # You can also pass an object_model for use in the blueprint.
     # This is very useful if you render another fields_for - block in the nested_form.
     #
-    #   <%= f.link_to_add(:tasks, :object_model => Task.new(:co_worker => CoWorker.new)) %>
+    #   <%= f.link_to_add(:tasks, :model_object => Task.new(:co_worker => CoWorker.new)) %>
     #
     # See the README for more details on where to call this method.
     def link_to_add(*args, &block)
