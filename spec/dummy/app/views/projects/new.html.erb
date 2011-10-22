@@ -1,0 +1,14 @@
+<% if params[:type] == 'prototype' %>
+  <%= javascript_include_tag 'prototype', 'prototype_nested_form' %>
+<% else %>
+  <%= javascript_include_tag 'jquery', 'jquery_nested_form' %>
+<% end %>
+
+<%= nested_form_for @project do |f| -%>
+  <%= f.text_field :name %>
+  <%= f.fields_for :tasks do |ff| -%>
+    <%= ff.text_field :name %>
+    <%= ff.link_to_remove 'Remove' %>
+  <% end -%>
+  <%= f.link_to_add 'Add new task', :tasks %>
+<% end -%>

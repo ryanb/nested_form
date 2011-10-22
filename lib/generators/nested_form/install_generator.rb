@@ -2,7 +2,7 @@ module NestedForm
   module Generators
     class InstallGenerator < Rails::Generators::Base
       def self.source_root
-        File.dirname(__FILE__) + "/templates"
+        File.expand_path('../../../../vendor/assets/javascripts', __FILE__)
       end
 
       def copy_jquery_file
