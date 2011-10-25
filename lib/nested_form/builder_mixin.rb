@@ -10,17 +10,23 @@ module NestedForm
     #     Add Task
     #   <% end %>
     #
+    # You can also pass an object_model for use in the blueprint.
+    # This is very useful if you render another fields_for - block in the nested_form.
+    #
+    #   <%= f.link_to_add(:tasks, :model_object => Task.new(:co_worker => CoWorker.new)) %>
+    #
     # See the README for more details on where to call this method.
     def link_to_add(*args, &block)
       options = args.extract_options!.symbolize_keys
       association = args.pop
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
+      model_object = options.delete(:model_object)
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
       @fields ||= {}
       @template.after_nested_form(association) do
-        model_object = object.class.reflect_on_association(association).klass.new
+        model_object ||= object.class.reflect_on_association(association).klass.new
         output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
         output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
         output.safe_concat('</div>')

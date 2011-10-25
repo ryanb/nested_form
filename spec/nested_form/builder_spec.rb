@@ -14,6 +14,7 @@ require "spec_helper"
         @builder.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
         @builder.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks">Add</a>'
         @builder.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
+        @builder.link_to_add("Add", :tasks, :model_object => Task.new).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
       end
 
       it "has a remove link which behaves similar to a Rails link_to" do
