@@ -32,6 +32,21 @@ module NestedForm
     # Based on link_to_add, but this builds an association for has_many => :through forms
     #
     #  f.link_to_add_hmt("Add Assocations", :singular_association, :plural_associations)
+    #
+    #  example case: 
+    #
+    #= f.fields_for :memberships do |mem|
+    #  = mem.fields_for :organisation do |org|
+    #    .row
+    #        = org.input :name, :label => "<strong>Name of the Organization</strong>"
+    #        = mem.input :title, :label => "<strong>Title in the Organization</strong>"
+    #    .row
+    #        = mem.input :starting_year, :label => "<strong>Starting Year</strong>"
+    #        = mem.input :ending_year, :label => "<strong>Ending Year</strong>"
+    #    .row
+    #        = org.text_area :description, :label => "<strong>Description of Organisation</strong>"
+    #  = mem.link_to_remove "Remove this oranisation"
+    #= f.link_to_add_hmt "Add an organisation", :organisation, :memberships
     def link_to_add_hmt(*args, &block)
       options = args.extract_options!.symbolize_keys
       association = args.pop
