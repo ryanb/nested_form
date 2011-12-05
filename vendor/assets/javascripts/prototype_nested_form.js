@@ -7,7 +7,7 @@ document.observe('click', function(e, el) {
 
     // Make the context correct by replacing <parents> with the generated ID
     // of each of the parent objects
-    var context = (el.getOffsetParent('.fields').firstDescendant().readAttribute('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
+    var context = (el.getOffsetParent('.fields').firstDescendant().readAttribute('name') || '').replace(new RegExp('\[[a-z_]+\]$'), '');
 
     // context will be something like this for a brand new form:
     // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
