@@ -57,9 +57,10 @@ module NestedForm
     end
 
     def fields_for_nested_model(name, object, options, block)
-      output = '<div class="fields">'.html_safe
+      wrapper_tag = options[:wrapper_tag] || :div
+      output = "<#{wrapper_tag} class=\"fields\">".html_safe
       output << super
-      output.safe_concat('</div>')
+      output.safe_concat("</#{wrapper_tag}>")
       output
     end
   end
