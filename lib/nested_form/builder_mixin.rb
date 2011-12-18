@@ -27,7 +27,7 @@ module NestedForm
           output.safe_concat('</div>')
           output
         else
-          raise "Class not found: " + association
+          raise "Class not found: " + association.to_s
         end
       end
       @template.link_to(*args, &block)
