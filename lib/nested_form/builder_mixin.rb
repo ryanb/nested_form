@@ -28,6 +28,7 @@ module NestedForm
           output
         else
           raise "Class not found: " + association
+        end
       end
       @template.link_to(*args, &block)
     end
