@@ -59,6 +59,12 @@ In this case it will look for a partial called "task_fields" and pass the form b
 
 If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
 
+== Tests
+
+nested_form uses appraisal to manage rails dependencies (cause we need to test it with different rails versions), so, in order to run tests you should do this:
+
+rake appraisal:install
+rake appraisal spec
 
 == Special Thanks
 
