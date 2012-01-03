@@ -7,6 +7,13 @@ module NestedForm
       form_for(*(args << options), &block) << after_nested_form_callbacks
     end
 
+    if defined?(Turkee::TurkeeFormHelper)
+      def turkee_nested_form_for(record, params, options = {}, &block)
+        options = options.merge(:builder => NestedForm::Builder)
+        turkee_form_for(record, params, options, &block) << after_nested_form_callbacks
+      end
+    end
+
     if defined?(NestedForm::SimpleBuilder)
       def simple_nested_form_for(*args, &block)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::SimpleBuilder)
