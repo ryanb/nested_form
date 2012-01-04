@@ -41,9 +41,9 @@ You will then be able to use +link_to_add+ and +link_to_remove+ helper methods o
   <p><%= f.link_to_add "Add a task", :tasks %></p>
 
 
-== SimpleForm and Formtastic Support
+== SimpleForm, Formtastic and {Turkee}[http://www.github.com/aantix/turkee] Support
 
-Use <tt>simple_nested_form_for</tt> or <tt>semantic_nested_form_for</tt> for SimpleForm and Formtastic support respectively. This is feature is not yet in a Gem release but is in the Git repo.
+Use <tt>simple_nested_form_for</tt>, <tt>semantic_nested_form_for</tt>, or <tt>turkee_nested_form_for</tt> for SimpleForm, Formtastic or Turkee support respectively. This is feature is not yet in a Gem release but is in the Git repo.
 
 
 == Partials
