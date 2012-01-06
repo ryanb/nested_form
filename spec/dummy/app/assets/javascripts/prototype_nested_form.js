@@ -1,0 +1,1 @@
+../../../../../vendor/assets/javascripts/prototype_nested_form.js
