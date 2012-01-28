@@ -1,0 +1,3 @@
+instance_eval File.read('gemfiles/Gemfile.base')
+gem "formtastic"
+gem "rails", "~> 3.0.0"
