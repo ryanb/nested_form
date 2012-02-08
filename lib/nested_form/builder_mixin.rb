@@ -20,13 +20,38 @@ module NestedForm
       args << options
       @fields ||= {}
       @template.after_nested_form(association) do
-        model_object = object.class.reflect_on_association(association).klass.new
-        output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
-        output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        output.safe_concat('</div>')
-        output
+        unless object.class.reflect_on_association(association).nil?
+          model_object = object.class.reflect_on_association(association).klass.new
+          output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
+          output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
+          output.safe_concat('</div>')
+          output
+        else
+          raise "Class not found: " + association.to_s
+        end
       end
       @template.link_to(*args, &block)
+    end
+    def button_to_add(*args, &block)
+      options = args.extract_options!.symbolize_keys
+      association = args.pop
+      options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
+      options["data-association"] = association
+      args << (options.delete(:href) || "javascript:void(0)")
+      args << options
+      @fields ||= {}
+      @template.after_nested_form(association) do
+        unless object.class.reflect_on_association(association).nil?
+          model_object = object.class.reflect_on_association(association).klass.new
+          output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
+          output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
+          output.safe_concat('</div>')
+          output
+        else
+          raise "Class not found: " + association.to_s
+        end
+      end
+      @template.button_to(*args, &block)
     end
 
     # Adds a link to remove the associated record. The first argment is the name of the link.
@@ -46,6 +71,13 @@ module NestedForm
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
       hidden_field(:_destroy) + @template.link_to(*args, &block)
+    end
+    def button_to_remove(*args, &block)
+      options = args.extract_options!.symbolize_keys
+      options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
+      args << (options.delete(:href) || "javascript:void(0)")
+      args << options
+      hidden_field(:_destroy) + @template.button_to(*args, &block)
     end
 
     def fields_for_with_nested_attributes(association_name, *args)
