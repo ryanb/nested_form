@@ -1,0 +1,1 @@
+../../../../../vendor/assets/javascripts/jquery_nested_form.js
