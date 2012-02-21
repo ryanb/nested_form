@@ -21,9 +21,9 @@ module NestedForm
       @fields ||= {}
       @template.after_nested_form(association) do
         model_object = object.class.reflect_on_association(association).klass.new
-        output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
-        output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        output.safe_concat('</div>')
+        output = %Q[<script type="text/html" id="#{association}_fields_blueprint">].html_safe
+        output << fields_for(association, model_object, :child_index => "new_#{association}", :wrapper_tag => @fields[association][:wrapper_tag], :wrapper_class => @fields[association][:wrapper_class], &@fields[association][:block])
+        output.safe_concat('</script>')
         output
       end
       @template.link_to(*args, &block)
@@ -51,15 +51,33 @@ module NestedForm
     def fields_for_with_nested_attributes(association_name, *args)
       # TODO Test this better
       block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
+
+      convert = false
+      if args[0].is_a?(Array)
+        options = args[0].extract_options!
+        convert = true
+      else
+        options = args.extract_options!
+      end
+
+      options[:wrapper_tag] ||= 'div'
+      options[:wrapper_class] = ' ' << options[:wrapper_class] if options[:wrapper_class]
+
+      if convert
+        args[0] << options
+      else
+        args << options
+      end
+
       @fields ||= {}
-      @fields[association_name] = block
+      @fields[association_name] = { :block => block, :wrapper_tag => options[:wrapper_tag], :wrapper_class => options[:wrapper_class] }
       super(association_name, *(args << block))
     end
 
     def fields_for_nested_model(name, object, options, block)
-      output = '<div class="fields">'.html_safe
+      output = %(<#{options[:wrapper_tag]} class="fields#{options[:wrapper_class]}">).html_safe
       output << super
-      output.safe_concat('</div>')
+      output.safe_concat("</#{options[:wrapper_tag]}>")
       output
     end
   end

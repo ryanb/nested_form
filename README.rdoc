@@ -9,8 +9,6 @@ This gem only works with Rails 3. See the {rails2 branch}[https://github.com/rya
 An example project showing how this works is available in the {complex-nested-forms/nested_form branch}[https://github.com/ryanb/complex-form-examples/tree/nested_form].
 
 
-== Changes in this repo
-
 === Enhanced jQuery javascript template
 
 Now you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
@@ -18,10 +16,11 @@ Now you can override default behavior of inserting new subforms into your form (
   window.nestedFormEvents.insertFields = function(content, assoc, link) {
     return $(link).closest('form').find(assoc + '_fields').append($(content));
   }
-  
+
+
 === Rails 3.1 support (with asset pipeline)
 
-There's a small fix for Rails 3.1 form handling. 
+There's a small fix for Rails 3.1 form handling.
 Also support of Rails 3.1 led me to huge refactor of specs setup (now using Helper specs from rspec-rails instead of custom implementation spec context).
 
 Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
@@ -31,6 +30,7 @@ Asset pipeline is supported. So you can use
   //= require jquery_nested_form
   // or
   //= require prototype_nested_form
+
 
 == Setup
 
@@ -60,6 +60,29 @@ Then use the +nested_form_for+ helper method to enable the nesting.
 You will then be able to use +link_to_add+ and +link_to_remove+ helper methods on the form builder in combination with fields_for to dynamically add/remove nested records.
 
   <%= f.fields_for :tasks do |task_form| %>
+    <%= task_form.text_field :name %>
+    <%= task_form.link_to_remove "Remove this task" %>
+  <% end %>
+  <p><%= f.link_to_add "Add a task", :tasks %></p>
+
+By default <tt>fields_for</tt> inside <tt>nested_form_for</tt> will add <div class="fields"> wrapper for every nested object. Sometimes you need not the <div>, but the <tr> (if you insert rows into table). Now you can specify wrapping tag by providing <tt>:wrapper_tag => 'tr'</tt> option (by default it is 'div'):
+
+  <table>
+    <%= f.fields_for :tasks, :wrapper_tag => 'tr' do |task_form| %>
+      <td>
+        <%= task_form.hidden_field :id %>
+        <%= task_form.text_field :name %>
+        <%= task_form.link_to_remove "Remove this task" %>
+      </td>
+    <% end %>
+  </table>
+  <p><%= f.link_to_add "Add a task", :tasks %></p>
+
+You should specify id field, cause form_for will insert it between <td>-s and this is not pretty good.
+
+Also, you can specify :wrapper_class, which will be added "fields" class in wrapper element:
+
+  <%= f.fields_for :tasks, :wrapper_class => 'task' do |task_form| %>
     <%= task_form.text_field :name %>
     <%= task_form.link_to_remove "Remove this task" %>
   <% end %>
