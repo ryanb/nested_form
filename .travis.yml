@@ -8,6 +8,7 @@ rvm:
 gemfile:
   - gemfiles/Gemfile.rails3_0
   - gemfiles/Gemfile.rails3_1
+  - gemfiles/Gemfile.rails3_2
 env:
   - JRUBY_OPTS="--server" DISPLAY=":99.0"
 before_script:
