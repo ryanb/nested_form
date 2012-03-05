@@ -53,10 +53,10 @@ module NestedForm
       block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
 
       convert = false
-      if args[0].is_a?(Array)
+      if Gem::Version.new(Rails::VERSION::STRING) < Gem::Version.new("3.1.0") # 3.0.x
         options = args[0].extract_options!
         convert = true
-      else
+      else # >= 3.1.0
         options = args.extract_options!
       end
 
