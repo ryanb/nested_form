@@ -29,6 +29,28 @@ require "spec_helper"
         end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
       end
 
+      it "should wrap nested fields with specified tag" do
+        2.times { @project.tasks.build }
+        @builder.fields_for(:tasks, :wrapper_tag => 'tr') do
+          "<td>Task</td>".html_safe
+        end.should == '<tr class="fields"><td>Task</td></tr><tr class="fields"><td>Task</td></tr>'
+      end
+
+      it "should add class to nested fields wrapper" do
+        2.times { @project.tasks.build }
+        @builder.fields_for(:tasks, :wrapper_class => 'task') do
+          "Task"
+        end.should == '<div class="fields task">Task</div><div class="fields task">Task</div>'
+      end
+
+      it "should add class to nested fields wrapper" do
+        tasks = []
+        2.times { tasks << @project.tasks.new }
+        @builder.fields_for(:tasks, tasks, :wrapper_class => 'task') do
+          "Task"
+        end.should == '<div class="fields task">Task</div><div class="fields task">Task</div>'
+      end
+
       it "should add task fields to hidden div after form" do
         pending
         output = ""
