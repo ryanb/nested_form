@@ -83,6 +83,28 @@ In this case it will look for a partial called "task_fields" and pass the form b
 If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
 
 
+== Tables
+
+The default link_to_add action is to wrap the new fields in a div tag and insert that immediately before the link_to_add link element. In some cases, such as when appending to the bottom of a table, this will result in invalid HTML.
+
+For example:
+
+  <table class="tasks">
+    <%= f.fields_for :tasks do |task_form| %>
+      <td><%= task_form.text_field :name %></td>
+      <td><%= task_form.link_to_remove "Remove this task" %></td>
+    <% end %>
+    <%# new fields should go here, wrapped in a tr element... %>
+  </table>
+  <p>
+    <%# ...but instead they'll end up here wrapped in a div element %>
+    <%= f.link_to_add "Add a task", :tasks %>
+  </p>
+
+To fix this, change the link_to_add line to:
+
+  <%= f.link_to_add "Add a task", :tasks, :container =>'table.tasks', :fields_element=>'tr' %>
+
 == Special Thanks
 
 This gem was originally based on the solution by Tim Riley in his {complex-form-examples fork}[https://github.com/timriley/complex-form-examples/tree/unobtrusive-jquery-deep-fix2].

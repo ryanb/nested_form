@@ -2,6 +2,7 @@ document.observe('click', function(e, el) {
 	if (el = e.findElement('form a.add_nested_fields')) {
 	  // Setup
 	  var assoc   = el.readAttribute('data-association');           // Name of child
+    var container  = el.readAttribute('data-container');           // CSS Selector
 	  var content = $(assoc + '_fields_blueprint').innerHTML; // Fields template
 
 	  // Make the context correct by replacing new_<parents> with the generated ID
@@ -34,7 +35,12 @@ document.observe('click', function(e, el) {
 	  var new_id  = new Date().getTime();
 	  content     = content.replace(regexp, "new_" + new_id);
 
-	  el.insert({ before: content });
+    if (container != null) {
+      $$('table.tasks').first().insert(content);
+    } else {
+  	  el.insert({ before: content });
+	  }
+  	  
 	  return false;
 	}
 });

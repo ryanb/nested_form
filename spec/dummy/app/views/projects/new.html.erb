@@ -4,11 +4,30 @@
   <%= javascript_include_tag 'jquery', 'jquery_nested_form' %>
 <% end %>
 
-<%= nested_form_for @project do |f| -%>
-  <%= f.text_field :name %>
-  <%= f.fields_for :tasks do |ff| -%>
-    <%= ff.text_field :name %>
-    <%= ff.link_to_remove 'Remove' %>
+<% if params[:layout] == 'tabular' %>
+
+  <%= nested_form_for @project do |f| -%>
+    <%= f.text_field :name %>
+    <table class="tasks">
+      <%= f.fields_for :tasks do |ff| -%>
+        <td><%= ff.text_field :name %></td>
+        <td><%= ff.link_to_remove 'Remove' %></td>
+      <% end -%>
+    </table>
+    <%= f.link_to_add 'Add new task', :tasks, :container=>'table.tasks', :fields_element=>'tr' %>
   <% end -%>
-  <%= f.link_to_add 'Add new task', :tasks %>
-<% end -%>
+
+<% else %>
+
+  <%= nested_form_for @project do |f| -%>
+    <div class="tasks">
+      <%= f.text_field :name %>
+      <%= f.fields_for :tasks do |ff| -%>
+        <%= ff.text_field :name %>
+        <%= ff.link_to_remove 'Remove' %>
+      <% end -%>
+      <%= f.link_to_add 'Add new task', :tasks %>
+    </div>
+  <% end -%>
+
+<% end %>
