@@ -25,17 +25,20 @@ require "spec_helper"
       it "should wrap nested fields each in a div with class" do
         2.times { @project.tasks.build }
         @builder.fields_for(:tasks) do
-          "Task"
-        end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
+          "<p>Task</p>".html_safe
+        end.should == '<div class="fields"><p>Task</p></div><div class="fields"><p>Task</p></div>'
       end
 
-      it "should add task fields to hidden div after form" do
-        pending
+      it "should add task html escaped fields to hidden div after form" do
         output = ""
-        mock(@template).after_nested_form(:tasks) { |arg, block| output << block.call }
-        @builder.fields_for(:tasks) { "Task" }
+        @template.class_eval do
+          define_method :after_nested_form do |assoc, &block|
+            output << block.call
+          end
+        end
+        @builder.fields_for(:tasks) { "<p>Task</p>".html_safe }
         @builder.link_to_add("Add", :tasks)
-        output.should == '<div id="tasks_fields_blueprint" style="display: none"><div class="fields">Task</div></div>'
+        output.should == '<div id="tasks_fields_blueprint" style="display: none">&lt;div class=&quot;fields&quot;&gt;&lt;p&gt;Task&lt;/p&gt;&lt;/div&gt;</div>'
       end
     end
   end
