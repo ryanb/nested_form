@@ -104,6 +104,8 @@ For example:
 To fix this, change the link_to_add line to:
 
   <%= f.link_to_add "Add a task", :tasks, :container =>'table.tasks', :fields_element=>'tr' %>
+  
+This feature is currently only working with jQuery. Help getting the Prototype version working would be appreciated.
 
 == Special Thanks
 
