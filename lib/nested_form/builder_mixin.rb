@@ -15,15 +15,17 @@ module NestedForm
       options = args.extract_options!.symbolize_keys
       association = args.pop
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
+      options["data-container"] = options.delete(:container) if options[:container]
       options["data-association"] = association
+      @fields_element = options.delete(:fields_element) if options[:fields_element]
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
       @fields ||= {}
       @template.after_nested_form(association) do
         model_object = object.class.reflect_on_association(association).klass.new
-        output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
+        output = %Q[<script id="#{association}_fields_blueprint" type='text/template'>].html_safe
         output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        output.safe_concat('</div>')
+        output.safe_concat('</script>')
         output
       end
       @template.link_to(*args, &block)
@@ -57,10 +59,15 @@ module NestedForm
     end
 
     def fields_for_nested_model(name, object, options, block)
-      output = '<div class="fields">'.html_safe
+      output = %Q[<#{fields_element} class="fields">].html_safe
       output << super
-      output.safe_concat('</div>')
+      output.safe_concat("</#{fields_element}>")
       output
     end
+    
+    def fields_element
+      @fields_element || "div"
+    end
+
   end
 end

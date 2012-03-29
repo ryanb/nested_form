@@ -9,6 +9,7 @@ jQuery(function($) {
       // Setup
       var link    = e.currentTarget;
       var assoc   = $(link).attr('data-association');            // Name of child
+      var container  = $(link).attr('data-container');           // CSS Selector
       var content = $('#' + assoc + '_fields_blueprint').html(); // Fields template
 
       // Make the context correct by replacing new_<parents> with the generated ID
@@ -41,14 +42,15 @@ jQuery(function($) {
       var new_id  = new Date().getTime();
       content     = content.replace(regexp, "new_" + new_id);
 
-      var field = this.insertFields(content, assoc, link);
+      var field = this.insertFields(content, container, link);
       $(link).closest("form")
         .trigger({ type: 'nested:fieldAdded', field: field })
         .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
       return false;
     },
-    insertFields: function(content, assoc, link) {
-      return $(content).insertBefore(link);
+    insertFields: function(content, container, link) {
+      return container != null ? $(container).append(content) : $(content).insertBefore(link);
+      // return $(content).insertBefore(link);
     },
     removeFields: function(e) {
       var link = e.currentTarget;
