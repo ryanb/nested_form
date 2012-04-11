@@ -7,13 +7,13 @@ jQuery(function($) {
   NestedFormEvents.prototype = {
     addFields: function(e) {
       // Setup
-      var link    = e.currentTarget;
-      var assoc   = $(link).attr('data-association');            // Name of child
-      var content = $('#' + assoc + '_fields_blueprint').html(); // Fields template
+      var link    = e.currentTarget,
+          assoc   = $(link).data('association'),                 // Name of child
+          content = $('#' + assoc + '_fields_blueprint').html(); // Fields template
 
       // Make the context correct by replacing new_<parents> with the generated ID
       // of each of the parent objects
-      var context = ($(link).closest('.fields').find('input:first').attr('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
+      var context = ($(content).find('input:first').prop('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
 
       // context will be something like this for a brand new form:
       // project[tasks_attributes][new_1255929127459][assignments_attributes][new_1255929128105]
@@ -37,8 +37,8 @@ jQuery(function($) {
       }
 
       // Make a unique ID for the new child
-      var regexp  = new RegExp('new_' + assoc, 'g');
-      var new_id  = new Date().getTime();
+      var regexp  = new RegExp('new_' + assoc, 'g'),
+          new_id  = new Date().getTime();
       content     = content.replace(regexp, "new_" + new_id);
 
       var field = this.insertFields(content, assoc, link);
