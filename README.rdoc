@@ -20,7 +20,7 @@ And then add it to the Asset Pipeline in the appication.js file:
 
 === Non Asset Pipeline Setup
 
-If you do not us the asset pipeline, run this generator to create the JavaScript file.
+If you do not use the asset pipeline, run this generator to create the JavaScript file.
 
   rails g nested_form:install
 
