@@ -7,40 +7,24 @@ This gem only works with Rails 3. See the {rails2 branch}[https://github.com/rya
 An example project showing how this works is available in the {complex-nested-forms/nested_form branch}[https://github.com/ryanb/complex-form-examples/tree/nested_form].
 
 
-== Changes in this repo
-
-=== Enhanced jQuery javascript template
-
-Now you can override default behavior of inserting new subforms into your form (jQuery-only feature, sorry). For example:
-
-  window.nestedFormEvents.insertFields = function(content, assoc, link) {
-    return $(link).closest('form').find(assoc + '_fields').append($(content));
-  }
-  
-=== Rails 3.1 support (with asset pipeline)
-
-There's a small fix for Rails 3.1 form handling. 
-Also support of Rails 3.1 led me to huge refactor of specs setup (now using Helper specs from rspec-rails instead of custom implementation spec context).
-
-Formtastic is supported only with Rails 3.0, Rails 3.1 integration is not available now.
-
-Asset pipeline is supported. So you can use
-
-  //= require jquery_nested_form
-  // or
-  //= require prototype_nested_form
-
 == Setup
 
 Add it to your Gemfile then run +bundle+ to install it.
 
   gem "nested_form"
 
-Next run the generator to create the JavaScript file. This will automatically detect if you are using jQuery or Prototype.
+And then add it to the Asset Pipeline in the appication.js file:
+
+  //= require jquery_nested_form
+
+
+=== Non Asset Pipeline Setup
+
+If you do not us the asset pipeline, run this generator to create the JavaScript file.
 
   rails g nested_form:install
 
-Running the generator will add a file at <tt>public/javascripts/nested_form.js</tt> which should be included after the jQuery or Prototype framework.
+You can then include the generated JavaScript in your layout.
 
   <%= javascript_include_tag :defaults, "nested_form" %>
 
@@ -81,6 +65,20 @@ In this case it will look for a partial called "task_fields" and pass the form b
 == Events
 
 If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
+
+
+== Enhanced jQuery JavaScript template
+
+You can override default behavior of inserting new subforms into your form. For example:
+
+  window.nestedFormEvents.insertFields = function(content, assoc, link) {
+    return $(link).closest('form').find(assoc + '_fields').append($(content));
+  }
+
+
+== Project Status
+
+Unfortunately I have not had time to actively work on this project recently. If you find a critical issue where it does not work as documented please {ping me on Twitter}[http://twitter.com/rbates] and I'll take a look.
 
 
 == Special Thanks
