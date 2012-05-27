@@ -29,6 +29,12 @@ describe NestedForm::ViewHelper do
     end
   end
 
+  if defined?(Turkee::TurkeeFormHelper)
+    _view.turkee_nested_form_for(Project.new) do |f|
+      f.should be_instance_of(NestedForm::Builder)
+    end
+  end
+
   if defined?(NestedForm::FormtasticBuilder)
     it "should pass instance of NestedForm::FormtasticBuilder to semantic_nested_form_for block" do
       _view.semantic_nested_form_for(Project.new) do |f|

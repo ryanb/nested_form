@@ -48,9 +48,9 @@ You will then be able to use +link_to_add+ and +link_to_remove+ helper methods o
   <p><%= f.link_to_add "Add a task", :tasks %></p>
 
 
-== SimpleForm and Formtastic Support
+== SimpleForm, Formtastic and {Turkee}[http://www.github.com/aantix/turkee] Support
 
-Use <tt>simple_nested_form_for</tt> or <tt>semantic_nested_form_for</tt> for SimpleForm and Formtastic support respectively. This is feature is not yet in a Gem release but is in the Git repo.
+Use <tt>simple_nested_form_for</tt>, <tt>semantic_nested_form_for</tt>, or <tt>turkee_nested_form_for</tt> for SimpleForm, Formtastic or Turkee support respectively. This is feature is not yet in a Gem release but is in the Git repo.
 
 
 == Partials
@@ -66,6 +66,12 @@ In this case it will look for a partial called "task_fields" and pass the form b
 
 If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
 
+== Tests
+
+nested_form uses appraisal to manage rails dependencies (cause we need to test it with different rails versions), so, in order to run tests you should do this:
+
+rake appraisal:install
+rake appraisal spec
 
 == Enhanced jQuery JavaScript template
 
