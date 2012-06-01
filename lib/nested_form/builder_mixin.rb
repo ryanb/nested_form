@@ -11,6 +11,10 @@ module NestedForm
     #   <% end %>
     #
     # See the README for more details on where to call this method.
+
+    include ActionView::Helpers::TagHelper
+
+
     def link_to_add(*args, &block)
       options = args.extract_options!.symbolize_keys
       association = args.pop
@@ -23,10 +27,9 @@ module NestedForm
       @fields ||= {}
       @template.after_nested_form(association) do
         model_object = object.class.reflect_on_association(association).klass.new
-        output = %Q[<script id="#{association}_fields_blueprint" type='text/template'>].html_safe
-        output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        output.safe_concat('</script>')
-        output
+        content_tag :script, 
+          fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association]),
+          :id => "#{association}_fields_blueprint", :type=>'text/template'
       end
       @template.link_to(*args, &block)
     end
@@ -57,12 +60,9 @@ module NestedForm
       @fields[association_name] = block
       super(association_name, *(args << block))
     end
-
+    
     def fields_for_nested_model(name, object, options, block)
-      output = %Q[<#{fields_element} class="fields">].html_safe
-      output << super
-      output.safe_concat("</#{fields_element}>")
-      output
+      content_tag(fields_element, super, :class => 'fields')
     end
     
     def fields_element
