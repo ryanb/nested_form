@@ -1,21 +1,21 @@
 class InitialTables < ActiveRecord::Migration
-  def up
-    create_table :projects, :force => true do |t|
+  def self.up
+    create_table :projects do |t|
       t.string :name
     end
 
-    create_table :tasks, :force => true do |t|
+    create_table :tasks do |t|
       t.integer :project_id
       t.string :name
     end
 
-    create_table :milestones, :force => true do |t|
+    create_table :milestones do |t|
       t.integer :task_id
       t.string :name
     end
   end
 
-  def down
+  def self.down
     drop_table :projects
     drop_table :tasks
     drop_table :milestones

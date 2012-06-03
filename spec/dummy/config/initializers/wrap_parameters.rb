@@ -4,7 +4,7 @@
 # is enabled by default.
 
 # Enable parameter wrapping for JSON. You can disable this by setting :format to an empty array.
-ActionController::Base.wrap_parameters format: [:json] if ActionController::Base.respond_to?(:wrap_parameters)
+ActionController::Base.wrap_parameters :format => [:json] if ActionController::Base.respond_to?(:wrap_parameters)
 
 # Disable root element in JSON by default.
 if defined?(ActiveRecord)
