@@ -1,3 +1,12 @@
+Development
+
+* Added Travis integration (thanks fxposter)
+
+* Make the "context" selector stricter, to work with deeply-nested forms. (thanks groe and nickhoffman)
+
+* Include vendor folder in the gem for Rails 3.1 asset support (thanks dmarkow)
+
+
 0.2.0 (February 7, 2012)
 
 * Integration tests (thanks fxposter) - issue #58
