@@ -1,5 +1,4 @@
 require 'rubygems'
-# require 'appraisal'
 require 'rake'
 
 begin
