@@ -15,20 +15,15 @@ task :default => :spec
 
 namespace :db do
   task :migrate do
-    puts `cd spec/dummy && rake db:migrate RAILS_ENV=test && rake db:migrate RAILS_ENV=development`
+    system 'cd spec/dummy && rake db:migrate RAILS_ENV=test && rake db:migrate RAILS_ENV=development'
   end
 end
 
 namespace :spec do
   task :install do
-    puts `bundle install --gemfile=gemfiles/Gemfile.rails3_0`
-    puts `bundle install --gemfile=gemfiles/Gemfile.rails3_1`
-    puts `bundle install --gemfile=gemfiles/Gemfile.rails3_2`
-  end
-
-  task :rails3_0 do
-    ENV['BUNDLE_GEMFILE'] = File.expand_path('../gemfiles/Gemfile.rails3_0', __FILE__)
-    Rake::Task["spec"].execute
+    system 'bundle install'
+    system 'bundle install --gemfile=gemfiles/Gemfile.rails3_0'
+    system 'bundle install --gemfile=gemfiles/Gemfile.rails3_1'
   end
 
   task :rails3_1 do
@@ -36,14 +31,14 @@ namespace :spec do
     Rake::Task["spec"].execute
   end
 
-  task :rails3_2 do
-    ENV['BUNDLE_GEMFILE'] = File.expand_path('../gemfiles/Gemfile.rails3_2', __FILE__)
+  task :rails3_0 do
+    ENV['BUNDLE_GEMFILE'] = File.expand_path('../gemfiles/Gemfile.rails3_0', __FILE__)
     Rake::Task["spec"].execute
   end
 
   task :all do
-    Rake::Task["spec:rails3_0"].execute
+    Rake::Task["spec"].execute
     Rake::Task["spec:rails3_1"].execute
-    Rake::Task["spec:rails3_2"].execute
+    Rake::Task["spec:rails3_0"].execute
   end
 end

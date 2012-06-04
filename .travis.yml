@@ -7,9 +7,9 @@ rvm:
   - rbx-18mode
   - rbx-19mode
 gemfile:
-  - gemfiles/Gemfile.rails3_0
+  - Gemfile
   - gemfiles/Gemfile.rails3_1
-  - gemfiles/Gemfile.rails3_2
+  - gemfiles/Gemfile.rails3_0
 before_script: "sh -c 'cd spec/dummy && rake db:migrate RAILS_ENV=test'"
 script: "xvfb-run rake"
 notifications:
