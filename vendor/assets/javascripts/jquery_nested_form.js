@@ -60,6 +60,7 @@ jQuery(function($) {
       //   hiddenField.value = '1';
       // }
       var field = $(link).closest('.fields');
+      field.addClass('deleted');
       field.hide();
       $(link).closest("form").trigger({ type: 'nested:fieldRemoved', field: field });
       return false;
