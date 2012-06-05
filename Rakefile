@@ -22,8 +22,10 @@ end
 namespace :spec do
   task :install do
     system 'bundle install'
-    system 'bundle install --gemfile=gemfiles/Gemfile.rails3_0'
-    system 'bundle install --gemfile=gemfiles/Gemfile.rails3_1'
+    ENV['BUNDLE_GEMFILE'] = File.expand_path('../gemfiles/Gemfile.rails3_1', __FILE__)
+    system 'bundle install'
+    ENV['BUNDLE_GEMFILE'] = File.expand_path('../gemfiles/Gemfile.rails3_0', __FILE__)
+    system 'bundle install'
   end
 
   task :rails3_1 do
