@@ -52,7 +52,7 @@ You will then be able to use +link_to_add+ and +link_to_remove+ helper methods o
 
 == SimpleForm and Formtastic Support
 
-Use <tt>simple_nested_form_for</tt> or <tt>semantic_nested_form_for</tt> for SimpleForm and Formtastic support respectively. This is feature is not yet in a Gem release but is in the Git repo.
+Use <tt>simple_nested_form_for</tt> or <tt>semantic_nested_form_for</tt> for SimpleForm and Formtastic support respectively.
 
 
 == Partials
