@@ -10,6 +10,10 @@ jQuery(function($) {
       var link    = e.currentTarget;
       var assoc   = $(link).attr('data-association');            // Name of child
       var content = $('#' + assoc + '_fields_blueprint').html(); // Fields template
+      var form    = $(link).closest('form');
+
+      if (!this.canAddNewField(form)) return false;
+
 
       // Make the context correct by replacing new_<parents> with the generated ID
       // of each of the parent objects
@@ -60,9 +64,24 @@ jQuery(function($) {
       //   hiddenField.value = '1';
       // }
       var field = $(link).closest('.fields');
+      field.addClass('deleted');
       field.hide();
       $(link).closest("form").trigger({ type: 'nested:fieldRemoved', field: field });
       return false;
+    },
+    fieldsCount: function(form) {
+      var total_fields   = $(form).find('.fields').length;
+      var deleted_fields = $(form).find('.deleted.fields').length;
+      return total_fields - deleted_fields;
+    },
+    canAddNewField: function(form) {
+      var max = parseInt($(form).data('max-fields'));
+      if (max > 0) {
+        return (this.fieldsCount(form) < max )
+      }
+      else {
+        return true
+      }
     }
   };
 
