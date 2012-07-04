@@ -30,4 +30,12 @@ describe 'NestedForm' do
     visit '/projects/new?type=prototype'
     check_form
   end
+
+  it 'generates correct name for the nested input', :js => true do
+    visit '/projects/new?type=jquery'
+    click_link 'Add new task'
+    click_link 'Add new milestone'
+    name = find('.fields .fields input[id$=name]')[:name]
+    name.should match(/\Aproject\[tasks_attributes\]\[new_\d+\]\[milestones_attributes\]\[new_\d+\]\[name\]\z/)
+  end
 end
