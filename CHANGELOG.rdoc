@@ -1,4 +1,4 @@
-dev
+0.2.2 (July 9, 2012)
 
 * Make deeply-nested form working in jruby and rubinius
 
