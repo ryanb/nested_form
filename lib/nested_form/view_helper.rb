@@ -33,8 +33,9 @@ module NestedForm
     private
       def after_nested_form_callbacks
         @after_nested_form_callbacks ||= []
-        fields = @after_nested_form_callbacks.map do |callback|
-          callback.call
+        fields = []
+        while callback = @after_nested_form_callbacks.shift
+          fields << callback.call
         end
         fields.join(" ").html_safe
       end
