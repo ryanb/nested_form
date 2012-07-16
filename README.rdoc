@@ -15,7 +15,7 @@ Add it to your Gemfile then run +bundle+ to install it.
 
   gem "nested_form"
 
-And then add it to the Asset Pipeline in the appication.js file:
+And then add it to the Asset Pipeline in the application.js file:
 
   //= require jquery_nested_form
 
