@@ -6,7 +6,7 @@ document.observe('click', function(e, el) {
 
 	  // Make the context correct by replacing new_<parents> with the generated ID
 	  // of each of the parent objects
-	  var context = (el.getOffsetParent('.fields').firstDescendant().readAttribute('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
+	  var context = (el.up('.fields').firstDescendant().readAttribute('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
 
 	  // context will be something like this for a brand new form:
 	  // project[tasks_attributes][new_1255929127459][assignments_attributes][new_1255929128105]
@@ -45,7 +45,7 @@ document.observe('click', function(e, el) {
 		if(hidden_field) {
 		  hidden_field.value = '1';
 		}
-		el.ancestors()[0].hide();
+		el.up('.fields').hide();
 		return false;
 	}
 });
