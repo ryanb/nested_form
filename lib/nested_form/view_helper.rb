@@ -21,6 +21,13 @@ module NestedForm
       end
     end
 
+    if defined?(NestedForm::FormtasticBootstrapBuilder)
+      def semantic_boostrap_nested_form_for(*args, &block)
+        options = args.extract_options!.reverse_merge(:builder => NestedForm::FormtasticBootstrapBuilder)
+        semantic_form_for(*(args << options), &block) << after_nested_form_callbacks
+      end
+    end
+
     def after_nested_form(association, &block)
       @associations ||= []
       @after_nested_form_callbacks ||= []
