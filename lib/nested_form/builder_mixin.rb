@@ -43,10 +43,8 @@ module NestedForm
       options = args.extract_options!.symbolize_keys
       options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
       
-      if parent_builder
-        association = object.class.name.demodulize.downcase.pluralize
-        options["data-association"] = association
-      end
+      association = object.class.name.demodulize.downcase.pluralize
+      options["data-association"] = association
       
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
