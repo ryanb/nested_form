@@ -14,15 +14,16 @@ module NestedForm
     def link_to_add(*args, &block)
       options = args.extract_options!.symbolize_keys
       association = args.pop
+      assoc_id = "#{object.class.to_s.underscore}_#{association}"
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
-      options["data-association"] = association
+      options["data-association"] = assoc_id
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
       @fields ||= {}
-      @template.after_nested_form(association) do
+      @template.after_nested_form(assoc_id) do
         model_object = object.class.reflect_on_association(association).klass.new
-        blueprint = fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        blueprint_options = {:id => "#{association}_fields_blueprint", :style => 'display: none'}
+        blueprint = fields_for(association, model_object, :child_index => "new_#{assoc_id}", &@fields[association])
+        blueprint_options = {:id => "#{assoc_id}_fields_blueprint", :style => 'display: none'}
         @template.content_tag(:div, blueprint, blueprint_options)
       end
       @template.link_to(*args, &block)
