@@ -17,9 +17,16 @@ require "spec_helper"
       end
 
       it "has a remove link which behaves similar to a Rails link_to" do
-        @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
-        @builder.link_to_remove("Remove", :class => "foo", :href => "url").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="url" class="foo remove_nested_fields">Remove</a>'
-        @builder.link_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
+        @builder.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields" data-association="projects">Remove</a>'
+        @builder.link_to_remove("Remove", :class => "foo", :href => "url").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="url" class="foo remove_nested_fields" data-association="projects">Remove</a>'
+        @builder.link_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields" data-association="projects">Remove</a>'
+      end
+
+      it 'adds data-association attribute to the remove link' do
+        @project.tasks.build
+        @builder.fields_for(:tasks, :builder => builder) do |tf|
+          tf.link_to_remove 'Remove'
+        end.should match '<a.+data-association="tasks">Remove</a>'
       end
 
       it "should wrap nested fields each in a div with class" do

@@ -2,10 +2,18 @@
 <html>
 <head>
   <title>Dummy</title>
+
+  <% if params[:type] == 'prototype' %>
+    <%= javascript_include_tag 'prototype', 'prototype_nested_form', 'prototype_events_test' %>
+  <% else %>
+    <%= javascript_include_tag 'jquery', 'jquery_nested_form', 'jquery_events_test' %>
+  <% end %>
 </head>
 <body>
 
 <%= yield %>
+
+<div id="console"></div>
 
 </body>
 </html>

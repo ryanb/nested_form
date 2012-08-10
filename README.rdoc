@@ -64,10 +64,50 @@ It is often desirable to move the nested fields into a partial to keep things or
 In this case it will look for a partial called "task_fields" and pass the form builder as an +f+ variable to it.
 
 
-== Events
+== JavaScript events
 
-If you are using jQuery, <tt>nested:fieldAdded</tt> and <tt>nested:fieldRemoved</tt> events are triggered on the +form+ element after adding and removing fields.
+Sometimes you want to do some additional work after element was added or removed, but only
+after DOM was _really_ modified. In this case simply listening for click events on
+'Add new'/'Remove' link won't reliably work, because your code and code that inserts/removes
+nested field will run concurrently.
 
+This problem can be solved, because after adding or removing the field a set of custom events
+is triggered on this field. Using form example from above, if you click on the "Add a task" link,
+<tt>nested:fieldAdded</tt> and <tt>nested:fieldAdded:tasks</tt> will be triggered, while
+<tt>nested:fieldRemoved</tt> and <tt>nested:fieldRemoved:tasks</tt> will be triggered if you click
+"Remove this task" then.
+
+These events bubble up the DOM tree, going through +form+ element, until they reach the +document+.
+This allows you to listen for the event and trigger some action accordingly. Field element, upon
+which action was made, is passed along with the +event+ object. In jQuery you can access it
+via +event.field+, in Prototype the same field will be in +event.memo.field+.
+
+For example, you have a date input in a nested field and you want to use jQuery datepicker
+for it. This is a bit tricky, because you have to activate datepicker after field was inserted.
+
+=== jQuery
+
+  $(document).on('nested:fieldAdded', function(event){
+    // this field was just inserted into your form
+    var field = event.field; 
+    // it's a jQuery object already! Now you can find date input
+    var dateField = field.find('.date');
+    // and activate datepicker on it
+    dateField.datepicker();
+  })
+
+=== Prototype
+
+  document.observe('nested:fieldAdded', function(event){
+    var field = event.memo.field;
+    // it's already extended by Prototype
+    var dateField = field.down('.date');
+    dateField.datepicker();
+  })  
+
+Second type of event (i.e. <tt>nested:fieldAdded:tasks</tt>) is useful then you have more than one type
+of nested fields on a form (i.e. tasks and milestones) and want to distinguish, which exactly
+was added/deleted.
 
 == Enhanced jQuery JavaScript template
 
