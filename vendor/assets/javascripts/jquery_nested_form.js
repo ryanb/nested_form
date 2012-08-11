@@ -42,7 +42,8 @@ jQuery(function($) {
       content     = content.replace(regexp, "new_" + new_id);
 
       var field = this.insertFields(content, assoc, link);
-      $(link).closest("form")
+      // bubble up event upto document (through form)
+      field
         .trigger({ type: 'nested:fieldAdded', field: field })
         .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
       return false;
@@ -51,16 +52,18 @@ jQuery(function($) {
       return $(content).insertBefore(link);
     },
     removeFields: function(e) {
-      var link = e.currentTarget;
-      var hiddenField = $(link).prev('input[type=hidden]');
+      var $link = $(e.currentTarget),
+          assoc = $link.data('association'); // Name of child to be removed
+      
+      var hiddenField = $link.prev('input[type=hidden]');
       hiddenField.val('1');
-      // if (hiddenField) {
-      //   $(link).v
-      //   hiddenField.value = '1';
-      // }
-      var field = $(link).closest('.fields');
+      
+      var field = $link.closest('.fields');
       field.hide();
-      $(link).closest("form").trigger({ type: 'nested:fieldRemoved', field: field });
+      
+      field
+        .trigger({ type: 'nested:fieldRemoved', field: field })
+        .trigger({ type: 'nested:fieldRemoved:' + assoc, field: field });
       return false;
     }
   };
