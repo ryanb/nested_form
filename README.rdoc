@@ -35,6 +35,8 @@ You can then include the generated JavaScript in your layout.
 
 Imagine you have a <tt>Project</tt> model that <tt>has_many :tasks</tt>. To be able to use this gem, you'll need to add <tt>accepts_nested_attributes_for :tasks</tt> to your Project model. If you wish to allow the nested objects to be destroyed, then add the <tt>:allow_destroy => true</tt> option to that declaration. If you don't have the <tt>accepts_nested_attributes_for :tasks</tt> you'll get a Missing Block Error. See the {accepts_nested_attributes_for documentation}[http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for] for details on all available options.
 
+If you are using mongoid as your database, you should also add <tt>accepts_nested_attributes_for :tasks</tt> to your model even if it is already set up by default in embedded relationships.
+
 This will create a <tt>tasks_attributes=</tt> method, so you may need to add it to the <tt>attr_accessible</tt> array. (<tt>attr_accessible :tasks_attributes</tt>)
 
 Then use the +nested_form_for+ helper method to enable the nesting.
