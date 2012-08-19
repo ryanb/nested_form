@@ -125,6 +125,7 @@ Second type of event (i.e. `nested:fieldAdded:tasks`) is useful then you have mo
 of nested fields on a form (i.e. tasks and milestones) and want to distinguish, which exactly
 was added/deleted.
 
+See also [how to limit max count of nested fields](https://github.com/ryanb/nested_form/wiki/How-to:-limit-max-count-of-nested-fields)
 
 ## Enhanced jQuery JavaScript template
 
