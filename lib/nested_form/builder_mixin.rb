@@ -43,7 +43,9 @@ module NestedForm
       options = args.extract_options!.symbolize_keys
       options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
       
-      association = object.class.name.demodulize.downcase.pluralize
+      # Extracting "milestones" from "...[milestones_attributes][...]"
+      md = object_name.to_s.match /(\w+)_attributes\]\[[\w\d]+\]$/
+      association = md && md[1]
       options["data-association"] = association
       
       args << (options.delete(:href) || "javascript:void(0)")

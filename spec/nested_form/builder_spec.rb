@@ -27,9 +27,9 @@ require "spec_helper"
       
       describe '#link_to_remove' do
         it "behaves similar to a Rails link_to" do
-          subject.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields" data-association="projects">Remove</a>'
-          subject.link_to_remove("Remove", :class => "foo", :href => "url").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="url" class="foo remove_nested_fields" data-association="projects">Remove</a>'
-          subject.link_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields" data-association="projects">Remove</a>'
+          subject.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
+          subject.link_to_remove("Remove", :class => "foo", :href => "url").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="url" class="foo remove_nested_fields">Remove</a>'
+          subject.link_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
         end
 
         it 'has data-association attribute' do
@@ -37,6 +37,27 @@ require "spec_helper"
           subject.fields_for(:tasks, :builder => builder) do |tf|
             tf.link_to_remove 'Remove'
           end.should match '<a.+data-association="tasks">Remove</a>'
+        end
+
+        context 'when association is declared in a model by the class_name' do
+          it 'properly detects association name' do
+            project.assignments.build
+            subject.fields_for(:assignments, :builder => builder) do |tf|
+              tf.link_to_remove 'Remove'
+            end.should match '<a.+data-association="assignments">Remove</a>'
+          end
+        end
+
+        context 'when there is more than one nested level' do
+          it 'properly detects association name' do
+            task = project.tasks.build
+            task.milestones.build
+            subject.fields_for(:tasks, :builder => builder) do |tf|
+              tf.fields_for(:milestones, :builder => builder) do |mf|
+                mf.link_to_remove 'Remove'
+              end
+            end.should match '<a.+data-association="milestones">Remove</a>'
+          end
         end
       end
 
