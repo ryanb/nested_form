@@ -23,6 +23,13 @@ require "spec_helper"
           subject.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks">Add</a>'
           subject.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
         end
+
+        context 'when missing association is provided' do
+          it 'raises Argument error' do
+            expect{ subject.link_to_add('Add', :bugs) }.to raise_error(ArgumentError,
+                'Failed to find Project association by name "bugs"')
+          end
+        end
       end
       
       describe '#link_to_remove' do

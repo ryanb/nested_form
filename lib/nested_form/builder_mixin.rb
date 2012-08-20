@@ -14,13 +14,19 @@ module NestedForm
     def link_to_add(*args, &block)
       options = args.extract_options!.symbolize_keys
       association = args.pop
+
+      unless (reflection = object.class.reflect_on_association(association))
+        raise ArgumentError, "Failed to find #{object.class.name} association by name \"#{association}\""
+      end
+      model_object = reflection.klass.new
+
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
+      
       @fields ||= {}
       @template.after_nested_form(association) do
-        model_object = object.class.reflect_on_association(association).klass.new
         blueprint = fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
         blueprint_options = {:id => "#{association}_fields_blueprint", :style => 'display: none'}
         @template.content_tag(:div, blueprint, blueprint_options)
