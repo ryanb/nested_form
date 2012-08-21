@@ -31,6 +31,15 @@ describe 'NestedForm' do
     check_form
   end
 
+  it 'works when there are no inputs for intermediate association', :js => true do
+    visit '/projects/without_intermediate_inputs'
+    click_link 'Add new task'
+    click_link 'Add new milestone'
+    click_link 'Add new milestone'
+    inputs = all('.fields .fields input[id$=name]')
+    inputs.first[:name].should_not eq(inputs.last[:name])
+  end
+
   it 'generates correct name for the nested input', :js => true do
     visit '/projects/new?type=jquery'
     click_link 'Add new task'

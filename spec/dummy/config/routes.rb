@@ -1,5 +1,7 @@
 Dummy::Application.routes.draw do
-  resources :projects
+  resources :projects, :only => %w(new create)
+  get '/:controller/:action'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

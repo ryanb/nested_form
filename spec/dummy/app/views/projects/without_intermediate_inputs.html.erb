@@ -1,0 +1,11 @@
+<%= nested_form_for Project.new do |f| -%>
+  <%= f.fields_for :tasks do |tf| -%>
+    <%= tf.fields_for :milestones do |mf| %>
+      <%= mf.text_field :name %>
+      <%= mf.link_to_remove 'Remove milestone' %>
+    <% end %>
+    <%= tf.link_to_add 'Add new milestone', :milestones %>
+    <%= tf.link_to_remove 'Remove' %>
+  <% end -%>
+  <%= f.link_to_add 'Add new task', :tasks %>
+<% end -%>
