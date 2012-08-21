@@ -148,8 +148,11 @@ If you have any issues with Nested Form not addressed above or in the [example p
 ```
 bundle install
 bundle exec rake spec:install
+bundle exec rake db:migrate
 bundle exec rake spec:all
 ```
+
+See available rake tasks using `bundle exec rake -T`.
 
 ## Special Thanks
 
