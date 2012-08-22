@@ -1,3 +1,15 @@
+dev
+
+* Fix selector for deeply nested forms (thanks groe)
+
+* Fix association detection in #link_to remove (thanks nashbridges)
+
+* Add nested:fieldRemoved:type event (thanks nashbridges)
+
+* Add events for Prototype (thanks nashbridges)
+
+* Element.up() is the proper Prototype counter part to jQuery's closest() (thanks clemens)
+
 0.2.2 (July 9, 2012)
 
 * Make deeply-nested form working in jruby and rubinius
