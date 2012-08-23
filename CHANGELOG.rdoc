@@ -1,4 +1,4 @@
-dev
+0.2.3 (August 23, 2012)
 
 * Fix selector for deeply nested forms (thanks groe)
 
