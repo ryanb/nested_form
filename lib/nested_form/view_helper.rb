@@ -22,7 +22,7 @@ module NestedForm
     end
 
     if defined?(NestedForm::FormtasticBootstrapBuilder)
-      def semantic_boostrap_nested_form_for(*args, &block)
+      def semantic_bootstrap_nested_form_for(*args, &block)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::FormtasticBootstrapBuilder)
         semantic_form_for(*(args << options), &block) << after_nested_form_callbacks
       end

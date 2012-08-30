@@ -38,8 +38,8 @@ describe NestedForm::ViewHelper do
   end
 
   if defined?(NestedForm::FormtasticBootstrapBuilder)
-    it "should pass instance of NestedForm::FormtasticBootstrapBuilder to semantic_boostrap_nested_form_for block" do
-      _view.semantic_boostrap_nested_form_for(Project.new) do |f|
+    it "should pass instance of NestedForm::FormtasticBootstrapBuilder to semantic_bootstrap_nested_form_for block" do
+      _view.semantic_bootstrap_nested_form_for(Project.new) do |f|
         f.should be_instance_of(NestedForm::FormtasticBootstrapBuilder)
       end
     end
