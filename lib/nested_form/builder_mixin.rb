@@ -22,13 +22,14 @@ module NestedForm
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
+      options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
       
       @fields ||= {}
-      @template.after_nested_form(association) do
-        blueprint = fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
-        blueprint_options = {:id => "#{association}_fields_blueprint", :style => 'display: none'}
+      @template.after_nested_form(fields_blueprint_id) do
+        blueprint = fields_for(association, model_object, :child_index => "new_#{association}", &@fields[fields_blueprint_id])
+        blueprint_options = {:id => fields_blueprint_id, :style => 'display: none'}
         @template.content_tag(:div, blueprint, blueprint_options)
       end
       @template.link_to(*args, &block)
@@ -63,12 +64,20 @@ module NestedForm
       # TODO Test this better
       block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
       @fields ||= {}
-      @fields[association_name] = block
+      @fields[fields_blueprint_id_for(association_name)] = block
       super(association_name, *(args << block))
     end
 
     def fields_for_nested_model(name, object, options, block)
       @template.content_tag(:div, super, :class => 'fields')
+    end
+
+    private
+
+    def fields_blueprint_id_for(association)
+      assocs = object_name.to_s.scan(/(\w+)_attributes/).map(&:first)
+      assocs << association
+      assocs.join('_') + '_fields_blueprint'
     end
   end
 end

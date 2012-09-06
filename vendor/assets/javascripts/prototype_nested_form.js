@@ -1,8 +1,8 @@
 document.observe('click', function(e, el) {
   if (el = e.findElement('form a.add_nested_fields')) {
     // Setup
-    var assoc   = el.readAttribute('data-association');           // Name of child
-    var content = $(assoc + '_fields_blueprint').innerHTML; // Fields template
+    var assoc   = el.readAttribute('data-association');               // Name of child
+    var content = $(el.readAttribute('data-blueprint-id')).innerHTML; // Fields template
 
     // Make the context correct by replacing new_<parents> with the generated ID
     // of each of the parent objects

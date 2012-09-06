@@ -19,9 +19,9 @@ require "spec_helper"
 
       describe '#link_to_add' do
         it "behaves similar to a Rails link_to" do
-          subject.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
-          subject.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks">Add</a>'
-          subject.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks">Add</a>'
+          subject.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
+          subject.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
+          subject.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
         end
 
         context 'when missing association is provided' do
@@ -77,13 +77,15 @@ require "spec_helper"
         end
       end
 
-      it "should add task fields to hidden div after form" do
-        pending
-        output = ""
-        mock(@template).after_nested_form(:tasks) { |arg, block| output << block.call }
-        @builder.fields_for(:tasks) { "Task" }
-        @builder.link_to_add("Add", :tasks)
-        output.should == '<div id="tasks_fields_blueprint" style="display: none"><div class="fields">Task</div></div>'
+      it "adds parent association name to the blueprint div id" do
+        task = project.tasks.build
+        task.milestones.build
+        subject.fields_for(:tasks, :builder => builder) do |tf|
+          tf.fields_for(:milestones, :builder => builder) { 'Milestone' }
+          tf.link_to_add('Add', :milestones)
+        end
+        output = template.send(:after_nested_form_callbacks)
+        output.should eq('<div id="tasks_milestones_fields_blueprint" style="display: none"><div class="fields">Milestone</div></div>')
       end
     end
   end
