@@ -14,12 +14,6 @@ module NestedForm
     def link_to_add(*args, &block)
       options = args.extract_options!.symbolize_keys
       association = args.pop
-
-      unless (reflection = object.class.reflect_on_association(association))
-        raise ArgumentError, "Failed to find #{object.class.name} association by name \"#{association}\""
-      end
-      model_object = reflection.klass.new
-
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
       options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
@@ -28,7 +22,7 @@ module NestedForm
       
       @fields ||= {}
       @template.after_nested_form(fields_blueprint_id) do
-        blueprint = fields_for(association, model_object, :child_index => "new_#{association}", &@fields[fields_blueprint_id])
+        blueprint = fields_for(association, model_object(association), :child_index => "new_#{association}", &@fields[fields_blueprint_id])
         blueprint_options = {:id => fields_blueprint_id, :style => 'display: none'}
         @template.content_tag(:div, blueprint, blueprint_options)
       end
@@ -57,7 +51,7 @@ module NestedForm
       
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
-      (hidden_field(:_destroy) << @template.link_to(*args, &block)).html_safe
+      (hidden_field(:_delete, :value => 0) << @template.link_to(*args, &block)).html_safe
     end
 
     def fields_for_with_nested_attributes(association_name, *args)
@@ -78,6 +72,25 @@ module NestedForm
       assocs = object_name.to_s.scan(/(\w+)_attributes/).map(&:first)
       assocs << association
       assocs.join('_') + '_fields_blueprint'
+    end
+
+    ##
+    # Instanciate a new object of association
+    #
+    def model_object(association)
+      if object.class.respond_to?(:reflect_on_association)
+	unless (reflection = object.class.reflect_on_association(association))
+	  raise ArgumentError, "Failed to find #{object.class.name} association by name \"#{association}\""
+	end
+	reflection.klass.new
+    else
+	unless (reflection = object.class.relationships[association])
+	  raise ArgumentError, "Failed to find #{object.class.name} association by name \"#{association}\""
+	end
+	reflection.target_model.new
+
+    end
+
     end
   end
 end
