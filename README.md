@@ -59,6 +59,9 @@ You will then be able to use `link_to_add` and `link_to_remove` helper methods o
 <p><%= f.link_to_add "Add a task", :tasks %></p>
 ```
 
+In order to choose how to handle, after validation errors, fields that are
+marked for destruction, the `marked_for_destruction` class is added on the div
+if the object is marked for destruction.
 
 ## SimpleForm and Formtastic Support
 

@@ -77,6 +77,13 @@ require "spec_helper"
         end
       end
 
+      it "wraps nested fields marked for destruction with an additional class" do
+        task = project.tasks.build
+        task.mark_for_destruction
+        fields = subject.fields_for(:tasks) { 'Task' }
+        fields.should eq('<div class="fields marked_for_destruction">Task</div>')
+      end
+
       it "adds parent association name to the blueprint div id" do
         task = project.tasks.build
         task.milestones.build

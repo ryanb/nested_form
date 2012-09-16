@@ -1,3 +1,7 @@
+dev
+
+* Add the <tt>marked_for_destruction</tt> class on the div if the object is marked for destruction
+
 0.2.3 (August 23, 2012)
 
 * Fix selector for deeply nested forms (thanks groe)
