@@ -7,9 +7,10 @@ jQuery(function($) {
   NestedFormEvents.prototype = {
     addFields: function(e) {
       // Setup
-      var link    = e.currentTarget;
-      var assoc   = $(link).attr('data-association');                  // Name of child
-      var content = $('#' + $(link).attr('data-blueprint-id')).html(); // Fields template
+      var link      = e.currentTarget;
+      var assoc     = $(link).data('association');                // Name of child
+      var blueprint = $('#' + $(link).attr('data-blueprint-id'));
+      var content   = blueprint.data('blueprint');                // Fields template
 
       // Make the context correct by replacing new_<parents> with the generated ID
       // of each of the parent objects

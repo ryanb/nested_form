@@ -84,6 +84,16 @@ require "spec_helper"
         fields.should eq('<div class="fields marked_for_destruction">Task</div>')
       end
 
+      it "puts blueprint into data-blueprint attribute" do
+        task = project.tasks.build
+        task.mark_for_destruction
+        subject.fields_for(:tasks) { 'Task' }
+        subject.link_to_add('Add', :tasks)
+        output   = template.send(:after_nested_form_callbacks)
+        expected = ERB::Util.html_escape '<div class="fields">Task</div>'
+        output.should match(/div.+data-blueprint="#{expected}"/)
+      end
+
       it "adds parent association name to the blueprint div id" do
         task = project.tasks.build
         task.milestones.build
@@ -92,7 +102,7 @@ require "spec_helper"
           tf.link_to_add('Add', :milestones)
         end
         output = template.send(:after_nested_form_callbacks)
-        output.should eq('<div id="tasks_milestones_fields_blueprint" style="display: none"><div class="fields">Milestone</div></div>')
+        output.should match(/div.+id="tasks_milestones_fields_blueprint"/)
       end
     end
   end
