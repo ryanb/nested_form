@@ -70,7 +70,7 @@ module NestedForm
 
     def fields_for_nested_model(name, object, options, block)
       classes = 'fields'
-      classes << ' marked_for_destruction' if object.marked_for_destruction?
+      classes << ' marked_for_destruction' if object.respond_to?(:marked_for_destruction?) && object.marked_for_destruction?
       @template.content_tag(:div, super, :class => classes)
     end
 
