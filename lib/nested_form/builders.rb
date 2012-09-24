@@ -20,4 +20,12 @@ module NestedForm
     end
   rescue LoadError
   end
+
+  begin
+    require 'formtastic-bootstrap'
+    class FormtasticBootstrapBuilder < ::FormtasticBootstrap::FormBuilder
+      include ::NestedForm::BuilderMixin
+    end
+  rescue LoadError
+  end
 end
