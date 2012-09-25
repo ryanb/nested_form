@@ -112,7 +112,7 @@ require "spec_helper"
       context "when model_object given" do
         it "should use it instead of new generated" do
           subject.fields_for(:tasks) {|f| f.object.name }
-          subject.link_to_add("Add", :tasks, model_object: Task.new(:name => 'for check'))
+          subject.link_to_add("Add", :tasks, :model_object => Task.new(:name => 'for check'))
           output   = template.send(:after_nested_form_callbacks)
           expected = ERB::Util.html_escape '<div class="fields">for check</div>'
           output.should match(/div.+data-blueprint="#{expected}"/)
