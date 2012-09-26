@@ -29,7 +29,9 @@ module NestedForm
       @fields ||= {}
       @template.after_nested_form(fields_blueprint_id) do
         blueprint = {:id => fields_blueprint_id, :style => 'display: none'}
-        blueprint[:"data-blueprint"] = fields_for(association, model_object, :child_index => "new_#{association}", &@fields[fields_blueprint_id]).to_str
+        block, options = @fields[fields_blueprint_id].values_at(:block, :options)
+        options[:child_index] = "new_#{association}"
+        blueprint[:"data-blueprint"] = fields_for(association, model_object, options, &block).to_str
         @template.content_tag(:div, nil, blueprint)
       end
       @template.link_to(*args, &block)
@@ -63,15 +65,27 @@ module NestedForm
     def fields_for_with_nested_attributes(association_name, *args)
       # TODO Test this better
       block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
+
+      options = if args[0].kind_of? Array # Rails 3.0.x
+        args[0].dup.extract_options!
+      else
+        args.dup.extract_options!
+      end
+
       @fields ||= {}
-      @fields[fields_blueprint_id_for(association_name)] = block
+      @fields[fields_blueprint_id_for(association_name)] = { :block => block, :options => options }
       super(association_name, *(args << block))
     end
 
     def fields_for_nested_model(name, object, options, block)
       classes = 'fields'
       classes << ' marked_for_destruction' if object.respond_to?(:marked_for_destruction?) && object.marked_for_destruction?
-      @template.content_tag(:div, super, :class => classes)
+
+      if options.fetch(:wrapper, true)
+        @template.content_tag(:div, super, :class => classes)
+      else
+        super
+      end
     end
 
     private

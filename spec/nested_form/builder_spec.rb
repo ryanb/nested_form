@@ -104,6 +104,18 @@ require "spec_helper"
         output = template.send(:after_nested_form_callbacks)
         output.should match(/div.+id="tasks_milestones_fields_blueprint"/)
       end
+
+      it "doesn't render wrapper div" do
+        task = project.tasks.build
+        fields = subject.fields_for(:tasks, :wrapper => false) { 'Task' }
+
+        fields.should eq('Task')
+
+        subject.link_to_add 'Add', :tasks
+        output = template.send(:after_nested_form_callbacks)
+
+        output.should match(/div.+data-blueprint="Task"/)
+      end
     end
 
     context "with options" do
