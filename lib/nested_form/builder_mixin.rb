@@ -18,7 +18,7 @@ module NestedForm
       unless (reflection = object.class.reflect_on_association(association))
         raise ArgumentError, "Failed to find #{object.class.name} association by name \"#{association}\""
       end
-      model_object = reflection.klass.new
+      model_object = options.delete(:model_object) || reflection.klass.new
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
