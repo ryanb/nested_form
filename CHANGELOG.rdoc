@@ -6,6 +6,8 @@ dev
 
 * Support for FormtasticBootstrapBuilder (thanks rvanlieshout)
 
+* Store blueprint html in data-blueprint attribute
+
 * Add the <tt>marked_for_destruction</tt> class on the div if the object is marked for destruction
 
 * Add parent association name to the blueprint div id
