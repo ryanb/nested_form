@@ -1,6 +1,14 @@
 dev
 
+* Add option to toggle wrapper div behavior with <tt>wrapper</tt> option in <tt>fields_for</tt> helper
+
+* Ability to set object for blueprint using <tt>model_object</tt> option in <tt>link_to_add</tt> helper (thanks Baltazore)
+
+* Support for FormtasticBootstrapBuilder (thanks rvanlieshout)
+
 * Add the <tt>marked_for_destruction</tt> class on the div if the object is marked for destruction
+
+* Add parent association name to the blueprint div id
 
 0.2.3 (August 23, 2012)
 
