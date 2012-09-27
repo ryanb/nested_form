@@ -10,6 +10,11 @@ module NestedForm
     #     Add Task
     #   <% end %>
     #
+    # You can also pass <tt>model_object</tt> option with an object for use in
+    # the blueprint, e.g.:
+    #
+    #   <%= f.link_to_add(:tasks, :model_object => Task.new(:name => 'Task')) %>
+    #
     # See the README for more details on where to call this method.
     def link_to_add(*args, &block)
       options = args.extract_options!.symbolize_keys
