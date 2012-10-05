@@ -45,6 +45,6 @@ describe 'NestedForm' do
     click_link 'Add new task'
     click_link 'Add new milestone'
     name = find('.fields .fields input[id$=name]')[:name]
-    name.should match(/\Aproject\[tasks_attributes\]\[new_\d+\]\[milestones_attributes\]\[new_\d+\]\[name\]\z/)
+    name.should match(/\Aproject\[tasks_attributes\]\[\d+\]\[milestones_attributes\]\[\d+\]\[name\]\z/)
   end
 end

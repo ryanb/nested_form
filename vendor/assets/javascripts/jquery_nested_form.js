@@ -12,17 +12,17 @@ jQuery(function($) {
       var blueprint = $('#' + $(link).data('blueprint-id'));
       var content   = blueprint.data('blueprint');                // Fields template
 
-      // Make the context correct by replacing new_<parents> with the generated ID
+      // Make the context correct by replacing <parents> with the generated ID
       // of each of the parent objects
       var context = ($(link).closest('.fields').closestChild('input, textarea').eq(0).attr('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
 
       // context will be something like this for a brand new form:
-      // project[tasks_attributes][new_1255929127459][assignments_attributes][new_1255929128105]
+      // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
       // or for an edit form:
       // project[tasks_attributes][0][assignments_attributes][1]
       if (context) {
         var parentNames = context.match(/[a-z_]+_attributes/g) || [];
-        var parentIds   = context.match(/(new_)?[0-9]+/g) || [];
+        var parentIds   = context.match(/[0-9]+/g) || [];
 
         for(var i = 0; i < parentNames.length; i++) {
           if(parentIds[i]) {
@@ -40,7 +40,7 @@ jQuery(function($) {
       // Make a unique ID for the new child
       var regexp  = new RegExp('new_' + assoc, 'g');
       var new_id  = new Date().getTime();
-      content     = content.replace(regexp, "new_" + new_id);
+      content     = content.replace(regexp, new_id);
 
       var field = this.insertFields(content, assoc, link);
       // bubble up event upto document (through form)
