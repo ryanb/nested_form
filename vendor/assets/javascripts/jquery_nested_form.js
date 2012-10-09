@@ -14,7 +14,7 @@ jQuery(function($) {
 
       // Make the context correct by replacing <parents> with the generated ID
       // of each of the parent objects
-      var context = ($(link).closest('.fields').closestChild('input, textarea').eq(0).attr('name') || '').replace(new RegExp('\[[a-z]+\]$'), '');
+      var context = ($(link).closest('.fields').closestChild('input, textarea').eq(0).attr('name') || '').replace(new RegExp('\\[[a-z]+\\]$'), '');
 
       // context will be something like this for a brand new form:
       // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
@@ -27,11 +27,11 @@ jQuery(function($) {
         for(var i = 0; i < parentNames.length; i++) {
           if(parentIds[i]) {
             content = content.replace(
-              new RegExp('(_' + parentNames[i] + ')_.+?_', 'g'),
+              new RegExp('(_' + parentNames[i] + ')_\\d+_', 'g'),
               '$1_' + parentIds[i] + '_');
 
             content = content.replace(
-              new RegExp('(\\[' + parentNames[i] + '\\])\\[.+?\\]', 'g'),
+              new RegExp('(\\[' + parentNames[i] + '\\])\\[\\d+\\]', 'g'),
               '$1[' + parentIds[i] + ']');
           }
         }
