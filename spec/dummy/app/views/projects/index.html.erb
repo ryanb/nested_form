@@ -1,7 +1,7 @@
 
 <ul>
 <% @projects.each do |p| %>
-	<li>Edit project <%= link_to p.name, edit_project_path(p) %> </ul>
+	<li>Edit project <%= link_to p.name, edit_project_path(p) %> </li>
 <% end %>	
 </ul>
 <p> <%= link_to 'new project', new_project_path %>

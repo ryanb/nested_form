@@ -1,10 +1,5 @@
 Dummy::Application.routes.draw do
-  resources :projects do #, :only => %w(new create)
-    collection do
-      get :edit_multiple
-      put :update_multiple
-    end
-  end
+  resources :projects #, :only => %w(new create)
   get '/:controller/:action'
 
   # The priority is based upon order of creation:

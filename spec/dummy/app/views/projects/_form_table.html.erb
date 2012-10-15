@@ -1,0 +1,51 @@
+<h1>Form Table</h1>
+
+<%= nested_form_for @project do |f| -%>
+
+  <p>Project name: <%= f.text_field :name %> </p>
+
+<table border="1" cellspacing="5" cellpadding="5">
+	<thead>
+		<tr>
+			<th>Type</th>
+			<th>Name</th>
+		</tr>
+	<thead>	
+
+	  <%= f.fields_for :tasks, :wrapper => false do |tf| -%>
+		<tbody class="fields">
+			<tr>	
+				<td>Task</td>					
+	    		<td><%= tf.text_field :name %></td>
+				<td><%= tf.link_to_remove 'Remove task' %></td>
+			</tr>
+					
+	    	<%= tf.fields_for :milestones, :wrapper => false do |mf| %>
+				<tr class="fields">
+					<td>Milestone</td>										
+	      			<td><%= mf.text_field :name %></td>
+	      			<td><%= mf.link_to_remove 'Remove milestone' %></td>
+				</tr>		
+	    	<% end %>
+		  <tr class="add_anchor">
+			<td></td>
+			<td><%= tf.link_to_add 'Add new milestone', :milestones %><td>
+		  <tr>	
+		</tbody>
+	  <% end -%>
+	<tbody class="add_anchor">
+		<tr><td colspan="2"><%= f.link_to_add 'Add new task', :tasks %><td><tr>
+	</tbody>		
+</table>
+	<p><%= f.submit %></p>
+
+<% end -%>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+	  	window.nestedFormEvents.insertFields = function(content, assoc, link) {
+	  		var $target = $(link).closest('.add_anchor');
+	  		return $(content).insertAfter($target);
+	 }})
+</script>
+
