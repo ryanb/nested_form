@@ -1,5 +1,5 @@
 class Task < ActiveRecord::Base
   belongs_to :project
   has_many :milestones
-  accepts_nested_attributes_for :milestones
+  accepts_nested_attributes_for :milestones, :allow_destroy => true
 end
