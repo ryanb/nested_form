@@ -1,5 +1,7 @@
 dev
 
+* Fix context getting for input names with an underscore (thanks kevinrood)
+
 * Add option to toggle wrapper div behavior with <tt>wrapper</tt> option in <tt>fields_for</tt> helper
 
 * Ability to set object for blueprint using <tt>model_object</tt> option in <tt>link_to_add</tt> helper (thanks Baltazore)
