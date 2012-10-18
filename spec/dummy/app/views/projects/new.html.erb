@@ -1,13 +1,5 @@
-<%= nested_form_for @project do |f| -%>
-  <%= f.text_field :name %>
-  <%= f.fields_for :tasks do |tf| -%>
-    <%= tf.text_field :name %>
-    <%= tf.fields_for :milestones do |mf| %>
-      <%= mf.text_field :name %>
-      <%= mf.link_to_remove 'Remove milestone' %>
-    <% end %>
-    <%= tf.link_to_add 'Add new milestone', :milestones %>
-    <%= tf.link_to_remove 'Remove' %>
-  <% end -%>
-  <%= f.link_to_add 'Add new task', :tasks %>
-<% end -%>
+
+<!-- not in use, see edit -->
+
+<%#= render 'form' %>
+<%#= render 'form_table' %>
