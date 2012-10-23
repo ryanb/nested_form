@@ -1,5 +1,7 @@
 dev
 
+* Fix issue when deeply nested and first level only has a select input (thanks eric88)
+
 * Fix context getting for input names with an underscore (thanks kevinrood)
 
 * Add option to toggle wrapper div behavior with <tt>wrapper</tt> option in <tt>fields_for</tt> helper
