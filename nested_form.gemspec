@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = "nested_form"
-  s.version     = "0.2.3"
+  s.version     = "0.3.0"
   s.authors     = ["Ryan Bates", "Andrea Singh"]
   s.email       = "ryan@railscasts.com"
   s.homepage    = "http://github.com/ryanb/nested_form"

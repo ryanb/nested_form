@@ -1,4 +1,4 @@
-dev
+0.3.0 (October 23, 2012)
 
 * Fix issue when deeply nested and first level only has a select input (thanks eric88)
 
