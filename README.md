@@ -39,7 +39,7 @@ You can then include the generated JavaScript in your layout.
 
 ## Usage
 
-Imagine you have a `Project` model that `has_many :tasks`. To be able to use this gem, you'll need to add `accepts_nested_attributes_for :tasks` to your Project model. If you wish to allow the nested objects to be destroyed, then add the `:allow_destroy => true` option to that declaration. If you don't have the `accepts_nested_attributes_for :tasks` you'll get a Missing Block Error. See the [accepts_nested_attributes_for documentation](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) for details on all available options.
+Imagine you have a `Project` model that `has_many :tasks`. To be able to use this gem, you'll need to add `accepts_nested_attributes_for :tasks` to your Project model. If you wish to allow the nested objects to be destroyed, then add the `:allow_destroy => true` option to that declaration. See the [accepts_nested_attributes_for documentation](http://api.rubyonrails.org/classes/ActiveRecord/NestedAttributes/ClassMethods.html#method-i-accepts_nested_attributes_for) for details on all available options.
 
 This will create a `tasks_attributes=` method, so you may need to add it to the `attr_accessible` array (`attr_accessible :tasks_attributes`).
 
