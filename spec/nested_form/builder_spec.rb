@@ -24,11 +24,16 @@ require "spec_helper"
           subject.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
         end
 
-        context 'when missing association is provided' do
-          it 'raises Argument error' do
-            expect{ subject.link_to_add('Add', :bugs) }.to raise_error(ArgumentError,
-                'Failed to find Project association by name "bugs"')
-          end
+        it 'raises ArgumentError when missing association is provided' do
+          expect {
+            subject.link_to_add('Add', :bugs)
+          }.to raise_error(ArgumentError)
+        end
+
+        it 'raises ArgumentError when accepts_nested_attributes_for is missing' do
+          expect {
+            subject.link_to_add('Add', :not_nested_tasks)
+          }.to raise_error(ArgumentError)
         end
       end
       
