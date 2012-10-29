@@ -51,5 +51,16 @@ describe NestedForm::ViewHelper do
     _view.nested_form_for(Project.new) {}
     _view.output_buffer.should include("123456")
   end
+
+  if Rails.version >= "3.1.0"
+    it "should set multipart when there's a file field" do
+      _view.nested_form_for(Project.new) do |f|
+        f.fields_for(:tasks) do |t|
+          t.file_field :file
+        end
+        f.link_to_add "Add", :tasks
+      end.should include(" enctype=\"multipart/form-data\" ")
+    end
+  end
 end
 
