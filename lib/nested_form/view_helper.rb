@@ -2,29 +2,37 @@ require 'nested_form/builders'
 
 module NestedForm
   module ViewHelper
-    def nested_form_for(*args, &block)
+    def nested_form_for(*args)
       options = args.extract_options!.reverse_merge(:builder => NestedForm::Builder)
-      form_for(*(args << options), &block) << after_nested_form_callbacks
+      form_for(*(args << options)) do |f|
+        yield(f).to_s << after_nested_form_callbacks
+      end
     end
 
     if defined?(NestedForm::SimpleBuilder)
-      def simple_nested_form_for(*args, &block)
+      def simple_nested_form_for(*args)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::SimpleBuilder)
-        simple_form_for(*(args << options), &block) << after_nested_form_callbacks
+        simple_form_for(*(args << options)) do |f|
+          yield(f).to_s << after_nested_form_callbacks
+        end
       end
     end
 
     if defined?(NestedForm::FormtasticBuilder)
-      def semantic_nested_form_for(*args, &block)
+      def semantic_nested_form_for(*args)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::FormtasticBuilder)
-        semantic_form_for(*(args << options), &block) << after_nested_form_callbacks
+        semantic_form_for(*(args << options)) do |f|
+          yield(f).to_s << after_nested_form_callbacks
+        end
       end
     end
 
     if defined?(NestedForm::FormtasticBootstrapBuilder)
-      def semantic_bootstrap_nested_form_for(*args, &block)
+      def semantic_bootstrap_nested_form_for(*args)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::FormtasticBootstrapBuilder)
-        semantic_form_for(*(args << options), &block) << after_nested_form_callbacks
+        semantic_form_for(*(args << options)) do |f|
+          yield(f).to_s << after_nested_form_callbacks
+        end
       end
     end
 
