@@ -36,7 +36,7 @@ require "spec_helper"
           }.to raise_error(ArgumentError)
         end
       end
-      
+
       describe '#link_to_remove' do
         it "behaves similar to a Rails link_to" do
           subject.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
@@ -76,9 +76,14 @@ require "spec_helper"
       describe '#fields_for' do
         it "wraps nested fields each in a div with class" do
           2.times { project.tasks.build }
-          subject.fields_for(:tasks) do
-            "Task"
-          end.should == '<div class="fields">Task</div><div class="fields">Task</div>'
+
+          fields = if subject.is_a?(NestedForm::SimpleBuilder)
+            subject.simple_fields_for(:tasks) { "Task" }
+          else
+            subject.fields_for(:tasks) { "Task" }
+          end
+
+          fields.should == '<div class="fields">Task</div><div class="fields">Task</div>'
         end
       end
 
