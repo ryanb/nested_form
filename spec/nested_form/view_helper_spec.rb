@@ -48,8 +48,8 @@ describe NestedForm::ViewHelper do
   it "should append content to end of nested form" do
     _view.after_nested_form(:tasks) { _view.concat("123") }
     _view.after_nested_form(:milestones) { _view.concat("456") }
-    _view.nested_form_for(Project.new) {}
-    _view.output_buffer.should include("123456")
+    result = _view.nested_form_for(Project.new) {}
+    result.should include("123456")
   end
 
   if Rails.version >= "3.1.0"
