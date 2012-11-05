@@ -1,3 +1,9 @@
+0.3.1 (November 5, 2012)
+
+* Raise ArgumentError when accepts_nested_attributes_for is missing
+
+* Fix wrapper element disabling feature (#202 and #214)
+
 0.3.0 (October 23, 2012)
 
 * Fix issue when deeply nested and first level only has a select input (thanks eric88)
