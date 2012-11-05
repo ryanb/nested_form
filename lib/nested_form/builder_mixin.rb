@@ -75,10 +75,11 @@ module NestedForm
       # TODO Test this better
       block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
 
-      options = if args[0].kind_of? Array # Rails 3.0.x
-        args[0].dup.extract_options!
-      else
-        args.dup.extract_options!
+      options = args.dup.extract_options!
+
+      # Rails 3.0.x
+      if options.empty? && args[0].kind_of?(Array)
+        options = args[0].dup.extract_options!
       end
 
       @fields ||= {}
