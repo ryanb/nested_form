@@ -39,7 +39,7 @@ jQuery(function($) {
 
       // Make a unique ID for the new child
       var regexp  = new RegExp('new_' + assoc, 'g');
-      var new_id  = new Date().getTime();
+      var new_id  = this.newId();
       content     = content.replace(regexp, new_id);
 
       var field = this.insertFields(content, assoc, link);
@@ -48,6 +48,9 @@ jQuery(function($) {
         .trigger({ type: 'nested:fieldAdded', field: field })
         .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
       return false;
+    },
+    newId: function() {
+      return new Date().getTime();
     },
     insertFields: function(content, assoc, link) {
       return $(content).insertBefore(link);
