@@ -1,6 +1,7 @@
 dev
 
 * Render blueprints inside form (thanks taavo)
+* Make generated ids easily overridable in jQuery version (thanks ghostganz)
 
 0.3.1 (November 5, 2012)
 
