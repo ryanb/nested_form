@@ -73,9 +73,10 @@ jQuery(function($) {
   };
 
   window.nestedFormEvents = new NestedFormEvents();
-  $(document)
-    .delegate('form a.add_nested_fields',    'click', nestedFormEvents.addFields)
-    .delegate('form a.remove_nested_fields', 'click', nestedFormEvents.removeFields);
+
+  $(document).off('click', 'form a.add_nested_fields');
+  $(document).on('click', 'form a.add_nested_fields', nestedFormEvents.addFields);
+  $(document).on('click', 'form a.remove_nested_fields', nestedFormEvents.removeFields);
 });
 
 // http://plugins.jquery.com/project/closestChild
