@@ -7,6 +7,7 @@ gem 'sqlite3', :platforms => :ruby
 gem 'simple_form'
 gem 'formtastic'
 gem 'formtastic-bootstrap'
+gem 'bootstrap_forms'
 gem 'rake'
 gem 'capybara'
 gem 'rails', '~> 3.2.0'
