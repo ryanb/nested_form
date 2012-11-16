@@ -1,6 +1,6 @@
 require "spec_helper"
 
-[NestedForm::Builder, NestedForm::SimpleBuilder, defined?(NestedForm::FormtasticBuilder) ? NestedForm::FormtasticBuilder : nil].compact.each do |builder|
+[NestedForm::Builder, NestedForm::SimpleBuilder, defined?(NestedForm::FormtasticBuilder) ? NestedForm::FormtasticBuilder : nil, defined?(NestedForm::BootstrapFormsBuilder) ? NestedForm::BootstrapFormsBuilder : nil].compact.each do |builder|
   describe builder do
     let(:project) do
       Project.new

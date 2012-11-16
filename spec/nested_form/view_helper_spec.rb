@@ -44,6 +44,14 @@ describe NestedForm::ViewHelper do
       end
     end
   end
+  
+  if defined?(NestedForm::BootstrapFormsBuilder)
+    it "should pass instance of NestedForm::BootstrapFormsBuilder to bootstrap_forms_nested_form_for block" do
+      _view.bootstrap_forms_nested_form_for(Project.new) do |f|
+        f.should be_instance_of(NestedForm::BootstrapFormsBuilder)
+      end
+    end
+  end
 
   it "should append content to end of nested form" do
     _view.after_nested_form(:tasks) { _view.concat("123") }

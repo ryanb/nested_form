@@ -63,10 +63,19 @@ In order to choose how to handle, after validation errors, fields that are
 marked for destruction, the `marked_for_destruction` class is added on the div
 if the object is marked for destruction.
 
-## SimpleForm and Formtastic Support
+## Other Form Builder Support
 
-Use `simple_nested_form_for` or `semantic_nested_form_for` for SimpleForm and Formtastic support respectively.
+### SimpleForm
 
+Use `simple_nested_form_for`.
+
+### Formtastic
+
+Use `semantic_nested_form_for` or `semantic_bootstrap_nested_form_for`.
+
+### Bootstrap Forms
+
+Use `bootstrap_forms_nested_form_for`.
 
 ## Partials
 
