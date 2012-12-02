@@ -4,5 +4,4 @@ gem "sqlite3", :platforms => :ruby
 gem "simple_form"
 gem "formtastic"
 gem "rake"
-gem "capybara"
 gemspec :path => '../'
