@@ -88,10 +88,15 @@ module NestedForm
     end
 
     def fields_for_nested_model(name, object, options, block)
+      begin
+        wrapper_off = true if object.class.wrapper_off?
+      rescue
+        wrapper_off = false
+      end
       classes = 'fields'
       classes << ' marked_for_destruction' if object.respond_to?(:marked_for_destruction?) && object.marked_for_destruction?
 
-      if options[:wrapper] != false # wrap even if nil
+      if options[:wrapper] != false && wrapper_off != true # wrap even if nil
         @template.content_tag(:div, super, :class => classes)
       else
         super
