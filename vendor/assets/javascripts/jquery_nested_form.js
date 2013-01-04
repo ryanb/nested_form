@@ -1,4 +1,4 @@
-jQuery(function($) {
+(function($) {
   window.NestedFormEvents = function() {
     this.addFields = $.proxy(this.addFields, this);
     this.removeFields = $.proxy(this.removeFields, this);
@@ -76,7 +76,7 @@ jQuery(function($) {
   $(document)
     .delegate('form a.add_nested_fields',    'click', nestedFormEvents.addFields)
     .delegate('form a.remove_nested_fields', 'click', nestedFormEvents.removeFields);
-});
+})(jQuery);
 
 // http://plugins.jquery.com/project/closestChild
 /*
