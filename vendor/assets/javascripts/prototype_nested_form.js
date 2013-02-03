@@ -14,7 +14,7 @@ document.observe('click', function(e, el) {
     // or for an edit form:
     // project[tasks_attributes][0][assignments_attributes][1]
     if(context) {
-      var parent_names = context.match(/[a-z_]+_attributes/g) || [];
+      var parent_names = context.match(/[a-z_]+_attributes(?=\]\[(new_)?\d+\])/g) || [];
       var parent_ids   = context.match(/[0-9]+/g) || [];
 
       for(i = 0; i < parent_names.length; i++) {

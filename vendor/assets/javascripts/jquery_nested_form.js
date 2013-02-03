@@ -21,7 +21,7 @@
       // or for an edit form:
       // project[tasks_attributes][0][assignments_attributes][1]
       if (context) {
-        var parentNames = context.match(/[a-z_]+_attributes/g) || [];
+        var parentNames = context.match(/[a-z_]+_attributes(?=\]\[(new_)?\d+\])/g) || [];
         var parentIds   = context.match(/[0-9]+/g) || [];
 
         for(var i = 0; i < parentNames.length; i++) {

@@ -1,0 +1,16 @@
+<%= nested_form_for @company do |f| -%>
+  <%= f.text_field :name %>
+  <%= f.fields_for :project do |pf| -%>
+    <%= pf.text_field :name %>
+    <%= pf.fields_for :tasks do |tf| -%>
+      <%= tf.text_field :name %>
+      <%= tf.fields_for :milestones do |mf| %>
+        <%= mf.text_field :name %>
+        <%= mf.link_to_remove 'Remove milestone' %>
+      <% end %>
+      <%= tf.link_to_add 'Add new milestone', :milestones %>
+      <%= tf.link_to_remove 'Remove' %>
+    <% end -%>
+    <%= pf.link_to_add 'Add new task', :tasks %>
+  <% end -%>
+<% end -%>
