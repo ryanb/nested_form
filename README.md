@@ -142,7 +142,7 @@ window.nestedFormEvents.insertFields = function(content, assoc, link) {
 
 ## Contributing
 
-If you have any issues with Nested Form not addressed above or in the [example project](http://github.com/ryanb/complex-form-examples/tree/nested_form), please add an [issue on GitHub](http://github.com/ryanb/nested_form/issues) or [fork the project](http://help.github.com/fork-a-repo) and send a [pull request](http://help.github.com/send-pull-requests). To run the specs:
+If you have any issues with Nested Form not addressed above or in the [example project](https://github.com/ryanb/complex-form-examples/tree/nested_form), please add an [issue on GitHub](https://github.com/ryanb/nested_form/issues) or [fork the project](https://help.github.com/articles/fork-a-repo) and send a [pull request](https://help.github.com/articles/using-pull-requests). To run the specs:
 
 ```
 bundle install
