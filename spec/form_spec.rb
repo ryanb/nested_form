@@ -47,4 +47,20 @@ describe 'NestedForm' do
     name = find('.fields .fields input[id$=name]')[:name]
     name.should match(/\Aproject\[tasks_attributes\]\[\d+\]\[milestones_attributes\]\[\d+\]\[name\]\z/)
   end
+
+  it 'generates correct name for the nested input (has_one => has_many)', :js => true do
+    visit '/companies/new?type=jquery'
+    click_link 'Add new task'
+    name = find('.fields .fields input[id$=name]')[:name]
+    name.should match(/\Acompany\[project_attributes\]\[tasks_attributes\]\[\d+\]\[name\]\z/)
+  end
+
+  it 'generates correct name for the nested input (has_one => has_many => has_many)', :js => true do
+    visit '/companies/new?type=jquery'
+    click_link 'Add new task'
+    click_link 'Add new milestone'
+    name = find('.fields .fields .fields input[id$=name]')[:name]
+    name.should match(/\Acompany\[project_attributes\]\[tasks_attributes\]\[\d+\]\[milestones_attributes\]\[\d+\]\[name\]\z/)
+  end
+
 end
