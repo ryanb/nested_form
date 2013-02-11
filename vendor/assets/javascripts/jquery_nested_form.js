@@ -21,18 +21,22 @@
       // or for an edit form:
       // project[tasks_attributes][0][assignments_attributes][1]
       if (context) {
+        var prevParentsId = "";
+        var prevParentsName = "";
         var parentNames = context.match(/[a-z_]+_attributes(?=\]\[(new_)?\d+\])/g) || [];
         var parentIds   = context.match(/[0-9]+/g) || [];
 
         for(var i = 0; i < parentNames.length; i++) {
           if(parentIds[i]) {
             content = content.replace(
-              new RegExp('(_' + parentNames[i] + ')_.+?_', 'g'),
+              new RegExp('(_' + prevParentsId + parentNames[i] + ')_.+?_', 'g'),
               '$1_' + parentIds[i] + '_');
+            prevParentsId += "_" + parentNames[i] + "_" + parentIds[i] + "_";
 
             content = content.replace(
-              new RegExp('(\\[' + parentNames[i] + '\\])\\[.+?\\]', 'g'),
+              new RegExp('(' + prevParentsName + '\\[' + parentNames[i] + '\\])\\[.+?\\]', 'g'),
               '$1[' + parentIds[i] + ']');
+            prevParentsName += "\\[" + parentNames[i] + "\\]\\[" + parentIds[i] + "\\]";
           }
         }
       }
