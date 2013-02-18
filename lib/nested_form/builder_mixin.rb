@@ -28,11 +28,13 @@ module NestedForm
         reflection = object.class.reflect_on_association(association)
         reflection.klass.new
       end
+      
+      helper = options.delete(:helper) || :link_to
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
       options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
-      args << (options.delete(:href) || "javascript:void(0)")
+      args << (options.delete(:href) || "javascript:void(0)") if helper == :link_to
       args << options
 
       @fields ||= {}
@@ -43,7 +45,7 @@ module NestedForm
         blueprint[:"data-blueprint"] = fields_for(association, model_object, options, &block).to_str
         @template.content_tag(:div, nil, blueprint)
       end
-      @template.link_to(*args, &block)
+      @template.send helper, *args, &block
     end
 
     # Adds a link to remove the associated record. The first argment is the name of the link.
@@ -65,10 +67,12 @@ module NestedForm
       md = object_name.to_s.match /(\w+)_attributes\]\[[\w\d]+\]$/
       association = md && md[1]
       options["data-association"] = association
+      
+      helper = options.delete(:helper) || :link_to
 
-      args << (options.delete(:href) || "javascript:void(0)")
+      args << (options.delete(:href) || "javascript:void(0)") if helper == :link_to
       args << options
-      hidden_field(:_destroy) << @template.link_to(*args, &block)
+      hidden_field(:_destroy) << @template.send(helper, *args, &block)
     end
 
     def fields_for_with_nested_attributes(association_name, *args)
