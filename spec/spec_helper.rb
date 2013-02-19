@@ -4,8 +4,9 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 
-Capybara.javascript_driver = :selenium
+Capybara.javascript_driver = :poltergeist
 RSpec.configure do |config|
   config.mock_with :mocha
 end
