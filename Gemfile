@@ -1,11 +1,5 @@
-source :rubygems
+gemspec :path => '.'
 
-gemspec
+instance_eval File.read(File.expand_path('../gemfiles/Gemfile.base', __FILE__))
 
-gem 'activerecord-jdbcsqlite3-adapter', :platforms => :jruby
-gem 'sqlite3', :platforms => :ruby
-gem 'simple_form'
-gem 'formtastic'
-gem 'formtastic-bootstrap'
-gem 'rake'
 gem 'rails', '~> 3.2.0'
