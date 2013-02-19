@@ -1,3 +1,5 @@
+require 'nested_form/unresolved_length_validator'
+
 module NestedForm
   module BuilderMixin
     # Adds a link to insert a new associated records. The first argument is the name of the link, the second is the name of the association.
@@ -31,14 +33,24 @@ module NestedForm
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
-      validators = self.object.class.validators_on(association)
-      unless validators.empty?
-        length_validator = validators.select {|item| item.class == ActiveModel::Validations::LengthValidator}.first
-        unless length_validator.nil?
-          maximum = length_validator.options[:maximum]
+      if Rails.application.config.nested_form.use_length_validators || options[:check_maximum] || options[:maximum]
+        unless maximum = options.delete(:maximum)
+          validators = self.object.class.validators_on(association)
+          length_validators = validators.select {|item| item.is_a? ActiveModel::Validations::LengthValidator}
+          if length_validators.length == 1
+            maximum = length_validators[0].options[:maximum]
+          end    
+        end
+
+        force_check_maximum = options.delete :check_maximum
+
+        if maximum
           options["data-maximum"] = maximum
+        elsif force_check_maximum
+          raise UnresolvedLengthValidator, "nested form builder could not find length of #{association}"
         end
       end
+      
       options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
@@ -97,7 +109,6 @@ module NestedForm
 
     def fields_for_nested_model(name, object, options, block)
       classes = 'fields'
-      classes << " #{object.class.name.underscore.pluralize}"
       classes << ' marked_for_destruction' if object.respond_to?(:marked_for_destruction?) && object.marked_for_destruction?
 
       perform_wrap   = options.fetch(:nested_wrapper, true)
