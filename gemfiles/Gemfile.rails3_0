@@ -1,2 +1,5 @@
+gemspec :path => '../'
 instance_eval File.read(File.expand_path('../Gemfile.base', __FILE__))
-gem "rails", "~> 3.0.0"
+# forcing 3.0.20 (rather than 3.0.0) fixes a bug where bundle hangs
+# trying to fetch gems from github
+gem "rails", "~> 3.0.20"
