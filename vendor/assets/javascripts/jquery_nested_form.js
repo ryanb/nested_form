@@ -40,7 +40,7 @@
       // Make a unique ID for the new child
       var regexp  = new RegExp('new_' + assoc, 'g');
       var new_id  = this.newId();
-      content     = content.replace(regexp, new_id);
+      content     = $.trim(content.replace(regexp, new_id));
 
       var field = this.insertFields(content, assoc, link);
       // bubble up event upto document (through form)
@@ -53,7 +53,12 @@
       return new Date().getTime();
     },
     insertFields: function(content, assoc, link) {
-      return $(content).insertBefore(link);
+      var target = $(link).data('target');
+      if (target) {
+        return $(content).appendTo($(target));
+      } else {
+        return $(content).insertBefore(link);
+      }
     },
     removeFields: function(e) {
       var $link = $(e.currentTarget),

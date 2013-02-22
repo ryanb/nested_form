@@ -79,6 +79,33 @@ It is often desirable to move the nested fields into a partial to keep things or
 In this case it will look for a partial called "task_fields" and pass the form builder as an `f` variable to it.
 
 
+## Specifying a Target for Nested Fields
+
+By default, `link_to_add` appends fields immediately before the link when
+clicked.  This is not desirable when using a list or table, for example.  In
+these situations, the "data-target" attribute can be used to specify where new
+fields should be inserted.
+
+```erb
+<table id="tasks">
+  <%= f.fields_for :tasks, :wrapper => false do |task_form| %>
+    <tr class="fields">
+      <td><%= task_form.text_field :name %></td>
+      </td><%= task_form.link_to_remove "Remove this task" %></td>
+    </tr>
+  <% end %>
+</table>
+<p><%= f.link_to_add "Add a task", :tasks, :data => { :target => "#tasks" } %></p>
+```
+
+Note that the `:data` option above only works in Rails 3.1+.  For Rails 3.0 and
+below, the following syntax must be used.
+
+```erb
+<p><%= f.link_to_add "Add a task", :tasks, "data-target" => "#tasks" %></p>
+```
+
+
 ## JavaScript events
 
 Sometimes you want to do some additional work after element was added or removed, but only
