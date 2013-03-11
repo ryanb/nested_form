@@ -1,9 +1,17 @@
 dev
 
 * Render blueprints inside form (thanks taavo)
+
 * Make generated ids easily overridable in jQuery version (thanks ghostganz)
+
 * Support `nested_wrapper` option as an alternative to `wrapper` option in
 order to maintain compatibility with `simple_fields_for` helper (#219)
+
+* Allow DOM target to be specified when adding new nested form elements
+(thanks mhuggins)
+
+* Fix "has_one => has_many => has_many" name generation (thanks kevinrood and
+basvanwesting)
 
 0.3.1 (November 5, 2012)
 
