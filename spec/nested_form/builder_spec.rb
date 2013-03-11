@@ -138,6 +138,18 @@ require "spec_helper"
 
         output.should match(/div.+data-blueprint="Task"/)
       end
+
+      it "doesn't render wrapper with nested_wrapper option" do
+        task = project.tasks.build
+        fields = subject.fields_for(:tasks, :nested_wrapper => false) { 'Task' }
+
+        fields.should eq('Task')
+
+        subject.link_to_add 'Add', :tasks
+        output = template.send(:after_nested_form_callbacks)
+
+        output.should match(/div.+data-blueprint="Task"/)
+      end
     end
 
     context "with options" do
