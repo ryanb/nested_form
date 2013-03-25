@@ -91,7 +91,7 @@ fields should be inserted.
   <%= f.fields_for :tasks, :wrapper => false do |task_form| %>
     <tr class="fields">
       <td><%= task_form.text_field :name %></td>
-      </td><%= task_form.link_to_remove "Remove this task" %></td>
+      <td><%= task_form.link_to_remove "Remove this task" %></td>
     </tr>
   <% end %>
 </table>
