@@ -1,4 +1,4 @@
-dev
+0.3.2 (April 5, 2013)
 
 * Render blueprints inside form (thanks taavo)
 
