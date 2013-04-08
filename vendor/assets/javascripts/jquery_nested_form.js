@@ -14,7 +14,7 @@
 
       // Make the context correct by replacing <parents> with the generated ID
       // of each of the parent objects
-      var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(new RegExp('\[[a-z_]+\]$'), '');
+      var context = ($(link).closest('.fields').closestChild('[name]').eq(0).attr('name') || '').replace(new RegExp('\[[a-z_]+\]$'), '');
 
       // context will be something like this for a brand new form:
       // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
@@ -43,6 +43,8 @@
       content     = $.trim(content.replace(regexp, new_id));
 
       var field = this.insertFields(content, assoc, link);
+      checkMaximum();
+
       // bubble up event upto document (through form)
       field
         .trigger({ type: 'nested:fieldAdded', field: field })
@@ -69,6 +71,8 @@
       
       var field = $link.closest('.fields');
       field.hide();
+
+      checkMaximum();
       
       field
         .trigger({ type: 'nested:fieldRemoved', field: field })
@@ -81,6 +85,21 @@
   $(document)
     .delegate('form a.add_nested_fields',    'click', nestedFormEvents.addFields)
     .delegate('form a.remove_nested_fields', 'click', nestedFormEvents.removeFields);
+
+  // if maximum is set for this nested
+  function checkMaximum() {
+    $('form a.add_nested_fields').each(function(){
+      var maximum = $(this).data('maximum');                // Maximum # of children
+      if(maximum != null) {
+        var assoc   = $(this).data('association');            // Name of child
+        var fields_selector = "div.fields :has(input[name*='["+ assoc +"_attributes]']):visible";
+        fields = $(this).siblings(fields_selector)
+        fields.length >= maximum ? $(this).hide() : $(this).show();
+      }
+    });
+  }
+  
+  checkMaximum();
 })(jQuery);
 
 // http://plugins.jquery.com/project/closestChild

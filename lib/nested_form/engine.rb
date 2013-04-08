@@ -11,4 +11,11 @@ module NestedForm
       end
     end
   end
+
+  class Railtie < Rails::Railtie
+    config.nested_form = ActiveSupport::OrderedOptions.new
+    #set to true for global use of length validators to hide and show
+    #add and remove buttons
+    config.nested_form.use_length_validators = false
+  end
 end
