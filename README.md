@@ -34,7 +34,7 @@ rails g nested_form:install
 You can then include the generated JavaScript in your layout.
 
 ```erb
-<%= javascript_include_tag :defaults, "nested_form" %>
+<%= javascript_include_tag "application", "nested_form" %>
 ```
 
 ## Usage
