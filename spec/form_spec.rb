@@ -40,6 +40,16 @@ describe 'NestedForm' do
     inputs.first[:name].should_not eq(inputs.last[:name])
   end
 
+  it 'works when specify target', :js => true do
+    visit '/projects/with_target_links'
+    click_link 'Add new task'
+    click_link 'Remove'
+    click_link 'Add new task'
+    click_link 'Add new milestone'
+
+    page.should have_selector('#milestone-fields .fields', visible: true)
+  end
+
   it 'generates correct name for the nested input', :js => true do
     visit '/projects/new?type=jquery'
     click_link 'Add new task'

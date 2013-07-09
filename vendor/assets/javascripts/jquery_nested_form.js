@@ -60,8 +60,12 @@
     },
     insertFields: function(content, assoc, link) {
       var target = $(link).data('target');
-      if (target) {
-        return $(content).appendTo($(target));
+      if (target) {      
+        if($(link).closest('.fields').length > 0) {
+          return $(content).appendTo($(link).closest('.fields').find($(link).data('target')));          
+        } else {
+          return $(content).appendTo($(target));          
+        }
       } else {
         return $(content).insertBefore(link);
       }
