@@ -47,7 +47,8 @@ describe 'NestedForm' do
     click_link 'Add new task'
     click_link 'Add new milestone'
 
-    page.should have_selector('#milestone-fields .fields', visible: true)
+    # page.should have_selector('#milestone-fields .fields', :visible => true)
+    find(:css, "#milestone-fields .fields").should be_visible
   end
 
   it 'generates correct name for the nested input', :js => true do
