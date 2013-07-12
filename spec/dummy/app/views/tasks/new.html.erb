@@ -1,0 +1,12 @@
+<%= nested_form_for @task do |f| -%>
+  <%= f.text_field :name %>
+  <table id="tasks">
+    <%= f.fields_for :milestones, :wrapper => false do |milestone_form| %>
+      <tr class="milestones-wrapper">
+        <td><%= milestone_form.text_field :name %></td>
+        <td><%= milestone_form.link_to_remove "Remove" %></td>
+      </tr>
+    <% end %>
+  </table>
+  <p><%= f.link_to_add "Add new milestone", :milestones, "data-target" => "#tasks", "data-selector" => ".milestones-wrapper" %></p>
+<% end %>

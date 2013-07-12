@@ -79,10 +79,15 @@ It is often desirable to move the nested fields into a partial to keep things or
 In this case it will look for a partial called "task_fields" and pass the form builder as an `f` variable to it.
 
 
-## Specifying a Target for Nested Fields
+## Options for the Wrapper
 
 By default, `link_to_add` appends fields immediately before the link when
-clicked.  This is not desirable when using a list or table, for example.  In
+clicked. The contents of `fields_for` are wrapped inside a `div` with
+`class="fields"`.
+
+### Specifying a Target for Nested Fields
+
+This behaviour is not desirable when using a list or table, for example. In
 these situations, the "data-target" attribute can be used to specify where new
 fields should be inserted.
 
@@ -98,12 +103,35 @@ fields should be inserted.
 <p><%= f.link_to_add "Add a task", :tasks, :data => { :target => "#tasks" } %></p>
 ```
 
+### Specifying a custom Wrapper Selector
+
+By default, nested_form assumes that the wrapper has a `class="fields"`
+attribute. In case this class conflicts with your existing css, you may
+provide a custom wrapper css selector attribute along with the `:wrapper
+=> false` option.
+
+```erb
+<table id="tasks">
+  <%= f.fields_for :tasks, :wrapper => false do |task_form| %>
+    <tr class="task-wrapper">
+      <td><%= task_form.text_field :name %></td>
+      <td><%= task_form.link_to_remove "Remove this task" %></td>
+    </tr>
+  <% end %>
+</table>
+<p><%= f.link_to_add "Add a task", :tasks, :data => { :target => "#tasks", :selector => ".task-wrapper"  } %></p>
+```
+
+### Data Attribute Syntax
+
 Note that the `:data` option above only works in Rails 3.1+.  For Rails 3.0 and
 below, the following syntax must be used.
 
 ```erb
-<p><%= f.link_to_add "Add a task", :tasks, "data-target" => "#tasks" %></p>
+<p><%= f.link_to_add "Add a task", :tasks, "data-target" => "#tasks", "data-selector" => ".task-wrapper" %></p>
 ```
+
+
 
 
 ## JavaScript events
