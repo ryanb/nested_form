@@ -1,6 +1,6 @@
 # Nested Form
 
-[<img src="https://secure.travis-ci.org/ryanb/nested_form.png?branch=master" alt="Build Status" />](http://travis-ci.org/ryanb/nested_form)
+[<img src="https://travis-ci.org/jbox-web/nested_form.png?branch=master" alt="Build Status" />](https://travis-ci.org/jbox-web/nested_form)
 
 This is a Rails gem for conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
 
