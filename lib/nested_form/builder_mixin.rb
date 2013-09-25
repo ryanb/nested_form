@@ -31,6 +31,7 @@ module NestedForm
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
+      options["type"] = "button"
       options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
       args << options
 
@@ -64,6 +65,7 @@ module NestedForm
       md = object_name.to_s.match /(\w+)_attributes\]\[[\w\d]+\]$/
       association = md && md[1]
       options["data-association"] = association
+      options["type"] = "button"
 
       args << options
       hidden_field(:_destroy) << @template.button_tag(*args, &block)
