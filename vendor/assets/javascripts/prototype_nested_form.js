@@ -48,8 +48,8 @@ document.observe('click', function(e, el) {
     } else {
       field = el.insert({ before: content });
     }
-    field.fire('nested:fieldAdded', {field: field});
-    field.fire('nested:fieldAdded:' + assoc, {field: field});
+    field.fire('nested:fieldAdded', {field: field, new_id: new_id});
+    field.fire('nested:fieldAdded:' + assoc, {field: field, new_id: new_id});
     return false;
   }
 });
