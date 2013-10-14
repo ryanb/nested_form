@@ -1,3 +1,9 @@
+## Speedway Special
+There are 2 differences between this and the main branch:
+
+1. A 'new_id' addition to the callback engine for adding fields so that way you can put them into tabs
+2. Modification to support inserting into a table when the last row of the table contains the link_to_add function
+
 # Nested Form
 
 [<img src="https://secure.travis-ci.org/ryanb/nested_form.png?branch=master" alt="Build Status" />](http://travis-ci.org/ryanb/nested_form)

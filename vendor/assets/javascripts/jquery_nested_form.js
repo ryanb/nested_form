@@ -14,8 +14,11 @@
 
       // Make the context correct by replacing <parents> with the generated ID
       // of each of the parent objects
-      var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
-
+      if($(link).data('tabled')){
+        var context = ($(link).closest('table').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
+      } else {
+        var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
+      }
       // If the parent has no inputs we need to strip off the last pair
       var current = content.match(new RegExp('\\[([a-z_]+)\\]\\[new_' + assoc + '\\]'))[1];
       if (current) {
@@ -62,6 +65,8 @@
       var target = $(link).data('target');
       if (target) {
         return $(content).appendTo($(target));
+      } else if ($(link).data('tabled')) {
+        return $(content).insertBefore($(link).closest('tr'))
       } else {
         return $(content).insertBefore(link);
       }
