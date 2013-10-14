@@ -8,8 +8,12 @@ document.observe('click', function(e, el) {
 
     // Make the context correct by replacing <parents> with the generated ID
     // of each of the parent objects
-    var context = (el.getOffsetParent('.fields').firstDescendant().readAttribute('name') || '').replace(/\[[a-z_]+\]$/, '');
-
+    var context;
+    if (el.readAttribute('data-tabled')) {
+      context = (el.getOffsetParent('table').firstDescendant().readAttribute('name') || '').replace(/\[[a-z_]+\]$/, '');
+    } else {
+      context = (el.getOffsetParent('.fields').firstDescendant().readAttribute('name') || '').replace(/\[[a-z_]+\]$/, '');
+    }
     // If the parent has no inputs we need to strip off the last pair
     var current = content.match(new RegExp('\\[([a-z_]+)\\]\\[new_' + assoc + '\\]'))[1];
     if (current) {
@@ -45,6 +49,8 @@ document.observe('click', function(e, el) {
     var field;
     if (target) {
       field = $$(target)[0].insert(content);
+    } else if (el.readAttribute('data-tabled')) {
+      field = el.getOffsetParent('tr').insert({ before: content })
     } else {
       field = el.insert({ before: content });
     }
