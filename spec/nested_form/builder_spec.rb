@@ -71,6 +71,17 @@ require "spec_helper"
             end.should match '<a.+data-association="milestones">Remove</a>'
           end
         end
+
+        context 'has_one association' do
+          let(:company) { Company.new }
+          subject { builder.new(:item, company, template, {}, proc {}) }
+
+          it 'properly detects association name' do
+            subject.fields_for(:project, :builder => builder) do |f|
+              f.link_to_remove 'Remove'
+            end.should match '<a.+data-association="project">Remove</a>'
+          end
+        end
       end
 
       describe '#fields_for' do
