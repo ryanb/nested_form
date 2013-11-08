@@ -17,9 +17,9 @@
       var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
 
       // If the parent has no inputs we need to strip off the last pair
-      var current = content.match(new RegExp('\\[([a-z_]+)\\]\\[new_' + assoc + '\\]'))[1];
+      var current = content.match(new RegExp('\\[([a-z_]+)\\]\\[new_' + assoc + '\\]'));
       if (current) {
-        context = context.replace(new RegExp('\\['+current+'\\]\\[(new_)?\\d+\\]$'), '');
+        context = context.replace(new RegExp('\\[' + current[1] + '\\]\\[(new_)?\\d+\\]$'), '');
       }
 
       // context will be something like this for a brand new form:
