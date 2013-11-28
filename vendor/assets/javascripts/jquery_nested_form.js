@@ -67,7 +67,7 @@
       }
     },
     removeFields: function(e) {
-      var $link = $(e.currentTarget),
+      var $link = $((e instanceof jQuery.Event) ? e.currentTarget : e),
           assoc = $link.data('association'); // Name of child to be removed
       
       var hiddenField = $link.prev('input[type=hidden]');
@@ -118,3 +118,9 @@
                 return $();//nothing found
         };
 })(jQuery);
+
+$(function() {
+  nestedFormEvents.removeFields(
+    $('input[name$="[_destroy]"][value="true"]').siblings('a.remove_nested_fields')
+  );
+})
