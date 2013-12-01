@@ -67,7 +67,7 @@ if the object is marked for destruction.
 For Rails 4 or people using the "strong_parameters" gem, here is an example:
 
 ```ruby
-params.require(:project).permit(:name, tasks: [:id, :name, :_destroy])
+params.require(:project).permit(:name, tasks_attributes: [:id, :name, :_destroy])
 ```
 
 The `:id` is to make sure you do not end up with a whole lot of tasks.
