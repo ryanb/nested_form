@@ -19,9 +19,9 @@ require "spec_helper"
 
       describe '#link_to_add' do
         it "behaves similar to a Rails link_to" do
-          subject.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
-          subject.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
-          subject.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
+          subject.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="item_tasks_fields_blueprint">Add</a>'
+          subject.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks" data-blueprint-id="item_tasks_fields_blueprint">Add</a>'
+          subject.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="item_tasks_fields_blueprint">Add</a>'
         end
 
         it 'raises ArgumentError when missing association is provided' do
@@ -115,7 +115,7 @@ require "spec_helper"
         output.should match(/div.+data-blueprint="#{expected}"/)
       end
 
-      it "adds parent association name to the blueprint div id" do
+      it "adds parent associations to the blueprint div id" do
         task = project.tasks.build
         task.milestones.build
         subject.fields_for(:tasks, :builder => builder) do |tf|
@@ -123,7 +123,7 @@ require "spec_helper"
           tf.link_to_add('Add', :milestones)
         end
         output = template.send(:after_nested_form_callbacks)
-        output.should match(/div.+id="tasks_milestones_fields_blueprint"/)
+        output.should match(/div.+id="item_tasks_milestones_fields_blueprint"/)
       end
 
       it "doesn't render wrapper div" do
