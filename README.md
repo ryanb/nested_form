@@ -74,9 +74,9 @@ The `:id` is to make sure you do not end up with a whole lot of tasks.
 
 The `:_destroy` must be there so that we can delete tasks.
 
-## SimpleForm and Formtastic Support
+## SimpleForm, Formtastic, and Formtastic Bootstrap Support
 
-Use `simple_nested_form_for` or `semantic_nested_form_for` for SimpleForm and Formtastic support respectively.
+Use `simple_nested_form_for` or `semantic_nested_form_for` or `semantic_bootstrap_nested_form_for` for SimpleForm, Formtastic, and Formtastic Bootstrap support respectively.
 
 
 ## Partials
