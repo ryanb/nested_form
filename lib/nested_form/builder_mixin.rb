@@ -62,7 +62,7 @@ module NestedForm
       options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
 
       # Extracting "milestones" from "...[milestones_attributes][...]"
-      md = object_name.to_s.match /(\w+)_attributes\]\[[\w\d]+\]$/
+      md = object_name.to_s.match /(\w+)_attributes\](?:\[[\w\d]+\])?$/
       association = md && md[1]
       options["data-association"] = association
 

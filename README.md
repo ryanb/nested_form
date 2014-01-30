@@ -69,6 +69,17 @@ In order to choose how to handle, after validation errors, fields that are
 marked for destruction, the `marked_for_destruction` class is added on the div
 if the object is marked for destruction.
 
+## Strong Parameters
+For Rails 4 or people using the "strong_parameters" gem, here is an example:
+
+```ruby
+params.require(:project).permit(:name, tasks_attributes: [:id, :name, :_destroy])
+```
+
+The `:id` is to make sure you do not end up with a whole lot of tasks.
+
+The `:_destroy` must be there so that we can delete tasks.
+
 ## SimpleForm and Formtastic Support
 
 Use `simple_nested_form_for` or `semantic_nested_form_for` for SimpleForm and Formtastic support respectively.
