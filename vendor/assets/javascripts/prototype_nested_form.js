@@ -5,10 +5,11 @@ document.observe('click', function(e, el) {
     var target    = el.readAttribute('data-target');
     var blueprint = $(el.readAttribute('data-blueprint-id'));
     var content   = blueprint.readAttribute('data-blueprint'); // Fields template
+    var wrapperSelector = el.readAttribute('data-selector') || ".fields";
 
     // Make the context correct by replacing <parents> with the generated ID
     // of each of the parent objects
-    var context = (el.getOffsetParent('.fields').firstDescendant().readAttribute('name') || '').replace(/\[[a-z_]+\]$/, '');
+    var context = (el.getOffsetParent(wrapperSelector).firstDescendant().readAttribute('name') || '').replace(/\[[a-z_]+\]$/, '');
 
     // If the parent has no inputs we need to strip off the last pair
     var current = content.match(new RegExp('\\[([a-z_]+)\\]\\[new_' + assoc + '\\]'));
@@ -43,11 +44,19 @@ document.observe('click', function(e, el) {
     content     = content.replace(regexp, new_id);
 
     var field;
+    var wrapper;
+
     if (target) {
       field = $$(target)[0].insert(content);
+      wrapper = field.select(wrapperSelector).last();
     } else {
       field = el.insert({ before: content });
+      wrapper = field.previous(wrapperSelector);
     }
+
+    //Add data-nested-wrapper attribute in order to allow remove links to find the wrapper
+    wrapper.writeAttribute("data-nested-wrapper", true);
+
     field.fire('nested:fieldAdded', {field: field});
     field.fire('nested:fieldAdded:' + assoc, {field: field});
     return false;
@@ -61,7 +70,11 @@ document.observe('click', function(e, el) {
     if(hidden_field) {
       hidden_field.value = '1';
     }
-    var field = el.up('.fields').hide();
+
+    var field = $(el).ancestors().detect(function(ancestor){
+      return ancestor.hasAttribute("data-nested-wrapper");
+    });
+    field.hide();
     field.fire('nested:fieldRemoved', {field: field});
     field.fire('nested:fieldRemoved:' + assoc, {field: field});
     return false;

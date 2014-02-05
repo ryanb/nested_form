@@ -21,6 +21,25 @@ describe 'NestedForm' do
     fields.reject { |field| field.visible? }.count.should == 1
   end
 
+  def check_form_with_custom_wrapper
+    page.should have_no_css('form .milestones-wrapper input[id$=name]')
+    click_link 'Add new milestone'
+    page.should have_css('form .milestones-wrapper[data-nested-wrapper] input[id$=name]', :count => 1)
+    find('form .milestones-wrapper[data-nested-wrapper] input[id$=name]').should be_visible
+    find('form .milestones-wrapper[data-nested-wrapper] input[id$=_destroy]').value.should == 'false'
+
+    click_link 'Remove'
+    find('form .milestones-wrapper[data-nested-wrapper] input[id$=_destroy]').value.should == '1'
+    find('form .milestones-wrapper[data-nested-wrapper] input[id$=name]').should_not be_visible
+
+    click_link 'Add new milestone'
+    click_link 'Add new milestone'
+    fields = all('form .milestones-wrapper[data-nested-wrapper]')
+    fields.select { |field| field.visible? }.count.should == 2
+    fields.reject { |field| field.visible? }.count.should == 1
+  end
+
+
   it 'should work with jQuery', :js => true do
     visit '/projects/new'
     check_form
@@ -62,5 +81,20 @@ describe 'NestedForm' do
     name = find('.fields .fields .fields input[id$=name]')[:name]
     name.should match(/\Acompany\[project_attributes\]\[tasks_attributes\]\[\d+\]\[milestones_attributes\]\[\d+\]\[name\]\z/)
   end
+
+  context "form with custom wrapper" do
+
+    it 'should work with jQuery', :js => true do
+      visit '/tasks/new'
+      check_form_with_custom_wrapper
+    end
+
+    it 'should work with Prototype', :js => true do
+      visit '/tasks/new?type=prototype'
+      check_form_with_custom_wrapper
+    end
+
+  end
+
 
 end
