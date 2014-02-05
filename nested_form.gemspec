@@ -13,8 +13,9 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rake"
   s.add_development_dependency "bundler"
   s.add_development_dependency "rspec-rails", "~> 2.6"
-  s.add_development_dependency "mocha"
+  s.add_development_dependency "mocha", "~> 0.12"
   s.add_development_dependency "capybara", "~> 1.1"
+  s.add_development_dependency "poltergeist", "~> 1.0"
 
   s.rubyforge_project = s.name
   s.required_rubygems_version = ">= 1.3.4"

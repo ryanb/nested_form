@@ -13,7 +13,6 @@ gemfile:
   - gemfiles/Gemfile.rails3_1
   - gemfiles/Gemfile.rails3_0
 before_script: "sh -c 'cd spec/dummy && rake db:migrate RAILS_ENV=test'"
-script: "xvfb-run rake"
 notifications:
   email:
     recipients:
