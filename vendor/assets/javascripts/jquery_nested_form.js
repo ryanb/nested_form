@@ -12,6 +12,9 @@
       var blueprint = $('#' + $(link).data('blueprint-id'));
       var content   = blueprint.data('blueprint');                // Fields template
 
+      if($(link).hasClass('disabled'))
+        return false;
+
       // Make the context correct by replacing <parents> with the generated ID
       // of each of the parent objects
       var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
@@ -69,6 +72,9 @@
     removeFields: function(e) {
       var $link = $(e.currentTarget),
           assoc = $link.data('association'); // Name of child to be removed
+
+      if($($link).hasClass('disabled'))
+        return false;
       
       var hiddenField = $link.prev('input[type=hidden]');
       hiddenField.val('1');
