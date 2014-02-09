@@ -72,10 +72,11 @@ module NestedForm
     end
 
     def fields_for_with_nested_attributes(association_name, *args)
-      # TODO Test this better
-      block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
-
       options = args.dup.extract_options!
+      options[:partial] ||= "#{association_name.to_s.singularize}_fields"
+
+      # TODO Test this better
+      block = args.pop || Proc.new { |fields| @template.render(:partial => options[:partial], :locals => {:f => fields}) }
 
       # Rails 3.0.x
       if options.empty? && args[0].kind_of?(Array)
