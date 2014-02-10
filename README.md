@@ -87,7 +87,13 @@ It is often desirable to move the nested fields into a partial to keep things or
 <%= f.fields_for :tasks %>
 ```
 
-In this case it will look for a partial called "task_fields" and pass the form builder as an `f` variable to it.
+In this case it will look for a partial called "task_fields". You can also pass a specific partial as an option:
+
+```erb
+<%= f.fields_for :tasks, partial: 'partial/path' %>
+```
+
+In either case the form builder will be passed as an `f` variable to the partial.
 
 
 ## Specifying a Target for Nested Fields
