@@ -73,7 +73,7 @@ module NestedForm
 
     def fields_for_with_nested_attributes(association_name, *args)
       # TODO Test this better
-      block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
+      block = args.pop
 
       options = args.dup.extract_options!
 
@@ -81,6 +81,10 @@ module NestedForm
       if options.empty? && args[0].kind_of?(Array)
         options = args[0].dup.extract_options!
       end
+      
+      # Check for a :partial option or use the default
+      partial = options.delete(:partial) || "#{association_name.to_s.singularize}_fields"
+      block ||= Proc.new { |fields| @template.render(:partial => partial, :locals => {:f => fields}) }
 
       @fields ||= {}
       @fields[fields_blueprint_id_for(association_name)] = { :block => block, :options => options }
