@@ -81,7 +81,7 @@ Use `simple_nested_form_for` or `semantic_nested_form_for` for SimpleForm and Fo
 
 ## Partials
 
-It is often desirable to move the nested fields into a partial to keep things organized. If you don't supply a block to fields_for it will look for a partial and use that.
+It is often desirable to move the nested fields into a partial to keep things organized. If you don't supply a block to fields_for it will look for a partial to use.
 
 ```erb
 <%= f.fields_for :tasks %>
