@@ -14,7 +14,7 @@
 
       // Make the context correct by replacing <parents> with the generated ID
       // of each of the parent objects
-      var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
+      var context = ($(link).closest('.fields').closestChild('input[name], textarea[name], select[name]').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
 
       // If the parent has no inputs we need to strip off the last pair
       var current = content.match(new RegExp('\\[([a-z_]+)\\]\\[new_' + assoc + '\\]'));
