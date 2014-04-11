@@ -9,7 +9,10 @@ $(function() {
       // Setup
       var link      = e.currentTarget;
       var assoc     = $(link).data('association');                 // Name of child
+ //     var blueprint = $('#' + $(link).data('blueprint-id'));
+//      var content   = blueprint.data('blueprint');                // Fields template
       var content   = $('#' + assoc + '_fields_blueprint').html(); // Fields template
+
 
       // Make the context correct by replacing new_<parents> with the generated ID
       // of each of the parent objects
