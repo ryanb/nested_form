@@ -69,10 +69,15 @@
     removeFields: function(e) {
       var $link = $(e.currentTarget),
           assoc = $link.data('association'); // Name of child to be removed
-      
+
       var hiddenField = $link.prev('input[type=hidden]');
+
+      // could not find the hidden field, try the siblings
+      if (hiddenField.length == 0) {
+        hiddenField = $link.siblings('input[type=hidden]');
+      }
       hiddenField.val('1');
-      
+
       var field = $link.closest('.fields');
       field.hide();
       
