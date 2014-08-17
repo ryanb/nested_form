@@ -43,7 +43,7 @@ module NestedForm
         blueprint_code = <<JS
 if (typeof nestedFormBlueprints === 'undefined')
   window.nestedFormBlueprints = {};
-nestedFormBlueprints["#{fields_blueprint_id}"] = "#{string_code}";
+nestedFormBlueprints["#{fields_blueprint_id}"] = "#{blueprint_string_code}";
 JS
         @template.content_tag(:script, blueprint_code.html_safe, {:type => 'text/javascript'})
       end
