@@ -37,11 +37,15 @@ module NestedForm
 
       @fields ||= {}
       @template.after_nested_form(fields_blueprint_id) do
-        blueprint = {:id => fields_blueprint_id, :style => 'display: none'}
         block, options = @fields[fields_blueprint_id].values_at(:block, :options)
         options[:child_index] = "new_#{association}"
-        blueprint[:"data-blueprint"] = fields_for(association, model_object, options, &block).to_str
-        @template.content_tag(:div, nil, blueprint)
+        blueprint_string_code = URI.encode(fields_for(association, model_object, options, &block).to_str)
+        blueprint_code = <<JS
+if (typeof nestedFormBlueprints === 'undefined')
+  window.nestedFormBlueprints = {};
+nestedFormBlueprints["#{fields_blueprint_id}"] = "#{string_code}";
+JS
+        @template.content_tag(:script, blueprint_code.html_safe, {:type => 'text/javascript'})
       end
       @template.link_to(*args, &block)
     end
@@ -62,7 +66,7 @@ module NestedForm
       options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
 
       # Extracting "milestones" from "...[milestones_attributes][...]"
-      md = object_name.to_s.match /(\w+)_attributes\](?:\[[\w\d]+\])?$/
+      md = object_name.to_s.match /(\w+)_attributes\]\[[\w\d]+\]$/
       association = md && md[1]
       options["data-association"] = association
 
