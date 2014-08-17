@@ -1,5 +1,7 @@
 # Nested Form
 
+[<img src="https://secure.travis-ci.org/ryanb/nested_form.png?branch=master" alt="Build Status" />](http://travis-ci.org/ryanb/nested_form)
+
 This is a Rails gem for conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
 
 This gem only works with Rails 3. See the [rails2 branch](https://github.com/ryanb/nested_form/tree/rails2) for a plugin to work in Rails 2.
