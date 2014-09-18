@@ -49,6 +49,8 @@
       content     = $.trim(content.replace(regexp, new_id));
 
       var field = this.insertFields(content, assoc, link);
+      field.data('new-id', new_id);
+
       // bubble up event upto document (through form)
       field
         .trigger({ type: 'nested:fieldAdded', field: field })
