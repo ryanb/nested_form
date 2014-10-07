@@ -2,9 +2,9 @@
 
 [<img src="https://secure.travis-ci.org/ryanb/nested_form.png?branch=master" alt="Build Status" />](http://travis-ci.org/ryanb/nested_form)
 
-This is a Rails gem for conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
+This is a Rails gem to conveniently manage multiple nested models in a single form. It does so in an unobtrusive way through jQuery or Prototype.
 
-This gem only works with Rails 3. See the [rails2 branch](https://github.com/ryanb/nested_form/tree/rails2) for a plugin to work in Rails 2.
+This gem only works with Rails 3 and above. See the [rails2 branch](https://github.com/ryanb/nested_form/tree/rails2) for a plugin to work in Rails 2.
 
 An example project showing how this works is available in the [complex-nested-forms/nested_form branch](https://github.com/ryanb/complex-form-examples/tree/nested_form).
 
@@ -143,7 +143,7 @@ for it. This is a bit tricky, because you have to activate datepicker after fiel
 ```javascript
 $(document).on('nested:fieldAdded', function(event){
   // this field was just inserted into your form
-  var field = event.field; 
+  var field = event.field;
   // it's a jQuery object already! Now you can find date input
   var dateField = field.find('.date');
   // and activate datepicker on it
@@ -159,7 +159,7 @@ document.observe('nested:fieldAdded', function(event){
   // it's already extended by Prototype
   var dateField = field.down('.date');
   dateField.datepicker();
-})  
+})
 ```
 
 Second type of event (i.e. `nested:fieldAdded:tasks`) is useful then you have more than one type
