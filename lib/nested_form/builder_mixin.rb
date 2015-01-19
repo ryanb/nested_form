@@ -71,6 +71,20 @@ module NestedForm
       hidden_field(:_destroy) << @template.button_tag(*args, &block)
     end
 
+    def button_to_diable(*args, &block)
+      options = args.extract_options!.symbolize_keys
+      options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
+
+      # Extracting "milestones" from "...[milestones_attributes][...]"
+      md = object_name.to_s.match /(\w+)_attributes\]\[[\w\d]+\]$/
+      association = md && md[1]
+      options["data-association"] = association
+      options["type"] = "button"
+
+      args << options
+      hidden_field(:disabled) << @template.button_tag(*args, &block)
+    end
+
     def fields_for_with_nested_attributes(association_name, *args)
       # TODO Test this better
       block = args.pop || Proc.new { |fields| @template.render(:partial => "#{association_name.to_s.singularize}_fields", :locals => {:f => fields}) }
