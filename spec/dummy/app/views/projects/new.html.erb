@@ -4,10 +4,10 @@
     <%= tf.text_field :name %>
     <%= tf.fields_for :milestones do |mf| %>
       <%= mf.text_field :name %>
-      <%= mf.link_to_remove 'Remove milestone' %>
+      <%= mf.button_to_remove 'Remove milestone' %>
     <% end %>
-    <%= tf.link_to_add 'Add new milestone', :milestones %>
-    <%= tf.link_to_remove 'Remove' %>
+    <%= tf.button_to_add 'Add new milestone', :milestones %>
+    <%= tf.button_to_remove 'Remove' %>
   <% end -%>
-  <%= f.link_to_add 'Add new task', :tasks %>
+  <%= f.button_to_add 'Add new task', :tasks %>
 <% end -%>

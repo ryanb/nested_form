@@ -58,7 +58,7 @@ describe NestedForm::ViewHelper do
         f.fields_for(:tasks) do |t|
           t.file_field :file
         end
-        f.link_to_add "Add", :tasks
+        f.button_to_add "Add", :tasks
       end.should include(" enctype=\"multipart/form-data\" ")
     end
   end

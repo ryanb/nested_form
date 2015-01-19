@@ -1,22 +1,22 @@
 module NestedForm
   module BuilderMixin
-    # Adds a link to insert a new associated records. The first argument is the name of the link, the second is the name of the association.
+    # Adds a button to insert a new associated records. The first argument is the name of the link, the second is the name of the association.
     #
-    #   f.link_to_add("Add Task", :tasks)
+    #   f.button_to_add("Add Task", :tasks)
     #
     # You can pass HTML options in a hash at the end and a block for the content.
     #
-    #   <%= f.link_to_add(:tasks, :class => "add_task", :href => new_task_path) do %>
+    #   <%= f.button_to_add(:tasks, :class => "add_task", :href => new_task_path) do %>
     #     Add Task
     #   <% end %>
     #
     # You can also pass <tt>model_object</tt> option with an object for use in
     # the blueprint, e.g.:
     #
-    #   <%= f.link_to_add(:tasks, :model_object => Task.new(:name => 'Task')) %>
+    #   <%= f.button_to_add(:tasks, :model_object => Task.new(:name => 'Task')) %>
     #
     # See the README for more details on where to call this method.
-    def link_to_add(*args, &block)
+    def button_to_add(*args, &block)
       options = args.extract_options!.symbolize_keys
       association = args.pop
 
@@ -31,8 +31,8 @@ module NestedForm
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
+      options["type"] = "button"
       options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
-      args << (options.delete(:href) || "javascript:void(0)")
       args << options
 
       @fields ||= {}
@@ -43,21 +43,21 @@ module NestedForm
         blueprint[:"data-blueprint"] = fields_for(association, model_object, options, &block).to_str
         @template.content_tag(:div, nil, blueprint)
       end
-      @template.link_to(*args, &block)
+      @template.button_tag(*args, &block)
     end
 
-    # Adds a link to remove the associated record. The first argment is the name of the link.
+    # Adds a button to remove the associated record. The first argment is the name of the link.
     #
-    #   f.link_to_remove("Remove Task")
+    #   f.button_to_remove("Remove Task")
     #
     # You can pass HTML options in a hash at the end and a block for the content.
     #
-    #   <%= f.link_to_remove(:class => "remove_task", :href => "#") do %>
+    #   <%= f.button_to_remove(:class => "remove_task", :href => "#") do %>
     #     Remove Task
     #   <% end %>
     #
     # See the README for more details on where to call this method.
-    def link_to_remove(*args, &block)
+    def button_to_remove(*args, &block)
       options = args.extract_options!.symbolize_keys
       options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
 
@@ -65,10 +65,24 @@ module NestedForm
       md = object_name.to_s.match /(\w+)_attributes\](?:\[[\w\d]+\])?$/
       association = md && md[1]
       options["data-association"] = association
+      options["type"] = "button"
 
-      args << (options.delete(:href) || "javascript:void(0)")
       args << options
-      hidden_field(:_destroy) << @template.link_to(*args, &block)
+      hidden_field(:_destroy) << @template.button_tag(*args, &block)
+    end
+
+    def button_to_diable(*args, &block)
+      options = args.extract_options!.symbolize_keys
+      options[:class] = [options[:class], "remove_nested_fields"].compact.join(" ")
+
+      # Extracting "milestones" from "...[milestones_attributes][...]"
+      md = object_name.to_s.match /(\w+)_attributes\]\[[\w\d]+\]$/
+      association = md && md[1]
+      options["data-association"] = association
+      options["type"] = "button"
+
+      args << options
+      hidden_field(:disabled) << @template.button_tag(*args, &block)
     end
 
     def fields_for_with_nested_attributes(association_name, *args)

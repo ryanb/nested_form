@@ -14,19 +14,19 @@ describe 'Nested form', :js => true do
       context 'when field was added' do
         it 'emits general add event' do
           visit url
-          click_link 'Add new task'
+          click_button 'Add new task'
 
           page.should have_content 'Added some field'
         end
 
         it 'emits add event for current association' do
           visit url
-          click_link 'Add new task'
+          click_button 'Add new task'
 
           page.should have_content 'Added task field'
           page.should_not have_content 'Added milestone field'
 
-          click_link 'Add new milestone'
+          click_button 'Add new milestone'
 
           page.should have_content 'Added milestone field'
         end
@@ -35,22 +35,22 @@ describe 'Nested form', :js => true do
       context 'when field was removed' do
         it 'emits general remove event' do
           visit url
-          click_link 'Add new task'
-          click_link 'Remove'
+          click_button 'Add new task'
+          click_button 'Remove'
 
           page.should have_content 'Removed some field'
         end
 
         it 'emits remove event for current association' do
           visit url
-          2.times { click_link 'Add new task' }
-          click_link 'Remove'
+          2.times { click_button 'Add new task' }
+          click_button 'Remove'
 
           page.should have_content 'Removed task field'
           page.should_not have_content 'Removed milestone field'
 
-          click_link 'Add new milestone'
-          click_link 'Remove milestone'
+          click_button 'Add new milestone'
+          click_button 'Remove milestone'
 
           page.should have_content 'Removed milestone field'
         end

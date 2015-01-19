@@ -17,46 +17,46 @@ require "spec_helper"
         builder.new(:item, project, template, {}, proc {})
       end
 
-      describe '#link_to_add' do
-        it "behaves similar to a Rails link_to" do
-          subject.link_to_add("Add", :tasks).should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
-          subject.link_to_add("Add", :tasks, :class => "foo", :href => "url").should == '<a href="url" class="foo add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
-          subject.link_to_add(:tasks) { "Add" }.should == '<a href="javascript:void(0)" class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint">Add</a>'
+      describe '#button_to_add' do
+        it "behaves similar to a Rails button_to" do
+          subject.button_to_add("Add", :tasks).should == '<button class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint" name="button" type="button">Add</button>'
+          subject.button_to_add("Add", :tasks, :class => "foo").should == '<button class="foo add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint" name="button" type="button">Add</button>'
+          subject.button_to_add(:tasks) { "Add" }.should == '<button class="add_nested_fields" data-association="tasks" data-blueprint-id="tasks_fields_blueprint" type="button">Add</button>'
         end
 
         it 'raises ArgumentError when missing association is provided' do
           expect {
-            subject.link_to_add('Add', :bugs)
+            subject.button_to_add('Add', :bugs)
           }.to raise_error(ArgumentError)
         end
 
         it 'raises ArgumentError when accepts_nested_attributes_for is missing' do
           expect {
-            subject.link_to_add('Add', :not_nested_tasks)
+            subject.button_to_add('Add', :not_nested_tasks)
           }.to raise_error(ArgumentError)
         end
       end
 
-      describe '#link_to_remove' do
-        it "behaves similar to a Rails link_to" do
-          subject.link_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
-          subject.link_to_remove("Remove", :class => "foo", :href => "url").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="url" class="foo remove_nested_fields">Remove</a>'
-          subject.link_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><a href="javascript:void(0)" class="remove_nested_fields">Remove</a>'
+      describe '#button_to_remove' do
+        it "behaves similar to a Rails button_to" do
+          subject.button_to_remove("Remove").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><button class="remove_nested_fields" name="button" type="button">Remove</button>'
+          subject.button_to_remove("Remove", :class => "foo").should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><button class="foo remove_nested_fields" name="button" type="button">Remove</button>'
+          subject.button_to_remove { "Remove" }.should == '<input id="item__destroy" name="item[_destroy]" type="hidden" value="false" /><button class="remove_nested_fields" type="button">Remove</button>'
         end
 
         it 'has data-association attribute' do
           project.tasks.build
           subject.fields_for(:tasks, :builder => builder) do |tf|
-            tf.link_to_remove 'Remove'
-          end.should match '<a.+data-association="tasks">Remove</a>'
+            tf.button_to_remove 'Remove'
+          end.should match '<button.+data-association="tasks".*>Remove</button>'
         end
 
         context 'when association is declared in a model by the class_name' do
           it 'properly detects association name' do
             project.assignments.build
             subject.fields_for(:assignments, :builder => builder) do |tf|
-              tf.link_to_remove 'Remove'
-            end.should match '<a.+data-association="assignments">Remove</a>'
+              tf.button_to_remove 'Remove'
+            end.should match '<button.+data-association="assignments".*>Remove</button>'
           end
         end
 
@@ -66,9 +66,9 @@ require "spec_helper"
             task.milestones.build
             subject.fields_for(:tasks, :builder => builder) do |tf|
               tf.fields_for(:milestones, :builder => builder) do |mf|
-                mf.link_to_remove 'Remove'
+                mf.button_to_remove 'Remove'
               end
-            end.should match '<a.+data-association="milestones">Remove</a>'
+            end.should match '<button.+data-association="milestones".*>Remove</button>'
           end
         end
 
@@ -109,7 +109,7 @@ require "spec_helper"
         task = project.tasks.build
         task.mark_for_destruction
         subject.fields_for(:tasks) { 'Task' }
-        subject.link_to_add('Add', :tasks)
+        subject.button_to_add('Add', :tasks)
         output   = template.send(:after_nested_form_callbacks)
         expected = ERB::Util.html_escape '<div class="fields">Task</div>'
         output.should match(/div.+data-blueprint="#{expected}"/)
@@ -120,7 +120,7 @@ require "spec_helper"
         task.milestones.build
         subject.fields_for(:tasks, :builder => builder) do |tf|
           tf.fields_for(:milestones, :builder => builder) { 'Milestone' }
-          tf.link_to_add('Add', :milestones)
+          tf.button_to_add('Add', :milestones)
         end
         output = template.send(:after_nested_form_callbacks)
         output.should match(/div.+id="tasks_milestones_fields_blueprint"/)
@@ -132,7 +132,7 @@ require "spec_helper"
 
         fields.should eq('Task')
 
-        subject.link_to_add 'Add', :tasks
+        subject.button_to_add 'Add', :tasks
         output = template.send(:after_nested_form_callbacks)
 
         output.should match(/div.+data-blueprint="Task"/)
@@ -144,7 +144,7 @@ require "spec_helper"
 
         fields.should eq('Task')
 
-        subject.link_to_add 'Add', :tasks
+        subject.button_to_add 'Add', :tasks
         output = template.send(:after_nested_form_callbacks)
 
         output.should match(/div.+data-blueprint="Task"/)
@@ -156,7 +156,7 @@ require "spec_helper"
 
         fields.should eq('Task')
 
-        subject.link_to_add 'Add', :tasks
+        subject.button_to_add 'Add', :tasks
         output = template.send(:after_nested_form_callbacks)
 
         output.should match(/div.+data-blueprint="Task"/)
@@ -169,7 +169,7 @@ require "spec_helper"
       context "when model_object given" do
         it "should use it instead of new generated" do
           subject.fields_for(:tasks) {|f| f.object.name }
-          subject.link_to_add("Add", :tasks, :model_object => Task.new(:name => 'for check'))
+          subject.button_to_add("Add", :tasks, :model_object => Task.new(:name => 'for check'))
           output   = template.send(:after_nested_form_callbacks)
           expected = ERB::Util.html_escape '<div class="fields">for check</div>'
           output.should match(/div.+data-blueprint="#{expected}"/)
