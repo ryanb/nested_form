@@ -28,4 +28,12 @@ module NestedForm
     end
   rescue LoadError
   end
+  
+  begin
+    require 'bh'
+    class Bh::FormBuilder
+      include ::NestedForm::BuilderMixin
+    end
+  rescue LoadError
+  end
 end
