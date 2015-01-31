@@ -88,14 +88,15 @@ module NestedForm
     end
 
     def fields_for_nested_model(name, object, options, block)
-      classes = 'fields'
+      classes = options.fetch(:nested_wrapper_class, '').dup
+      classes << ' fields'
       classes << ' marked_for_destruction' if object.respond_to?(:marked_for_destruction?) && object.marked_for_destruction?
 
       perform_wrap   = options.fetch(:nested_wrapper, true)
       perform_wrap &&= options[:wrapper] != false # wrap even if nil
 
       if perform_wrap
-        @template.content_tag(:div, super, :class => classes)
+        @template.content_tag(:div, super, :class => classes.strip)
       else
         super
       end
