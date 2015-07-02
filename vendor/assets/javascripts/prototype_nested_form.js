@@ -48,8 +48,8 @@ document.observe('click', function(e, el) {
     } else {
       field = el.insert({ before: content });
     }
-    field.fire('nested:fieldAdded', {field: field});
-    field.fire('nested:fieldAdded:' + assoc, {field: field});
+    field.fire('nested:fieldAdded', {field: field, association: assoc});
+    field.fire('nested:fieldAdded:' + assoc, {field: field, association: assoc});
     return false;
   }
 });
@@ -62,8 +62,8 @@ document.observe('click', function(e, el) {
       hidden_field.value = '1';
     }
     var field = el.up('.fields').hide();
-    field.fire('nested:fieldRemoved', {field: field});
-    field.fire('nested:fieldRemoved:' + assoc, {field: field});
+    field.fire('nested:fieldRemoved', {field: field, association: assoc});
+    field.fire('nested:fieldRemoved:' + assoc, {field: field, association: assoc});
     return false;
   }
 });
