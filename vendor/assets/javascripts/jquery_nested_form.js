@@ -51,8 +51,8 @@
       var field = this.insertFields(content, assoc, link);
       // bubble up event upto document (through form)
       field
-        .trigger({ type: 'nested:fieldAdded', field: field })
-        .trigger({ type: 'nested:fieldAdded:' + assoc, field: field });
+        .trigger({ type: 'nested:fieldAdded', field: field, association: assoc })
+        .trigger({ type: 'nested:fieldAdded:' + assoc, field: field, association: assoc });
       return false;
     },
     newId: function() {
@@ -77,8 +77,8 @@
       field.hide();
       
       field
-        .trigger({ type: 'nested:fieldRemoved', field: field })
-        .trigger({ type: 'nested:fieldRemoved:' + assoc, field: field });
+        .trigger({ type: 'nested:fieldRemoved', field: field, association: assoc  })
+        .trigger({ type: 'nested:fieldRemoved:' + assoc, field: field, association: assoc });
       return false;
     }
   };

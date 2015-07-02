@@ -1,3 +1,7 @@
+master (unreleased)
+
+* Provide association name in all events as `event.association`
+
 0.3.2 (April 5, 2013)
 
 * Render blueprints inside form (thanks taavo)
