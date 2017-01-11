@@ -20,6 +20,19 @@ module NestedForm
       options = args.extract_options!.symbolize_keys
       association = args.pop
 
+      # get blueprint source prefix
+      source = nil
+      if options.has_key?(:data)
+        if options[:data].has_key?(:source)
+          source = options[:data][:source]
+
+          # remove it from Hash, because it's not a valid option for link_to method
+          data = options[:data]
+          data.tap{|x| x.delete(:source)}
+          options[:data] = data
+        end
+      end
+
       unless object.respond_to?("#{association}_attributes=")
         raise ArgumentError, "Invalid association. Make sure that accepts_nested_attributes_for is used for #{association.inspect} association."
       end
@@ -31,13 +44,22 @@ module NestedForm
 
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
-      options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
+
+      # keep association with model
+      fields_blueprint_id = fields_blueprint_id_for(association)
+      if !source.nil?
+        fields_blueprint_id_with_prefix = "#{source}_#{fields_blueprint_id}"
+      else
+        fields_blueprint_id_with_prefix = fields_blueprint_id
+      end
+
+      options["data-blueprint-id"] = fields_blueprint_id_with_prefix
       args << (options.delete(:href) || "javascript:void(0)")
       args << options
 
       @fields ||= {}
       @template.after_nested_form(fields_blueprint_id) do
-        blueprint = {:id => fields_blueprint_id, :style => 'display: none'}
+        blueprint = {:id => fields_blueprint_id_with_prefix, :style => 'display: none'}
         block, options = @fields[fields_blueprint_id].values_at(:block, :options)
         options[:child_index] = "new_#{association}"
         blueprint[:"data-blueprint"] = fields_for(association, model_object, options, &block).to_str
