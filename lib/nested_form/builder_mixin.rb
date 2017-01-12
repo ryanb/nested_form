@@ -32,7 +32,7 @@ module NestedForm
       options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
       options["data-association"] = association
       options["data-blueprint-id"] = fields_blueprint_id = fields_blueprint_id_for(association)
-      args << (options.delete(:href) || "javascript:void(0)")
+      args << (options.delete(:href) || "#")
       args << options
 
       @fields ||= {}
