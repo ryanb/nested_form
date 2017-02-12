@@ -46,6 +46,44 @@ module NestedForm
       @template.link_to(*args, &block)
     end
 
+    # Based on link_to_add, but this builds an association for has_many => :through forms
+    #
+    #  f.link_to_add_hmt("Add Assocations", :singular_association, :plural_associations)
+    #
+    #  example case: 
+    #
+    #= f.fields_for :memberships do |mem|
+    #  = mem.fields_for :organisation do |org|
+    #    .row
+    #        = org.input :name, :label => "<strong>Name of the Organization</strong>"
+    #        = mem.input :title, :label => "<strong>Title in the Organization</strong>"
+    #    .row
+    #        = mem.input :starting_year, :label => "<strong>Starting Year</strong>"
+    #        = mem.input :ending_year, :label => "<strong>Ending Year</strong>"
+    #    .row
+    #        = org.text_area :description, :label => "<strong>Description of Organisation</strong>"
+    #  = mem.link_to_remove "Remove this oranisation"
+    #= f.link_to_add_hmt "Add an organisation", :organisation, :memberships
+    def link_to_add_hmt(*args, &block)
+      options = args.extract_options!.symbolize_keys
+      association = args.pop
+      association_two = args.pop
+      options[:class] = [options[:class], "add_nested_fields"].compact.join(" ")
+      options["data-association"] = association
+      args << (options.delete(:href) || "javascript:void(0)")
+      args << options
+      @fields ||= {}
+      @template.after_nested_form(association) do
+        model_object = object.class.reflect_on_association(association).klass.new
+        model_object.send(:"build_#{association_two}")
+        output = %Q[<div id="#{association}_fields_blueprint" style="display: none">].html_safe
+        output << fields_for(association, model_object, :child_index => "new_#{association}", &@fields[association])
+        output.safe_concat('</div>')
+        output
+      end
+      @template.link_to(*args, &block)
+    end
+
     # Adds a link to remove the associated record. The first argment is the name of the link.
     #
     #   f.link_to_remove("Remove Task")
