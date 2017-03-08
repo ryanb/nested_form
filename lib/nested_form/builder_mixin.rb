@@ -39,7 +39,8 @@ module NestedForm
       @template.after_nested_form(fields_blueprint_id) do
         blueprint = {:id => fields_blueprint_id, :style => 'display: none'}
         block, options = @fields[fields_blueprint_id].values_at(:block, :options)
-        options[:child_index] = "new_#{association}"
+        options_key = Rails::VERSION::MAJOR>=4 ? :index : :child_index
+        options[options_key] = "new_#{association}"
         blueprint[:"data-blueprint"] = fields_for(association, model_object, options, &block).to_str
         @template.content_tag(:div, nil, blueprint)
       end
