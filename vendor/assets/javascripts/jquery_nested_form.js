@@ -16,37 +16,15 @@
       // of each of the parent objects
       var context = ($(link).closest('.fields').closestChild('input, textarea, select').eq(0).attr('name') || '').replace(/\[[a-z_]+\]$/, '');
 
-      // If the parent has no inputs we need to strip off the last pair
-      // var current = content.match(new RegExp('\\[([a-z_]+)\\]\\[new_' + assoc + '\\]'))[1];
-      // if (current) {
-      //   context = context.replace(new RegExp('\\['+current+'\\]\\[(new_)?\\d+\\]$'), '');
-      // }
+      if (context){
+          var parentNames = context.match(/[a-z_]+_attributes(?=\]\[(new_)?.+\])/g) || [];
+          var parentIds   = context.match(/[0-9]+/g) || [];
 
-      // context will be something like this for a brand new form:
-      // project[tasks_attributes][1255929127459][assignments_attributes][1255929128105]
-      // or for an edit form:
-      // project[tasks_attributes][0][assignments_attributes][1]
-      if (context) {
-        var parentNames = context.match(/[a-z_]+_attributes(?=\]\[(new_)?\d+\])/g) || [];
-        var parentIds   = context.match(/[0-9]+/g) || [];
-
-        for(var i = 0; i < parentNames.length; i++) {
-          if(parentIds[i]) {
-            content = content.replace(
-              new RegExp('(_' + parentNames[i] + ')_[0-9]+?_', 'g'),
-              '$1_' + parentIds[i] + '_');
-
-            content = content.replace(
-              new RegExp('(\\[' + parentNames[i] + '\\])\\[[0-9]+?\\]', 'g'),
-              '$1[' + parentIds[i] + ']');
-          }
-        }
+          content = this.replaceContentFromParents(content, assoc, parentNames, parentIds)
       }
-
-      // Make a unique ID for the new child
-      var regexp  = new RegExp('new_' + assoc, 'g');
-      var new_id  = this.newId();
-      content     = $.trim(content.replace(regexp, new_id));
+      else{
+          content = this.replaceContentFromParents(content, assoc)
+      }
 
       var field = this.insertFields(content, assoc, link);
       // bubble up event upto document (through form)
@@ -84,6 +62,36 @@
         .trigger({ type: 'nested:fieldRemoved', field: field })
         .trigger({ type: 'nested:fieldRemoved:' + assoc, field: field });
       return false;
+    },
+    replaceContentFromParents: function(content, assoc, parentNames, parentIds){
+        parentNames = parentNames || [];
+        parentIds = parentIds || [];
+
+        if (parentNames.length > 0 && parentNames.length == parentIds.length){
+            // we need to get a name pattern and id pattern that is mapped to parent
+            var fullNameRegexp = "";     // regexp used to find the full name pattern in blueprint
+            var fullIdRegexp = "";       // regexp used to find the full id   pattern in blueprint
+            var fullNameReplace = "";    // name part from parents, eg. [parameters_attributes][0][children_attributes][1]
+            var fullIdReplace = "";      // id   part from parents, eg. _parameters_attributes_0_children_attributes_1
+            for (var i=0; i< parentNames.length; i++){
+                fullNameRegexp += "\\[" + parentNames[i] + "\\]\\[.+?\\]";
+                fullNameReplace += "[" + parentNames[i] + "][" + parentIds[i] + "]";
+                fullIdRegexp += "_" + parentNames[i] + "_.+?";
+                fullIdReplace += "_" + parentNames[i] + "_" + parentIds[i];
+
+                if (i== parentNames.length -1){
+                    fullIdRegexp += "(?=_" + assoc + "_attributes)"
+                }
+            }
+            content = content.replace(new RegExp(fullNameRegexp, 'g'), fullNameReplace);
+            content = content.replace(new RegExp(fullIdRegexp, 'g'), fullIdReplace);
+        }
+
+        // Make a unique ID for the new child
+        var regexp  = new RegExp('new_' + assoc, 'g');
+        var new_id  = this.newId();
+        content     = $.trim(content.replace(regexp, new_id));
+        return content;
     }
   };
 
