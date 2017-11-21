@@ -33,11 +33,11 @@
         for(var i = 0; i < parentNames.length; i++) {
           if(parentIds[i]) {
             content = content.replace(
-              new RegExp('(_' + parentNames[i] + ')_.+?_', 'g'),
+              new RegExp('(_' + parentNames[i] + ')_[0-9]+?_', 'g'),
               '$1_' + parentIds[i] + '_');
 
             content = content.replace(
-              new RegExp('(\\[' + parentNames[i] + '\\])\\[.+?\\]', 'g'),
+              new RegExp('(\\[' + parentNames[i] + '\\])\\[[0-9]+?\\]', 'g'),
               '$1[' + parentIds[i] + ']');
           }
         }
