@@ -5,7 +5,7 @@ module NestedForm
     def nested_form_for(*args, &block)
       options = args.extract_options!.reverse_merge(:builder => NestedForm::Builder)
       form_for(*(args << options)) do |f|
-        capture(f, &block).to_s << after_nested_form_callbacks
+        capture(f, &block).to_s + after_nested_form_callbacks
       end
     end
 
@@ -13,7 +13,7 @@ module NestedForm
       def simple_nested_form_for(*args, &block)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::SimpleBuilder)
         simple_form_for(*(args << options)) do |f|
-          capture(f, &block).to_s << after_nested_form_callbacks
+          capture(f, &block).to_s + after_nested_form_callbacks
         end
       end
     end
@@ -22,7 +22,7 @@ module NestedForm
       def semantic_nested_form_for(*args, &block)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::FormtasticBuilder)
         semantic_form_for(*(args << options)) do |f|
-          capture(f, &block).to_s << after_nested_form_callbacks
+          capture(f, &block).to_s + after_nested_form_callbacks
         end
       end
     end
@@ -31,7 +31,7 @@ module NestedForm
       def semantic_bootstrap_nested_form_for(*args, &block)
         options = args.extract_options!.reverse_merge(:builder => NestedForm::FormtasticBootstrapBuilder)
         semantic_form_for(*(args << options)) do |f|
-          capture(f, &block).to_s << after_nested_form_callbacks
+          capture(f, &block).to_s + after_nested_form_callbacks
         end
       end
     end
