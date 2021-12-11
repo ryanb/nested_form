@@ -1,3 +1,7 @@
+# Unmaintained
+
+The Nested Form gem is **no longer maintained**. Feel free to fork this project.
+
 # Nested Form
 
 [<img src="https://secure.travis-ci.org/ryanb/nested_form.png?branch=master" alt="Build Status" />](http://travis-ci.org/ryanb/nested_form)
@@ -143,7 +147,7 @@ for it. This is a bit tricky, because you have to activate datepicker after fiel
 ```javascript
 $(document).on('nested:fieldAdded', function(event){
   // this field was just inserted into your form
-  var field = event.field; 
+  var field = event.field;
   // it's a jQuery object already! Now you can find date input
   var dateField = field.find('.date');
   // and activate datepicker on it
@@ -159,7 +163,7 @@ document.observe('nested:fieldAdded', function(event){
   // it's already extended by Prototype
   var dateField = field.down('.date');
   dateField.datepicker();
-})  
+})
 ```
 
 Second type of event (i.e. `nested:fieldAdded:tasks`) is useful then you have more than one type
